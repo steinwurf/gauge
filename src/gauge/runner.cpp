@@ -80,9 +80,12 @@ namespace gauge
         if(m_impl->m_options.count("help"))
             return;
 
+        // Notify all printers that we are starting
         for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
             (*it)->start_benchmark();
 
+        // Check whether we should run all tests or whether we
+        // should use a filter
         if(m_impl->m_options.count("gauge_filter"))
         {
             run_filtered(m_impl->m_options["gauge_filter"].as<std::string>());
@@ -92,6 +95,7 @@ namespace gauge
             run_all();
         }
 
+        // Notify all printers that we are done
         for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
             (*it)->end_benchmark();
 
@@ -161,7 +165,7 @@ namespace gauge
 
             for(uint32_t i = 0; i < configs; ++i)
             {
-                bench->set_configuration(i);
+                bench->set_current_configuration(i);
                 run_benchmark(bench);
             }
         }

@@ -2,6 +2,8 @@
 #define GAUGE_BENCHMARK_H
 
 #include <cassert>
+#include <vector>
+
 #include "config_set.h"
 
 namespace gauge
@@ -37,23 +39,30 @@ namespace gauge
 
         /// @return the number of configurations create for this
         ///         benchmark
-        virtual uint32_t configuration_count() const
-            { return 0; }
+        uint32_t configuration_count() const
+            { return m_configurations.size(); }
 
         /// @return true if the benchmark has configurations
-        virtual bool has_configurations() const
+        bool has_configurations() const
             { return configuration_count() > 0; }
 
         /// Updates the configuration index
         /// @param config_index, the new configuration index
-        virtual void set_configuration(uint32_t config_index)
+        void set_current_configuration(uint32_t config_index)
             {
                 assert(config_index < configuration_count());
                 m_config_index = config_index;
             }
 
+        /// Updates the configuration index
+        /// @param config_index, the new configuration index
+        void add_configuration(const config_set &config)
+            {
+                m_configurations.push_back(config);
+            }
+
         /// @return the current configuration index
-        virtual uint32_t current_configuration() const
+        uint32_t current_configuration() const
             {
                 assert(has_configurations());
                 return m_config_index;
@@ -62,11 +71,12 @@ namespace gauge
         /// @return the current configuration set if this
         ///         function is not overridden by a sub-class
         ///         a default config_set is returned
-        virtual config_set configuration_set() const
+        config_set get_current_configuration() const
             {
-                config_set cs;
-                cs.set_value("configuration_id", current_configuration());
-                return cs;
+                assert(has_configurations());
+                assert(m_config_index < m_configurations.size());
+
+                return m_configurations[m_config_index];
             }
 
         /// Starts a measurement
@@ -105,6 +115,9 @@ namespace gauge
 
         /// Stores the current configuration index
         uint32_t m_config_index;
+
+        /// Stores the different configurations
+        std::vector<config_set> m_configurations;
 
     };
 

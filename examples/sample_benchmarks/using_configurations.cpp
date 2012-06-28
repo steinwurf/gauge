@@ -16,25 +16,19 @@ public:
             {
                 gauge::config_set cs;
                 cs.set_value<uint32_t>("vector_length", 1000*k);
-                m_test_configs.push_back(cs);
+                add_configuration(cs);
             }
 
             gauge::config_set cs;
             cs.set_value<uint32_t>("vector_length", 1000000);
-            m_test_configs.push_back(cs);
-        }
-
-    uint32_t configuration_count() const
-        {
-            // tell gauge how many configurations we have
-            return m_test_configs.size();
+            add_configuration(cs);
         }
 
     void setup()
         {
             // Setup the test this could also be done inside the
             // BENCHMARK macro
-            gauge::config_set cs = configuration_set();
+            gauge::config_set cs = get_current_configuration();
 
             uint32_t length = cs.get_value<uint32_t>("vector_length");
 
@@ -43,24 +37,12 @@ public:
                 m_vector[i] = rand() % 5;
         }
 
-    gauge::config_set configuration_set() const
-        {
-            // Implementing this function makes sure that gauge
-            // can output information about the current configuration.
-            // gauge tells us which configuration we should use
-            uint32_t index = current_configuration();
-
-            assert(index < m_test_configs.size());
-            return m_test_configs[index];
-        }
-
     void tear_down()
         {
             // No implementation required
         }
 
     std::vector<uint32_t> m_vector;
-    std::vector<gauge::config_set> m_test_configs;
 
 };
 

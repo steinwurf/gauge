@@ -54,7 +54,7 @@ namespace gauge
 
         if(info.has_configurations())
         {
-            benchmark_dict.add("config", info.configuration_set());
+            benchmark_dict.add("config", info.get_current_configuration());
         }
 
         benchmark_dict.add("data", result.m_results);

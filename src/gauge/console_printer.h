@@ -64,7 +64,7 @@ namespace gauge
             {
                 std::cout << console::textyellow << "[  CONFIG  ]"
                           << console::textdefault << " "
-                          << info.configuration_set() << std::endl;
+                          << info.get_current_configuration() << std::endl;
             }
 
             std::cout << console::textyellow << "[   RUNS   ] "
