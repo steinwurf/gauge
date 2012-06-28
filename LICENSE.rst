@@ -1,7 +1,6 @@
 gauge licence
 -------------
 gauge is provided under the "New BSD License":
-
 ::
   Copyright (c) 2012, Steinwurf ApS
   All rights reserved.
@@ -38,7 +37,6 @@ Hayai (Nick Bruun)
 ..................
 gauge has borrowed terminal color and benchmark registration macros from
 Nick Bruun's Hayai library. These have since been modified to fit gauge.
-
 ::
   Copyright (c) 2011 - Nick Bruun.
 
