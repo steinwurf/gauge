@@ -20,6 +20,10 @@ namespace gauge
         virtual std::string benchmark_name() const
             { return "unknown"; }
 
+        /// @todo: consider to handle this differently since
+        /// we now allow the user to override the number of
+        /// runs it could be confusing why runs() does not return
+        /// the actual number of runs completed..
         /// @return the number of runs to be completed for this benchmark
         virtual uint32_t runs() const = 0;
 

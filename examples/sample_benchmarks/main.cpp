@@ -1,7 +1,7 @@
-#include "gauge.h"
+#include <gauge/gauge.h>
 
-#include "python_printer.h"
-#include "console_printer.h"
+#include <gauge/python_printer.h>
+#include <gauge/console_printer.h>
 
 
 int main(int argc, const char* argv[])

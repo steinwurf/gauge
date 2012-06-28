@@ -1,8 +1,6 @@
-#include "gauge.h"
+#include <gauge/gauge.h>
 
-#include "python_printer.h"
-#include "console_printer.h"
-
+#include <algorithm>
 #include <list>
 
 class find_max_benchmark : public gauge::time_benchmark

@@ -1,7 +1,4 @@
-#include "gauge.h"
-
-#include "python_printer.h"
-#include "console_printer.h"
+#include <gauge/gauge.h>
 
 
 class benchmark_me

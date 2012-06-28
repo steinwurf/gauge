@@ -40,8 +40,8 @@ namespace gauge
                       << console::textdefault << " "
                       << info.testcase_name() << "."
                       << info.benchmark_name()
-                      << " (" << info.runs()
-                      << (info.runs() == 1 ? " run)" : " runs)")
+                      << " (" << result.m_results.size()
+                      << (result.m_results.size() == 1 ? " run)" : " runs)")
                       << std::endl;
 
             statistics res = calculate_statistics(

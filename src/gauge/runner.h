@@ -33,6 +33,9 @@ namespace gauge
         /// Creates a new runner with a default printer
         runner();
 
+        /// Destructor
+        ~runner();
+
         /// Access to the gauge benchmark runner instance. Even though we
         /// don't like singletons we use it here since it reduces complexity
         /// of registering and running benchmarks
@@ -52,13 +55,12 @@ namespace gauge
         void register_benchmark()
             {
                 uint32_t id = T::benchmark_id();
-                m_benchmarks[id] = std::make_shared<T>();
-
-                std::string t_name = m_benchmarks[id]->testcase_name();
-                std::string b_name = m_benchmarks[id]->benchmark_name();
-
-                m_testcases[t_name][b_name] = m_benchmarks[id];
+                benchmark_ptr bench = std::make_shared<T>();
+                add_benchmark(id, bench);
             }
+
+        /// Adds a new benchmark
+        void add_benchmark(uint32_t id, benchmark_ptr bench);
 
         /// Returns the benchmark with the specific id
         /// @param id of the desired benchmark
@@ -88,16 +90,11 @@ namespace gauge
         /// @return access to the runners printers
         std::vector<printer_ptr>& printers();
 
-    private:
+    private: // @todo move to pimpl
 
-        /// The registered benchmarks
-        std::map<uint32_t, benchmark_ptr> m_benchmarks;
+        struct impl;
+        std::unique_ptr<impl> m_impl;
 
-        /// Container for all the registered printers.
-        std::vector<printer_ptr> m_printers;
-
-        /// Test case map
-        testcase_map m_testcases;
     };
 
 

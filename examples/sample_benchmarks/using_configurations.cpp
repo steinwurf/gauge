@@ -1,7 +1,5 @@
-#include "gauge.h"
-
-#include "python_printer.h"
-#include "console_printer.h"
+#include <gauge/gauge.h>
+#include <algorithm>
 
 /// This test shows how you can create configurations
 /// for the benchmarks. This could be different string

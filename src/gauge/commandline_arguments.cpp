@@ -16,7 +16,10 @@ namespace gauge
             ("help", "produce help message")
             ("gauge_filter", po::value<std::string>(),
              "Filter which benchmarks to run based on their name "
-              "for example ./benchmark --gauge_filter=MyTest.*");
+              "for example ./benchmark --gauge_filter=MyTest.*")
+            ("runs", po::value<uint32_t>(),
+             "Sets the number of runs to complete. Overrides the "
+             "settings specified in the benchmark ex. --runs=50");
 
         po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);

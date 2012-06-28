@@ -5,11 +5,30 @@
 namespace gauge
 {
 
+    struct runner::impl
+    {
+        /// The registered benchmarks
+        std::map<uint32_t, benchmark_ptr> m_benchmarks;
+
+        /// Container for all the registered printers.
+        std::vector<printer_ptr> m_printers;
+
+        /// Test case map
+        testcase_map m_testcases;
+
+        /// Program options
+        po::variables_map m_options;
+    };
+
     runner::runner()
+        : m_impl(new runner::impl())
     {
         //m_printers.push_back(std::make_shared<console_printer>());
     }
 
+    runner::~runner()
+    {
+    }
 
     runner& runner::instance()
     {
@@ -31,19 +50,26 @@ namespace gauge
         return ++id;
     }
 
+    void runner::add_benchmark(uint32_t id, benchmark_ptr bench)
+    {
+        m_impl->m_benchmarks[id] = bench;
+
+        std::string t_name = bench->testcase_name();
+        std::string b_name = bench->benchmark_name();
+
+        m_impl->m_testcases[t_name][b_name] = bench;
+    }
 
     runner::benchmark_ptr runner::get_benchmark(uint32_t id)
     {
-        return m_benchmarks[id];
+        return m_impl->m_benchmarks[id];
     }
-
 
     void runner::run(int argc, const char *argv[])
     {
-        po::variables_map options;
 
         try{
-            options = parse_commandline(argc, argv);
+            m_impl->m_options = parse_commandline(argc, argv);
         }
         catch(const std::exception &e)
         {
@@ -51,22 +77,22 @@ namespace gauge
             return;
         }
 
-        if(options.count("help"))
+        if(m_impl->m_options.count("help"))
             return;
 
-        for(auto it = m_printers.begin(); it != m_printers.end(); ++it)
+        for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
             (*it)->start_benchmark();
 
-        if(options.count("gauge_filter"))
+        if(m_impl->m_options.count("gauge_filter"))
         {
-            run_filtered(options["gauge_filter"].as<std::string>());
+            run_filtered(m_impl->m_options["gauge_filter"].as<std::string>());
         }
         else
         {
             run_all();
         }
 
-        for(auto it = m_printers.begin(); it != m_printers.end(); ++it)
+        for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
             (*it)->end_benchmark();
 
     }
@@ -74,7 +100,7 @@ namespace gauge
 
     void runner::run_all()
     {
-        for(auto it = m_benchmarks.begin(); it != m_benchmarks.end(); ++it)
+        for(auto it = m_impl->m_benchmarks.begin(); it != m_impl->m_benchmarks.end(); ++it)
         {
             benchmark_ptr bench = it->second;
             assert(bench);
@@ -103,10 +129,10 @@ namespace gauge
             throw std::runtime_error("Error malformed gauge_filter"
                                      " (example MyTest.*)");
 
-        if(m_testcases.find(testcase_name) == m_testcases.end())
+        if(m_impl->m_testcases.find(testcase_name) == m_impl->m_testcases.end())
             throw std::runtime_error("Error testcase not found");
 
-        benchmark_map &benchmarks = m_testcases[testcase_name];
+        benchmark_map &benchmarks = m_impl->m_testcases[testcase_name];
 
         if(benchmark_name == "*")
         {
@@ -159,7 +185,19 @@ namespace gauge
 
         result result;
 
-        uint32_t runs = bench->runs();
+        uint32_t runs = 0;
+
+        if(m_impl->m_options.count("runs"))
+        {
+            runs = m_impl->m_options["runs"].as<uint32_t>();
+        }
+        else
+        {
+            runs = bench->runs();
+        }
+
+        assert(runs > 0);
+
         uint32_t run = 0;
         while(run < runs)
         {
@@ -181,7 +219,7 @@ namespace gauge
             }
         }
 
-        for(auto it = m_printers.begin(); it != m_printers.end(); ++it)
+        for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
         {
             (*it)->benchmark_result(*bench, result);
         }
@@ -191,7 +229,7 @@ namespace gauge
 
     std::vector<runner::printer_ptr>& runner::printers()
     {
-        return m_printers;
+        return m_impl->m_printers;
     }
 
 }
