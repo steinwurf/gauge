@@ -47,7 +47,7 @@ public:
 };
 
 
-BENCHMARK_F(using_configurations, accumulate, 10)
+BENCHMARK_F(using_configurations, Stdlib, Accumulate, 10)
 {
 
     volatile uint32_t sum;

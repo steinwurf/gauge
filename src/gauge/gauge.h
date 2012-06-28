@@ -59,12 +59,13 @@
                                                                             \
     void BENCHMARK_CLASS_NAME_(__testcase_name, __benchmark_name)::test_body()
 
-#define BENCHMARK_F(testcase_name,                       \
+#define BENCHMARK_F(fixture_name,                        \
+                    testcase_name,                       \
                     benchmark_name,                      \
                     runs)                                \
     BENCHMARK_(testcase_name,                            \
                benchmark_name,                           \
-               testcase_name,                            \
+               fixture_name,                             \
                runs)
 
 #define BENCHMARK(testcase_name,                         \

@@ -11,7 +11,7 @@ void max_array(double* x, double* y, double* z, uint32_t elements)
     }
 }
 
-BENCHMARK(simple_run, max_array, 100)
+BENCHMARK(SimpleRun, MaxArray, 100)
 {
 
     uint32_t elements = 10000;
@@ -43,7 +43,7 @@ void max_array_opt(double* x, double* y, double* z, uint32_t elements)
 }
 
 
-BENCHMARK(simple_run, max_array_opt, 100)
+BENCHMARK(SimpleRun, MaxArrayOpt, 100)
 {
 
     uint32_t elements = 10000;

@@ -3,10 +3,10 @@
 #include <algorithm>
 #include <list>
 
-class find_max_benchmark : public gauge::time_benchmark
+class find_max_setup : public gauge::time_benchmark
 {
 public:
-    find_max_benchmark()
+    find_max_setup()
         : m_elements(1000)
         {
             m_vector.resize(m_elements, 0);
@@ -48,7 +48,7 @@ protected:
 };
 
 
-BENCHMARK_F(find_max_benchmark, find_in_list, 100)
+BENCHMARK_F(find_max_setup, FindMax, FindInList, 10)
 {
     uint32_t max_value;
 
@@ -62,7 +62,7 @@ BENCHMARK_F(find_max_benchmark, find_in_list, 100)
 }
 
 
-BENCHMARK_F(find_max_benchmark, find_in_vector, 100)
+BENCHMARK_F(find_max_setup, FindMax, FindInVector, 10)
 {
     uint32_t max_value;
 

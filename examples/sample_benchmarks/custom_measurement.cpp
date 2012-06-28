@@ -63,7 +63,7 @@ public:
 };
 
 
-BENCHMARK_F(custom_measurement, run_count, 100)
+BENCHMARK_F(custom_measurement, BenchmarkMe, RunCount, 100)
 {
 
     RUN{
