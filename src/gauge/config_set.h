@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <map>
+#include <cstdint>
 
 namespace gauge
 {
