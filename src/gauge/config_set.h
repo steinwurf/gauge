@@ -145,14 +145,14 @@ namespace gauge
 
                 if(it != end())
                 {
-                    os << it->first << "=";
+                    os << (it->first) << "=";
                     it->second->print(os,f);
                 }
                 ++it;
 
                 while(it != end())
                 {
-                    os << ", " << it->first << "=";
+                    os << ", " << (it->first) << "=";
                     it->second->print(os,f);
                     ++it;
                 }
