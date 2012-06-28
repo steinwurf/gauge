@@ -1,12 +1,14 @@
 Introduction
 ------------
 
-**gauge** is a flexible C++ benchmarking tool.
+gauge is a flexible C++ benchmarking tool.
 
 Dependencies
 ----------
-* We rely on functionality from the Boost C++ libraries.
-* We are migrating to C++11 and currently use a few features.
+* We rely on functionality from the Boost C++ libraries, currently the 
+  gauge build-tool will automatically download these dependencies.
+* We are migrating to C++11 and currently use a few features, you therefore
+  have to supply the appropiate C++11 compiler switch when using gauge.
 
 Build
 -----
@@ -15,15 +17,24 @@ With some additional tools which may be found at external-waf_
 
 .. _external-waf: https://github.com/steinwurf/external-waf
 
-
+To build gauge run the following command:
 ::
   ./waf configure --bundle=ALL --bundle-path=~/dev/bundle_dependencies
   ./waf build
+
+Substitute the ``~/dev/bundle_dependencies`` with the path where you wish 
+waf to download gauge's dependencies. You may omit this option then waf
+will download the dependencies into the gauge project folder.
 
 You should now have the ``libgauge.a`` static lib. It also build the boost
 dependencies as static libs. In the gauge directory type ``find . -name "*.a"``
 to see the libraries produced. We need to use the path to the libraries when
 using gauge with our own applications as shown in the following.
+
+When building the static lib, waf will also build the ``gauge_example`` executable.
+Depending on your platform you should be able to launch it by running:
+::
+  ./build/linux/examples/sample_benchmarks/gauge_example
 
 Example Use
 -----------
