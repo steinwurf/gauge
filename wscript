@@ -42,10 +42,13 @@ def build(bld):
         recurse_helper(bld, 'boost')
         bld.recurse('examples/sample_benchmarks')
 
+    extra_flags = []
+    if bld.env.TOOLCHAIN != 'win32': extra_flags.append('-std=gnu++0x')
+
     bld.stlib(features = 'cxx',
 	      source   = bld.path.ant_glob('src/gauge/*.cpp'),
 	      target   = 'gauge',
-              cxxflags = bld.toolchain_cxx_flags() + ['-std=gnu++0x'],
+              cxxflags = bld.toolchain_cxx_flags() + extra_flags,
               export_includes = ['src/gauge'],
               use = ['boost_chrono', 'boost_system', 'boost_program_options'])
 
