@@ -49,7 +49,7 @@ def build(bld):
 	      source   = bld.path.ant_glob('src/gauge/*.cpp'),
 	      target   = 'gauge',
               cxxflags = bld.toolchain_cxx_flags() + extra_flags,
-              export_includes = ['src/gauge'],
+              export_includes = ['src'],
               use = ['boost_chrono', 'boost_system', 'boost_program_options'])
 
 
