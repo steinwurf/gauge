@@ -68,6 +68,12 @@ namespace gauge
                 s << val;
             }
 
+        virtual void format(std::ostream &s, const std::string &val) const
+            {
+                s << val;
+            }
+
+
     };
 
     struct config_type
