@@ -77,7 +77,7 @@
                runs)
 
 #define RUN \
-    for (gauge::iteration_controller __controller(benchmark_id()); \
+    for (gauge::iteration_controller __controller; \
             __controller.is_done() == false; __controller.next())
 
 

@@ -5,7 +5,7 @@ gauge is a flexible C++ benchmarking tool.
 
 Dependencies
 ----------
-* We rely on functionality from the Boost C++ libraries, currently the 
+* We rely on functionality from the Boost C++ libraries, currently the
   gauge build-tool will automatically download these dependencies.
 * We are migrating to C++11 and currently use a few features, you therefore
   have to supply the appropiate C++11 compiler switch when using gauge.
@@ -22,7 +22,7 @@ To build gauge run the following command:
   ./waf configure --bundle=ALL --bundle-path=~/dev/bundle_dependencies
   ./waf build
 
-Substitute the ``~/dev/bundle_dependencies`` with the path where you wish 
+Substitute the ``~/dev/bundle_dependencies`` with the path where you wish
 waf to download gauge's dependencies. You may omit this option then waf
 will download the dependencies into the gauge project folder.
 
@@ -73,7 +73,17 @@ code provide or save the following code in a file called ``main.cpp``
       return 0;
   }
 
+In the above we use the ``BENCHMARK`` macro which takes 3 parameters:
 
+1. The name of the test-case in this case``MyTest``
+2. The name of the benchmark in this case ``RunThis``
+3. The number of runs to complete in this case 100.
+
+The measurement will not start until we hit the ``RUN`` macro. Depending
+on the type of benchmark (the default is time) the code inside ``RUN`` will
+be executed several times (we refer to this as the number of iterations).
+When gauge is satisfied with the measurement we exit the run loop. For every
+``BENCHMARK`` we may only call ``RUN`` once.
 
 Using ``g++`` the example code may be compiled as::
 ::

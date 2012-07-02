@@ -22,14 +22,15 @@ namespace gauge
         /// with a specific id.
         /// Starts the benchmark
         /// @param benchmark_id the id of the benchmark
-        iteration_controller(uint32_t benchmark_id)
+        iteration_controller()
             : m_iteration_count(0),
               m_total_iterations(0),
-              m_benchmark(gauge::runner::instance().get_benchmark(benchmark_id))
+              m_benchmark(gauge::runner::instance().current_benchmark())
             {
                 assert(m_benchmark);
 
                 m_total_iterations = m_benchmark->iteration_count();
+
                 m_benchmark->start();
             }
 

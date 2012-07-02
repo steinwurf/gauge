@@ -26,18 +26,24 @@ namespace gauge
         /// The result in microseconds
         double m_result;
 
+        /// Got result i.e. was start() and stop() called
+        /// If the user forgets to use the RUN macro inside the
+        /// BENCHMARK macro this test would trigger
+        bool m_started;
+        bool m_stopped;
+
     };
 
 
     /// How many micro seconds passes in one tick of the clock
     /// now mulitply that with a 100 then that is how long we should
     /// measure
-    template <class Clock>
-    double display_precision()
-    {
-        auto s = typename Clock::duration(1);
-        return bc::duration_cast<bc::microseconds>(s).count() * 1000.0;
-    }
+    //template <class Clock>
+    //double display_precision()
+    //{
+    //    auto s = typename Clock::duration(1);
+    //    return bc::duration_cast<bc::microseconds>(s).count() * 1000.0;
+    //}
 
 
     time_benchmark::time_benchmark()
@@ -52,6 +58,8 @@ namespace gauge
     {
         m_impl->m_iterations = 1;
         m_impl->m_threshold = 10000.0;
+        m_impl->m_started = false;
+        m_impl->m_stopped = false;
     }
 
     uint32_t time_benchmark::iteration_count() const
@@ -61,15 +69,19 @@ namespace gauge
 
     void time_benchmark::start()
     {
+        assert(m_impl->m_iterations > 0);
+        m_impl->m_started = true;
         m_impl->m_start = bc::high_resolution_clock::now();
     }
 
     void time_benchmark::stop()
     {
         m_impl->m_stop = bc::high_resolution_clock::now();
-
+        m_impl->m_stopped = true;
         m_impl->m_result = bc::duration_cast<bc::microseconds>(
             m_impl->m_stop-m_impl->m_start).count();
+
+        assert(m_impl->m_iterations > 0);
     }
 
     double time_benchmark::measurement()
@@ -79,6 +91,8 @@ namespace gauge
 
     bool time_benchmark::accept_measurement()
     {
+        assert(m_impl->m_started); // Did you forget the RUN macro?
+        assert(m_impl->m_stopped);
         assert(m_impl->m_threshold > 0);
         assert(m_impl->m_iterations > 0);
 
@@ -93,6 +107,7 @@ namespace gauge
             // valid time duration so we double the number of
             // iterations
             m_impl->m_iterations = m_impl->m_iterations * 2;
+            assert(m_impl->m_iterations > 0);
             return false;
         }
 

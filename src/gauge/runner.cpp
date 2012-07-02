@@ -1,6 +1,6 @@
 #include "runner.h"
 #include "commandline_arguments.h"
-#include <boost/algorithm/string.hpp>
+#include <cassert>
 
 namespace gauge
 {
@@ -18,6 +18,9 @@ namespace gauge
 
         /// Program options
         po::variables_map m_options;
+
+        /// Id the the currently active benchmark
+        uint32_t m_current_id;
     };
 
     runner::runner()
@@ -46,12 +49,19 @@ namespace gauge
 
     uint32_t runner::register_id()
     {
-        static uint32_t id = 0;
+        // We start from one so we let 0 be an invalid benchmark id
+        static uint32_t id = 1;
+
+        // If zero is invalid we cannot have overflow, but that should
+        // not be a problem - anyways better safe than sorry
+        assert(id < std::numeric_limits<uint32_t>::max());
         return ++id;
     }
 
-    void runner::add_benchmark(uint32_t id, benchmark_ptr bench)
+    void runner::add_benchmark(benchmark_ptr bench)
     {
+        uint32_t id = bench->id();
+
         m_impl->m_benchmarks[id] = bench;
 
         std::string t_name = bench->testcase_name();
@@ -62,7 +72,14 @@ namespace gauge
 
     runner::benchmark_ptr runner::get_benchmark(uint32_t id)
     {
+        assert(m_impl->m_benchmarks.find(id) != m_impl->m_benchmarks.end());
         return m_impl->m_benchmarks[id];
+    }
+
+    runner::benchmark_ptr runner::current_benchmark()
+    {
+        assert(m_impl->m_current_id != 0);
+        return get_benchmark(m_impl->m_current_id);
     }
 
     void runner::run(int argc, const char *argv[])
@@ -180,6 +197,9 @@ namespace gauge
         assert(bench);
         bench->init();
 
+        assert(m_impl->m_current_id == 0);
+        m_impl->m_current_id = bench->id();
+
         if(bench->needs_warmup_iteration())
         {
             bench->setup();
@@ -227,6 +247,8 @@ namespace gauge
         {
             (*it)->benchmark_result(*bench, result);
         }
+
+        m_impl->m_current_id = 0;
 
     }
 

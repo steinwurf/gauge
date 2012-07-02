@@ -14,6 +14,18 @@ namespace gauge
     {
     public:
 
+        /// @param benchmark_id sets the benchmark id
+        void set_id(uint32_t benchmark_id)
+            {
+                m_id = benchmark_id;
+            }
+
+        /// @return the benchmark id
+        uint32_t id() const
+            {
+                return m_id;
+            }
+
         /// @return the test case name
         virtual std::string testcase_name() const
             { return "unknown"; }
@@ -112,6 +124,10 @@ namespace gauge
             {}
 
     private:
+
+        /// The benchmark id given by the static call to
+        /// register_id in the runner
+        uint32_t m_id;
 
         /// Stores the current configuration index
         uint32_t m_config_index;

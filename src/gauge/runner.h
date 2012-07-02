@@ -56,16 +56,21 @@ namespace gauge
             {
                 uint32_t id = T::benchmark_id();
                 benchmark_ptr bench = std::make_shared<T>();
-                add_benchmark(id, bench);
+                bench->set_id(id);
+                add_benchmark(bench);
             }
 
         /// Adds a new benchmark
-        void add_benchmark(uint32_t id, benchmark_ptr bench);
+        void add_benchmark(benchmark_ptr bench);
 
         /// Returns the benchmark with the specific id
         /// @param id of the desired benchmark
         /// @return pointer to the benchmark
         benchmark_ptr get_benchmark(uint32_t id);
+
+        /// Returns the id of the currently active benchmark
+        /// @return id of benchmark
+        benchmark_ptr current_benchmark();
 
         /// Start a new benchmark runner using the commandline
         /// parameters specified.
