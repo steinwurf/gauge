@@ -36,6 +36,9 @@ namespace gauge
         v.print(os, f);
     }
 
+    /// Prints a std::vector<T> as a python list
+    /// @param os, the output stream
+    /// @param v, the vector
     template<class T, class Alloc>
     inline void pyprint(std::ostream &os, const std::vector<T, Alloc> &v)
     {
@@ -62,6 +65,15 @@ namespace gauge
         os << "]";
     }
 
+
+    struct python_format : public default_format
+    {
+        virtual void format(std::ostream &s, const std::string &val) const
+            {
+                s << "\"" << val << "\"";
+            }
+    };
+
     inline void pyprint(std::ostream &os, const config_set &set)
     {
         auto it = set.begin();
@@ -72,7 +84,7 @@ namespace gauge
         {
             pyprint(os, it->first);
             os << ":";
-            it->second->print(os);
+            it->second->print(os, python_format());
 
             ++it;
 
