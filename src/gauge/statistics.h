@@ -2,6 +2,7 @@
 #define GAUGE_STATISTICS_H
 
 #include <algorithm>
+#include <numeric>
 
 namespace gauge
 {
