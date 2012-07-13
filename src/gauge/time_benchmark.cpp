@@ -76,6 +76,8 @@ namespace gauge
 
     void time_benchmark::stop()
     {
+        assert(m_impl->m_started);
+
         m_impl->m_stop = bc::high_resolution_clock::now();
         m_impl->m_stopped = true;
         m_impl->m_result = bc::duration_cast<bc::microseconds>(
@@ -91,13 +93,22 @@ namespace gauge
 
     bool time_benchmark::accept_measurement()
     {
-        assert(m_impl->m_started); // Did you forget the RUN macro?
+        // Did you forget the RUN macro?
+        assert(m_impl->m_started);
         assert(m_impl->m_stopped);
         assert(m_impl->m_threshold > 0);
         assert(m_impl->m_iterations > 0);
 
         if(m_impl->m_result >= m_impl->m_threshold)
         {
+            double factor = m_impl->m_result / m_impl->m_threshold;
+            if(factor > 2.0)
+            {
+                // We seem to be running longer than needed
+                m_impl->m_iterations = (m_impl->m_iterations / factor) + 1;
+                assert(m_impl->m_iterations > 0);
+            }
+
             return true;
         }
 
@@ -111,9 +122,15 @@ namespace gauge
             return false;
         }
 
+
+
         // We did not get a valid measurement so we try to calculate
         // the number of iterations we need to hit the threshold
         double factor = m_impl->m_threshold / m_impl->m_result;
+
+        // We limit the growth of iteration by a factor of 10
+        factor = std::min(factor, 10.0);
+
         assert(factor > 1.0);
 
         // Adjust the number of iterations with the factor
