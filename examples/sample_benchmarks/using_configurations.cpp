@@ -1,5 +1,6 @@
 #include <gauge/gauge.h>
 #include <algorithm>
+#include <numeric>
 
 /// This test shows how you can create configurations
 /// for the benchmarks. This could be different string

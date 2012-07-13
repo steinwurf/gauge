@@ -5,6 +5,7 @@
 #include <memory>
 #include <map>
 #include <cstdint>
+#include <string>
 
 namespace gauge
 {
