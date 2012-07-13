@@ -122,10 +122,17 @@ namespace gauge
             }
 
         template<class T>
-        T get_value(const std::string &key)
+        T get_value(const std::string &key) const
             {
+                auto it = m_values.find(key);
+
+                // @todo: re-consider whether this is a good idea
+                //        maybe it is better to throw. Since somebody
+                //        might compile with NDEBUG
+                assert(it != m_values.end());
+
                 auto value = std::dynamic_pointer_cast< config_value<T> >(
-                    m_values[key]);
+                    it->second);
 
                 assert(value);
 
