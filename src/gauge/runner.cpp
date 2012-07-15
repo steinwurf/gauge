@@ -7,6 +7,10 @@ namespace gauge
 
     struct runner::impl
     {
+        /// Constructor
+        impl() : m_current_id(0)
+            {}
+
         /// The registered benchmarks
         std::map<uint32_t, benchmark_ptr> m_benchmarks;
 
