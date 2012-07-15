@@ -231,11 +231,9 @@ namespace gauge
 
             if(bench->accept_measurement())
             {
-                double m = bench->measurement();
                 uint32_t i = bench->iteration_count();
-                double r = m/i;
+                double r = bench->measurement();
 
-                result.m_measurements.push_back(m);
                 result.m_iterations.push_back(i);
                 result.m_results.push_back(r);
 
