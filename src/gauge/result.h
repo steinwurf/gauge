@@ -16,11 +16,8 @@ namespace gauge
     struct result
     {
 
-        /// The result per iteration i.e. m_measurements[0] / m_iterations[0]
+        /// The result per iteration
         std::vector<double> m_results;
-
-        /// The "raw" measurements for all iterations
-        std::vector<double> m_measurements;
 
         /// The number of iterations performed to obtain the
         /// corresponding result

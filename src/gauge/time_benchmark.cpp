@@ -76,9 +76,9 @@ namespace gauge
 
     void time_benchmark::stop()
     {
-        assert(m_impl->m_started);
-
         m_impl->m_stop = bc::high_resolution_clock::now();
+
+        assert(m_impl->m_started);
         m_impl->m_stopped = true;
 
         m_impl->m_result = static_cast<double>(
@@ -90,7 +90,9 @@ namespace gauge
 
     double time_benchmark::measurement()
     {
-        return m_impl->m_result;
+        assert(m_impl->m_iterations > 0);
+
+        return m_impl->m_result / m_impl->m_iterations;
     }
 
     bool time_benchmark::accept_measurement()

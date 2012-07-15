@@ -44,7 +44,7 @@ namespace gauge
         ///         completed
         bool is_done()
             {
-                return m_iteration_count > m_total_iterations;
+                return !(m_iteration_count < m_total_iterations);
             }
 
         /// Increments the iteration counter
