@@ -17,7 +17,7 @@ namespace gauge
 
         virtual void init();
 
-        virtual uint32_t iteration_count() const;
+        virtual uint64_t iteration_count() const;
 
         virtual void start();
 

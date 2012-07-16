@@ -50,29 +50,25 @@ protected:
 
 BENCHMARK_F(find_max_setup, FindMax, FindInList, 10)
 {
-    uint32_t max_value;
+    volatile uint32_t max_value;
 
     RUN{
         max_value = *std::max_element(m_list.begin(), m_list.end());
     }
 
     (void)max_value; // Suppress unused variable warning
-
-
 }
 
 
 BENCHMARK_F(find_max_setup, FindMax, FindInVector, 10)
 {
-    uint32_t max_value;
+    volatile uint32_t max_value;
 
     RUN{
         max_value = *std::max_element(m_vector.begin(), m_vector.end());
     }
 
     (void)max_value; // Suppress unused variable warning
-
-
 }
 
 

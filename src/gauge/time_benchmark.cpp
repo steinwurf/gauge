@@ -11,7 +11,7 @@ namespace gauge
 
         /// The number of iterations to run to get an
         /// acceptable result
-        uint32_t m_iterations;
+        uint64_t m_iterations;
 
         /// The threshold in microseconds before we accept
         /// a measurement
@@ -62,7 +62,7 @@ namespace gauge
         m_impl->m_stopped = false;
     }
 
-    uint32_t time_benchmark::iteration_count() const
+    uint64_t time_benchmark::iteration_count() const
     {
         return m_impl->m_iterations;
     }
@@ -120,6 +120,11 @@ namespace gauge
 
         if(m_impl->m_result == 0)
         {
+            // Check for overflow - are you sure you actually measure
+            // anything - it seems time is zero even with a very large
+            // number of iterations?
+            assert((m_impl->m_iterations * 2) > m_impl->m_iterations);
+
             // We did not measure long enough to get a
             // valid time duration so we double the number of
             // iterations
@@ -127,7 +132,6 @@ namespace gauge
             assert(m_impl->m_iterations > 0);
             return false;
         }
-
 
 
         // We did not get a valid measurement so we try to calculate

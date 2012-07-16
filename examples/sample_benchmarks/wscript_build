@@ -1,12 +1,9 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-extra_flags = []
-if bld.env.TOOLCHAIN != 'win32': extra_flags.append('-std=gnu++0x')
-
 bld.program(
     features = 'cxx',
     source   = bld.path.ant_glob('*.cpp'),
     target   = 'gauge_example',
-    cxxflags = bld.toolchain_cxx_flags() + extra_flags,
+    cxxflags = bld.toolchain_cxx_flags(),
     use = ['gauge'])

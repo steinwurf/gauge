@@ -46,7 +46,7 @@ namespace gauge
 
         /// For how many iterations should we loop
         /// @return the iteration count
-        virtual uint32_t iteration_count() const
+        virtual uint64_t iteration_count() const
             { return 1; };
 
         /// @return the number of configurations create for this
