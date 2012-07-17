@@ -21,7 +21,7 @@ namespace gauge
 
         /// The number of iterations performed to obtain the
         /// corresponding result
-        std::vector<uint32_t> m_iterations;
+        std::vector<uint64_t> m_iterations;
 
     };
 
