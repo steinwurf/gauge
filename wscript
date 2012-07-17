@@ -13,7 +13,6 @@ def recurse_helper(ctx, name):
         p = ctx.dependency_path(name)
         ctx.recurse(p)
 
-
 def options(opt):
     opt.load('toolchain_cxx')
     opt.load('dependency_bundle')

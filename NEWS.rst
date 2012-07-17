@@ -11,5 +11,5 @@ Latest (head of the master branch)
 1.0.0
 -----
 * Initial release
-
+* Tested on Linux, Mac and Windows
 
