@@ -235,7 +235,7 @@ namespace gauge
 
             if(bench->accept_measurement())
             {
-                uint32_t i = bench->iteration_count();
+                uint64_t i = bench->iteration_count();
                 double r = bench->measurement();
 
                 result.m_iterations.push_back(i);

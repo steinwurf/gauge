@@ -56,10 +56,10 @@ namespace gauge
     private:
 
         /// The current iteration count
-        uint32_t m_iteration_count;
+        uint64_t m_iteration_count;
 
         /// The total number of iterations to perform
-        uint32_t m_total_iterations;
+        uint64_t m_total_iterations;
 
         /// Pointer to the benchmark
         benchmark_ptr m_benchmark;
