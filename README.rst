@@ -4,11 +4,17 @@ Introduction
 gauge is a flexible C++ benchmarking tool.
 
 Dependencies
-----------
+------------
 * We rely on functionality from the Boost C++ libraries, currently the
   gauge build-tool will automatically download these dependencies.
 * We are migrating to C++11 and currently use a few features, you therefore
   have to supply the appropiate C++11 compiler switch when using gauge.
+
+Platforms
+---------
+We have tested gauge on various versions of Windows, Linux and Mac. You can
+see the status by selecting the cxx-gauge project on the Steinwurf `buildbot
+page <http://176.28.49.184:12344/>`_: 
 
 Build
 -----
