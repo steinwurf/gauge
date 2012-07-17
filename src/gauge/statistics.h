@@ -42,8 +42,15 @@ namespace gauge
         statistics s;
         s.m_mean = mean(begin, end);
 
-        s.m_max = *std::max_element(begin, end);
-        s.m_min = *std::min_element(begin, end);
+        typename Iterator::value_type max =
+            *std::max_element(begin, end);
+
+        typename Iterator::value_type min =
+            *std::min_element(begin, end);
+
+        // @todo do we have an issues with overflows here
+        s.m_max = static_cast<double>(max);
+        s.m_min = static_cast<double>(min);
 
         s.m_std_dev = 0;
         return s;
