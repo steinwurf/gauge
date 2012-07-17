@@ -176,14 +176,16 @@ namespace gauge
     };
 
 
+    inline std::ostream& operator<<(std::ostream &os, const config_set &cs)
+    {
+        cs.print(os);
+        return os;
+    }
+
+
 }
 
 
-inline std::ostream& operator<<(std::ostream &os, const gauge::config_set &cs)
-{
-    cs.print(os);
-    return os;
-}
 
 #endif
 

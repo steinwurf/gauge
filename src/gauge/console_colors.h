@@ -1,7 +1,9 @@
 /// Modified from Nick Bruun's Hayai C++ Benchmark library
 /// See LICENSE.rst
-#ifndef GAUGE_THIRD_PARTY_CONSOLE_COLORS_CONSOLE_COLORS_H
-#define GAUGE_THIRD_PARTY_CONSOLE_COLORS_CONSOLE_COLORS_H
+#ifndef GAUGE_CONSOLE_COLORS_H
+#define GAUGE_CONSOLE_COLORS_H
+
+#include <iostream>
 
 namespace gauge
 {
@@ -16,45 +18,44 @@ namespace gauge
         {
             /// Default console color.
             /// Used for resets.
-            textdefault = 0,
+            textdefault,
 
             /// Black.
             /// @warning Avoid using black unless it is absolutely necessary.
-            textblack = 30,
+            textblack,
 
             /// Blue.
-            textblue = 34,
+            textblue,
 
             /// Green.
-            textgreen = 32,
+            textgreen,
 
             /// cyan.
-            textcyan = 36,
+            textcyan,
 
             /// red.
-            textred = 31,
+            textred,
 
             /// purple.
-            textpurple = 35,
+            textpurple,
 
             /// Yellow.
-            textyellow = 33,
+            textyellow,
 
             /// White.
             /// @warning Avoid using white unless it is absolutely necessary.
-            textwhite = 37
+            textwhite
         };
     };
+
+    /// Output operator for writing a color to the terminal. The function
+    /// will try to determine whether any terminal color support exists
+    /// @param stream the output stream
+    /// @param color the selected color
+    std::ostream& operator <<(std::ostream& stream,
+                              const gauge::console::textcolor& color);
 }
 
-inline std::ostream& operator <<(std::ostream& stream,
-                                 const gauge::console::textcolor& color)
-{
-    if (color == gauge::console::textdefault)
-        return stream << "\033[m";
-    else
-        return stream << "\033[0;" << int(color) << "m";
-}
 
 #endif
 
