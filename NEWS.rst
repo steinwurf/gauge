@@ -8,6 +8,10 @@ Latest (head of the master branch)
 ----------------------------------
 * TBD
 
+2.0.0
+-----
+* Using .hpp extension instead of .h
+
 1.0.0
 -----
 * Initial release
