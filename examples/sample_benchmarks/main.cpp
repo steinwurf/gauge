@@ -1,8 +1,6 @@
-#include <gauge/gauge.h>
-
-#include <gauge/python_printer.h>
-#include <gauge/console_printer.h>
-
+#include <gauge/gauge.hpp>
+#include <gauge/python_printer.hpp>
+#include <gauge/console_printer.hpp>
 
 int main(int argc, const char* argv[])
 {
@@ -15,5 +13,4 @@ int main(int argc, const char* argv[])
     gauge::runner::run_benchmarks(argc, argv);
     return 0;
 }
-
 

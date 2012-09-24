@@ -1,5 +1,5 @@
-#ifndef GAUGE_CONFIG_SET_H
-#define GAUGE_CONFIG_SET_H
+#ifndef GAUGE_CONFIG_SET_HPP
+#define GAUGE_CONFIG_SET_HPP
 
 #include <iostream>
 #include <memory>

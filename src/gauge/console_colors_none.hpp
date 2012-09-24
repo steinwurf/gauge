@@ -1,9 +1,10 @@
 /// Modified from Nick Bruun's Hayai C++ Benchmark library
 /// See LICENSE.rst
-#ifndef GAUGE_CONSOLE_COLORS_NONE_H
-#define GAUGE_CONSOLE_COLORS_NONE_H
 
-#include "console_colors.h"
+#ifndef GAUGE_CONSOLE_COLORS_NONE_HPP
+#define GAUGE_CONSOLE_COLORS_NONE_HPP
+
+#include "console_colors.hpp"
 
 namespace gauge
 {
@@ -20,7 +21,5 @@ namespace gauge
     };
 }
 
-
 #endif
-
 

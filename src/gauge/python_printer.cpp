@@ -1,8 +1,7 @@
-#include "python_printer.h"
+#include "python_printer.hpp"
 
 namespace gauge
 {
-
     pylist::pylist()
         : m_first(true)
     {}
@@ -70,7 +69,5 @@ namespace gauge
         pyprint(m_out, m_list);
         m_out.close();
     }
-
 }
-
 

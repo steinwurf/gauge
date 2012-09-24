@@ -1,5 +1,6 @@
-#include "time_benchmark.h"
 #include <boost/chrono.hpp>
+
+#include "time_benchmark.hpp"
 
 namespace gauge
 {
@@ -114,7 +115,6 @@ namespace gauge
 
                 assert(m_impl->m_iterations > 0);
             }
-
             return true;
         }
 
@@ -156,9 +156,5 @@ namespace gauge
     {
         return "microseconds";
     }
-
 }
-
-
-
 

@@ -1,18 +1,18 @@
 /// Modified from Nick Bruun's Hayai C++ Benchmark library
 /// See LICENSE.rst
-#ifndef GAUGE_CONSOLE_COLORS_UNIX_H
-#define GAUGE_CONSOLE_COLORS_UNIX_H
+
+#ifndef GAUGE_CONSOLE_COLORS_UNIX_HPP
+#define GAUGE_CONSOLE_COLORS_UNIX_HPP
 
 #include <unistd.h>
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
 
-#include "console_colors.h"
+#include "console_colors.hpp"
 
 namespace gauge
 {
-
     /// Makes it possible to disable terminal colors
     /// by running:
     ///
@@ -70,7 +70,5 @@ namespace gauge
     };
 }
 
-
 #endif
-
 

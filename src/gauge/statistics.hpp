@@ -1,12 +1,11 @@
-#ifndef GAUGE_STATISTICS_H
-#define GAUGE_STATISTICS_H
+#ifndef GAUGE_STATISTICS_HPP
+#define GAUGE_STATISTICS_HPP
 
 #include <algorithm>
 #include <numeric>
 
 namespace gauge
 {
-
     /// The computed statistics for a specific
     /// result
     struct statistics
@@ -22,7 +21,6 @@ namespace gauge
 
         /// The standard deviation
         double m_std_dev;
-
     };
 
     /// Calculates the mean of a sequence

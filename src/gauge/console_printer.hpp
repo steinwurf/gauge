@@ -1,15 +1,14 @@
-#ifndef GAUGE_CONSOLE_PRINTER_H
-#define GAUGE_CONSOLE_PRINTER_H
+#ifndef GAUGE_CONSOLE_PRINTER_HPP
+#define GAUGE_CONSOLE_PRINTER_HPP
 
 #include <iomanip>
 
-#include "printer.h"
-#include "statistics.h"
-#include "console_colors.h"
+#include "printer.hpp"
+#include "statistics.hpp"
+#include "console_colors.hpp"
 
 namespace gauge
 {
-
     /// A console printer which outputs the progress of the
     /// benchmarks to the console (std::cout)
     class console_printer : public printer
@@ -29,8 +28,6 @@ namespace gauge
                           " benchmarks.")
                           << std::endl; */
         }
-
-
 
         void benchmark_result(const benchmark &info,
                               const result &result)
@@ -101,10 +98,7 @@ namespace gauge
                           << std::endl;*/
         }
 };
-
-
 }
 
 #endif
-
 

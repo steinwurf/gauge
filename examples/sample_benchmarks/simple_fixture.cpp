@@ -1,7 +1,7 @@
-#include <gauge/gauge.h>
-
 #include <algorithm>
 #include <list>
+
+#include <gauge/gauge.hpp>
 
 class find_max_setup : public gauge::time_benchmark
 {
@@ -70,7 +70,4 @@ BENCHMARK_F(find_max_setup, FindMax, FindInVector, 10)
 
     (void)max_value; // Suppress unused variable warning
 }
-
-
-
 

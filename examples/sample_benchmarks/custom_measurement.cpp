@@ -1,5 +1,4 @@
-#include <gauge/gauge.h>
-
+#include <gauge/gauge.hpp>
 
 class benchmark_me
 {
@@ -20,7 +19,6 @@ public:
         }
 
     uint32_t m_count;
-
 };
 
 /// A custom benchmark where we do not measure time
@@ -70,7 +68,5 @@ BENCHMARK_F(custom_measurement, BenchmarkMe, RunCount, 100)
         m_benchmark_me.run_this();
     }
 }
-
-
 
 

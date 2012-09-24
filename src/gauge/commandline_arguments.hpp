@@ -1,11 +1,10 @@
-#ifndef GAUGE_COMMANDLINE_ARGUMENTS_H
-#define GAUGE_COMMANDLINE_ARGUMENTS_H
+#ifndef GAUGE_COMMANDLINE_ARGUMENTS_HPP
+#define GAUGE_COMMANDLINE_ARGUMENTS_HPP
 
 #include <boost/program_options.hpp>
 
 namespace gauge
 {
-
     namespace po = boost::program_options;
 
     /// Create a options map

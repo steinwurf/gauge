@@ -1,11 +1,11 @@
-#include "console_colors.h"
+#include "console_colors.hpp"
 
 // The preprocessor defines are taken from
 // http://predef.sourceforge.net
 #if defined(__unix__)
-  #include "console_colors_unix.h"
+  #include "console_colors_unix.hpp"
 #else
-  #include "console_colors_none.h"
+  #include "console_colors_none.hpp"
 #endif
 
 // @todo implement colors for windows
@@ -22,7 +22,5 @@ namespace gauge
         return stream;
     }
 }
-
-
 
 

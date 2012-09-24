@@ -1,10 +1,10 @@
-#include "runner.h"
-#include "commandline_arguments.h"
 #include <cassert>
+
+#include "runner.hpp"
+#include "commandline_arguments.hpp"
 
 namespace gauge
 {
-
     struct runner::impl
     {
         /// Constructor
@@ -259,8 +259,6 @@ namespace gauge
     {
         return m_impl->m_printers;
     }
-
 }
-
 
 

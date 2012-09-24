@@ -1,4 +1,4 @@
-#include <gauge/gauge.h>
+#include <gauge/gauge.hpp>
 
 void max_array(double* x, double* y, double* z, uint32_t elements)
 {
@@ -61,8 +61,5 @@ BENCHMARK(SimpleRun, MaxArrayOpt, 100)
     RUN{
         max_array_opt(&x[0], &y[0], &z[0], elements);
     }
-
 }
-
-
 

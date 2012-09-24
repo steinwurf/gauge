@@ -1,6 +1,7 @@
-#include <gauge/gauge.h>
-#include <gauge/console_printer.h>
 #include <vector>
+
+#include <gauge/gauge.hpp>
+#include <gauge/console_printer.hpp>
 
 BENCHMARK(MyTest, RunThis, 100)
 {
@@ -27,3 +28,4 @@ int main(int argc, const char* argv[])
     gauge::runner::run_benchmarks(argc, argv);
     return 0;
 }
+

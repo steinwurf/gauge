@@ -1,7 +1,7 @@
-#include <gauge/gauge.h>
 #include <list>
 #include <vector>
 
+#include <gauge/gauge.hpp>
 
 template<class Container>
 uint32_t max_container(const Container &one)
@@ -34,20 +34,15 @@ uint32_t setup_and_run()
     return max_container(c);
 }
 
-
 BENCHMARK(RunOutside, VectorMaxValue, 10)
 {
     uint32_t max = setup_and_run< std::vector<uint32_t> >();
     (void)max;
 }
 
-
 BENCHMARK(RunOutside, ListMaxValue, 10)
 {
     uint32_t max = setup_and_run< std::list<uint32_t> >();
     (void)max;
 }
-
-
-
 

@@ -1,12 +1,11 @@
-#ifndef GAUGE_ITERATION_CONTROLLER_H
-#define GAUGE_ITERATION_CONTROLLER_H
+#ifndef GAUGE_ITERATION_CONTROLLER_HPP
+#define GAUGE_ITERATION_CONTROLLER_HPP
 
-#include "benchmark.h"
-#include "runner.h"
+#include "benchmark.hpp"
+#include "runner.hpp"
 
 namespace gauge
 {
-
     /// Iteration controller used by the benchmarks to
     /// control the measurement loop.
     class iteration_controller
@@ -63,11 +62,8 @@ namespace gauge
 
         /// Pointer to the benchmark
         benchmark_ptr m_benchmark;
-
     };
-
 }
 
 #endif
-
 

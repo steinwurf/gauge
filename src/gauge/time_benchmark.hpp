@@ -1,12 +1,12 @@
-#ifndef GAUGE_TIME_BENCHMARK_H
-#define GAUGE_TIME_BENCHMARK_H
+#ifndef GAUGE_TIME_BENCHMARK_HPP
+#define GAUGE_TIME_BENCHMARK_HPP
 
-#include "benchmark.h"
 #include <memory>
+
+#include "benchmark.hpp"
 
 namespace gauge
 {
-
     /// Base class for benchmarks measuring time
     class time_benchmark : public benchmark
     {
@@ -37,5 +37,4 @@ namespace gauge
 }
 
 #endif
-
 

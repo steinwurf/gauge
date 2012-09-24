@@ -1,8 +1,8 @@
-#ifndef GAUGE_PRINTER_H
-#define GAUGE_PRINTER_H
+#ifndef GAUGE_PRINTER_HPP
+#define GAUGE_PRINTER_HPP
 
-#include "benchmark.h"
-#include "result.h"
+#include "benchmark.hpp"
+#include "result.hpp"
 
 namespace gauge
 {
@@ -35,7 +35,6 @@ namespace gauge
         virtual void end_benchmark(/*const gauge_info &info*/)
             {}
     };
-
 }
 
 #endif

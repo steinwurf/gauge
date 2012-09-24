@@ -1,17 +1,15 @@
-#ifndef GAUGE_RUNNER_H
-#define GAUGE_RUNNER_H
+#ifndef GAUGE_RUNNER_HPP
+#define GAUGE_RUNNER_HPP
 
 #include <vector>
 #include <memory>
 
-#include "benchmark.h"
-#include "result.h"
-#include "printer.h"
+#include "benchmark.hpp"
+#include "result.hpp"
+#include "printer.hpp"
 
 namespace gauge
 {
-
-
     /// The gauge benchmark runner. Responsible for
     /// invoking the registered benchmarks.
     class runner
@@ -99,13 +97,8 @@ namespace gauge
 
         struct impl;
         std::unique_ptr<impl> m_impl;
-
     };
-
-
 }
 
-
 #endif
-
 

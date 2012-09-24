@@ -1,6 +1,7 @@
-#include <gauge/gauge.h>
 #include <algorithm>
 #include <numeric>
+
+#include <gauge/gauge.hpp>
 
 /// This test shows how you can create configurations
 /// for the benchmarks. This could be different string
@@ -57,7 +58,4 @@ BENCHMARK_F(using_configurations, Stdlib, Accumulate, 10)
     }
     (void)sum; // Suppress warning about unused variable
 }
-
-
-
 

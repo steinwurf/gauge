@@ -1,13 +1,13 @@
 /// Modified from Nick Bruun's Hayai C++ Benchmark library
 /// See LICENSE.rst
-#ifndef GAUGE_CONSOLE_COLORS_H
-#define GAUGE_CONSOLE_COLORS_H
+
+#ifndef GAUGE_CONSOLE_COLORS_HPP
+#define GAUGE_CONSOLE_COLORS_HPP
 
 #include <iostream>
 
 namespace gauge
 {
-
     /// Static helper class for outputting to a terminal/console.
     class console
     {
@@ -58,5 +58,4 @@ namespace gauge
 
 
 #endif
-
 

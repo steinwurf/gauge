@@ -1,10 +1,10 @@
-#ifndef GAUGE_GAUGE_H
-#define GAUGE_GAUGE_H
+#ifndef GAUGE_GAUGE_HPP
+#define GAUGE_GAUGE_HPP
 
-#include "iteration_controller.h"
-#include "runner.h"
-#include "benchmark.h"
-#include "time_benchmark.h"
+#include "iteration_controller.hpp"
+#include "runner.hpp"
+#include "benchmark.hpp"
+#include "time_benchmark.hpp"
 
 #define BENCHMARK_CLASS_NAME_(testcase_name, benchmark_name)     \
     testcase_name ## _ ## benchmark_name ## _Benchmark

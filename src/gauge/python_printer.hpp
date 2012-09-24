@@ -1,5 +1,5 @@
-#ifndef GAUGE_PYTHON_PRINTER_H
-#define GAUGE_PYTHON_PRINTER_H
+#ifndef GAUGE_PYTHON_PRINTER_HPP
+#define GAUGE_PYTHON_PRINTER_HPP
 
 #include <iostream>
 #include <string>
@@ -7,13 +7,12 @@
 #include <cassert>
 #include <fstream>
 
-#include "printer.h"
-#include "benchmark.h"
-#include "config_set.h"
+#include "printer.hpp"
+#include "benchmark.hpp"
+#include "config_set.hpp"
 
 namespace gauge
 {
-
     template<class T>
     inline void pyprint(std::ostream &os, const T &v)
     {

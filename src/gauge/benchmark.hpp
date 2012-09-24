@@ -1,14 +1,13 @@
-#ifndef GAUGE_BENCHMARK_H
-#define GAUGE_BENCHMARK_H
+#ifndef GAUGE_BENCHMARK_HPP
+#define GAUGE_BENCHMARK_HPP
 
 #include <cassert>
 #include <vector>
 
-#include "config_set.h"
+#include "config_set.hpp"
 
 namespace gauge
 {
-
     /// Base class for all benchmark.
     class benchmark
     {
@@ -134,12 +133,8 @@ namespace gauge
 
         /// Stores the different configurations
         std::vector<config_set> m_configurations;
-
     };
-
-
 }
 
 #endif
-
 
