@@ -1,4 +1,5 @@
 #include <gauge/gauge.hpp>
+#include <cstdlib>
 
 void max_array(double* x, double* y, double* z, uint32_t elements)
 {
