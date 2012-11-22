@@ -1,4 +1,5 @@
 #include <gauge/gauge.hpp>
+#include <cstdlib>
 
 class benchmark_me
 {
