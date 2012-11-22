@@ -5,5 +5,4 @@ bld.program(
     features = 'cxx',
     source   = bld.path.ant_glob('*.cpp'),
     target   = 'gauge_example',
-    cxxflags = bld.toolchain_cxx_flags(),
     use = ['gauge'])
