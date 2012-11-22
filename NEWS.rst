@@ -4,9 +4,13 @@ News for gauge
 This file lists the major changes between versions. For a more detailed list
 of every change, see the Git log.
 
-Latest (head of the master branch)
-----------------------------------
-* TBD
+Latest
+------
+* tba
+
+3.0.0
+-----
+* Switched to mkspec enabled builds
 
 2.0.0
 -----
