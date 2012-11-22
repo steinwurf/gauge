@@ -1,5 +1,6 @@
 #include <list>
 #include <vector>
+#include <cstdlib>
 
 #include <gauge/gauge.hpp>
 
