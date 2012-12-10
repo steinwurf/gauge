@@ -1,6 +1,6 @@
 Introduction
 ------------
-
+ 
 gauge is a flexible C++ benchmarking tool.
 
 Dependencies
