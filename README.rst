@@ -14,7 +14,7 @@ Platforms
 ---------
 We have tested gauge on various versions of Windows, Linux and Mac. You can
 see the status by selecting the cxx-gauge project on the Steinwurf `buildbot
-page <http://176.28.49.184:12344/>`_: 
+page <http://176.28.49.184:12344/>`_:
 
 Build
 -----
@@ -91,7 +91,7 @@ be executed several times (we refer to this as the number of iterations).
 When gauge is satisfied with the measurement we exit the run loop. For every
 ``BENCHMARK`` we may only call ``RUN`` once.
 
-Using ``g++`` the example code may be compiled as::
+Using ``g++`` the example code may be compiled as:
 ::
   g++ main.cpp -o benchmark --std=c++0x -I../path_to_gauge/ -L../path_to_libguage -lgauge -L../path_to_libboostxyz -lboost_chrono -lboost_program_options -lboost_system -lrt
 
