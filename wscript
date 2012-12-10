@@ -15,41 +15,35 @@ def recurse_helper(ctx, name):
         ctx.recurse(p)
 
 def options(opt):
-    opt.load('waf_unit_test_v2')
-    opt.load('wurf_cxx_mkspec')
-    opt.load('dependency_bundle')
 
-    import waflib.extras.dependency_bundle as bundle
-    import waflib.extras.dependency_resolve as resolve
+    import waflib.extras.wurf_dependency_bundle as bundle
+    import waflib.extras.wurf_dependency_resolve as resolve
+
+    bundle.add_dependency(opt,
+        resolve.ResolveGitMajorVersion(
+            name='waf-tools',
+            git_repository = 'git://github.com/steinwurf/external-waf-tools.git',
+            major_version = 1))
 
     bundle.add_dependency(opt,
         resolve.ResolveGitMajorVersion(
             name = 'boost',
             git_repository = 'git://github.com/steinwurf/external-boost.git',
-            major_version = 3))
+            major_version = 4))
 
-    bundle.add_dependency(opt,
-        resolve.ResolveGitMajorVersion(
-            name='mkspec',
-            git_repository = 'git://github.com/steinwurf/external-waf-mkspec.git',
-            major_version = 2))
-
+    opt.load('wurf_dependency_bundle')
+    opt.load('wurf_tools')
 
 def configure(conf):
 
     if conf.is_toplevel():
-        conf.load('dependency_bundle')
-        conf.load('waf_unit_test_v2')
-        conf.load('wurf_cxx_mkspec')
+
+        conf.load('wurf_dependency_bundle')
+        conf.load_external_tool('mkspec', 'wurf_cxx_mkspec_tool')
 
         recurse_helper(conf, 'boost')
 
 def build(bld):
-
-    if bld.is_toplevel():
-
-        recurse_helper(bld, 'boost')
-        bld.recurse('examples/sample_benchmarks')
 
     bld.stlib(features = 'cxx',
 	      source   = bld.path.ant_glob('src/gauge/*.cpp'),
@@ -57,5 +51,8 @@ def build(bld):
               export_includes = ['src'],
               use = ['boost_chrono', 'boost_system', 'boost_program_options'])
 
+    if bld.is_toplevel():
+        recurse_helper(bld, 'boost')
 
+        bld.recurse('examples/sample_benchmarks')
 
