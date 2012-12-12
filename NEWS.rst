@@ -6,7 +6,11 @@ of every change, see the Git log.
 
 Latest
 ------
-* tba
+* tbd
+
+4.0.0
+-----
+* Updated waf to use new external waf tools repository
 
 3.0.0
 -----
