@@ -1,27 +1,38 @@
-#ifndef GAUGE_RESULT_HPP
-#define GAUGE_RESULT_HPP
-
-#include <vector>
-#include <cstdint>
+#pargma once
 
 namespace gauge
 {
     /// Struct containing the benchmark results from a single
-    /// test run.
-    ///
-    /// The results is give so that m_results[0] denotes the
-    /// result obtained for run 0 and m_iterations[0] gives
-    /// number of iterations performed to obtain m_results[0]
-    struct result
+    /// run.
+    struct measurement
     {
+
         /// The result per iteration
-        std::vector<double> m_results;
+        boost::any m_result;
 
         /// The number of iterations performed to obtain the
         /// corresponding result
-        std::vector<uint64_t> m_iterations;
+        uint64_t m_iterations;
+
     };
+
+
+    struct measurement_collector
+    {
+
+
+
+        /// The name of this result - describes the result type e.g.
+        /// "time" or "throughput"
+        std::string m_name;
+
+        /// The unit of this result e.g. seconds or MB/s
+        std::string m_unit;
+
+        /// The collection of measurements
+        std::vector<measurement> m_measurements;
+
+
+    };
+
 }
-
-#endif
-

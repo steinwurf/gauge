@@ -5,7 +5,6 @@
 #include <memory>
 
 #include "benchmark.hpp"
-#include "result.hpp"
 #include "printer.hpp"
 
 namespace gauge

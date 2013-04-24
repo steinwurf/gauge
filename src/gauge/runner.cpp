@@ -1,7 +1,9 @@
 #include <cassert>
 
 #include "runner.hpp"
+#include "results.hpp"
 #include "commandline_arguments.hpp"
+
 
 namespace gauge
 {
@@ -89,7 +91,8 @@ namespace gauge
     void runner::run(int argc, const char *argv[])
     {
 
-        try{
+        try
+        {
             m_impl->m_options = parse_commandline(argc, argv);
         }
         catch(const std::exception &e)
@@ -102,14 +105,17 @@ namespace gauge
             return;
 
         // Notify all printers that we are starting
-        for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
+        for(auto it = m_impl->m_printers.begin();
+            it != m_impl->m_printers.end(); ++it)
+        {
             (*it)->start_benchmark();
-
+        }
         // Check whether we should run all tests or whether we
         // should use a filter
         if(m_impl->m_options.count("gauge_filter"))
         {
-            run_filtered(m_impl->m_options["gauge_filter"].as<std::string>());
+            auto f = m_impl->m_options["gauge_filter"].as<std::string>();
+            run_filtered(f);
         }
         else
         {
@@ -117,15 +123,19 @@ namespace gauge
         }
 
         // Notify all printers that we are done
-        for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
+        for(auto it = m_impl->m_printers.begin();
+            it != m_impl->m_printers.end(); ++it)
+        {
             (*it)->end_benchmark();
+        }
 
     }
 
 
     void runner::run_all()
     {
-        for(auto it = m_impl->m_benchmarks.begin(); it != m_impl->m_benchmarks.end(); ++it)
+        for(auto it = m_impl->m_benchmarks.begin();
+            it != m_impl->m_benchmarks.end(); ++it)
         {
             benchmark_ptr bench = it->second;
             assert(bench);
@@ -151,11 +161,16 @@ namespace gauge
         std::getline(sstream, benchmark_name);
 
         if(!sstream)
+        {
             throw std::runtime_error("Error malformed gauge_filter"
                                      " (example MyTest.*)");
+        }
 
-        if(m_impl->m_testcases.find(testcase_name) == m_impl->m_testcases.end())
+        if(m_impl->m_testcases.find(testcase_name) ==
+           m_impl->m_testcases.end())
+        {
             throw std::runtime_error("Error testcase not found");
+        }
 
         benchmark_map &benchmarks = m_impl->m_testcases[testcase_name];
 
@@ -170,7 +185,9 @@ namespace gauge
         {
 
             if(benchmarks.find(benchmark_name) == benchmarks.end())
+            {
                 throw std::runtime_error("Error benchmark not found");
+            }
 
             benchmark_ptr bench = benchmarks.find(benchmark_name)->second;
             run_benchmark_configurations(bench);
@@ -211,7 +228,7 @@ namespace gauge
             bench->tear_down();
         }
 
-        result result;
+        results results;
 
         uint32_t runs = 0;
 
@@ -238,16 +255,17 @@ namespace gauge
                 uint64_t i = bench->iteration_count();
                 double r = bench->measurement();
 
-                result.m_iterations.push_back(i);
-                result.m_results.push_back(r);
+                results.m_iterations.push_back(i);
+                results.m_results.push_back(r);
 
                 ++run;
             }
         }
 
-        for(auto it = m_impl->m_printers.begin(); it != m_impl->m_printers.end(); ++it)
+        for(auto it = m_impl->m_printers.begin();
+            it != m_impl->m_printers.end(); ++it)
         {
-            (*it)->benchmark_result(*bench, result);
+            (*it)->benchmark_result(*bench, results);
         }
 
         m_impl->m_current_id = 0;

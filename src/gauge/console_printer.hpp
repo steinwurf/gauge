@@ -30,7 +30,7 @@ namespace gauge
         }
 
         void benchmark_result(const benchmark &info,
-                              const result &result)
+                              const results &result)
         {
             // Describe the beginning of the run.
             std::cout << std::fixed << console::textgreen << "[ RUN      ]"

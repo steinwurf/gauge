@@ -39,11 +39,11 @@ namespace gauge
         : m_filename(filename)
     { }
 
-    void python_printer::start_benchmark(/*const gauge_info &infouint32_t benchmarks*/)
+    void python_printer::start_benchmark()
     { }
 
     void python_printer::benchmark_result(const benchmark &info,
-                                          const result &result)
+                                          const results &result)
     {
         pydict benchmark_dict;
 
@@ -62,7 +62,7 @@ namespace gauge
         m_list.add(benchmark_dict);
     }
 
-    void python_printer::end_benchmark(/*const benchmark &info*/)
+    void python_printer::end_benchmark()
     {
         m_out.open(m_filename, std::ios::trunc);
         m_out << "results = ";

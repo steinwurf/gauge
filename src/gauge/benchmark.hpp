@@ -4,10 +4,21 @@
 #include <cassert>
 #include <vector>
 
+#include <boost/any.hpp>
+
 #include "config_set.hpp"
 
 namespace gauge
 {
+
+    // struct measurement_result
+    // {
+    //     std::string m_name;
+    //     std::string m_unit;
+    //     boost::any m_value;
+    // };
+
+
     /// Base class for all benchmark.
     class benchmark
     {

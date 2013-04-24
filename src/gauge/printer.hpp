@@ -1,8 +1,7 @@
-#ifndef GAUGE_PRINTER_HPP
-#define GAUGE_PRINTER_HPP
+#pragma once
 
 #include "benchmark.hpp"
-#include "result.hpp"
+#include "results.hpp"
 
 namespace gauge
 {
@@ -28,7 +27,7 @@ namespace gauge
         /// Called when a result from a benchmark is ready
         /// @param result the benchmark results
         virtual void benchmark_result(const benchmark &/*info*/,
-                                      const result &/*result*/)
+                                      const results &/*result*/)
             {}
 
         /// Called when the benchmark program is finished
@@ -36,6 +35,4 @@ namespace gauge
             {}
     };
 }
-
-#endif
 
