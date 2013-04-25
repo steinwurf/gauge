@@ -1,0 +1,8 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+bld.program(
+    features = 'cxx test',
+    source   = ['gauge_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
+    target   = 'gauge_tests',
+    use = ['gauge', 'gtest', 'boost_includes'])
