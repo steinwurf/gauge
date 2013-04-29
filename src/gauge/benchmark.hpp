@@ -7,6 +7,7 @@
 #include <boost/any.hpp>
 
 #include "config_set.hpp"
+#include "commandline_arguments.hpp"
 
 namespace gauge
 {
@@ -26,23 +27,27 @@ namespace gauge
 
         /// @param benchmark_id sets the benchmark id
         void set_id(uint32_t benchmark_id)
-            {
-                m_id = benchmark_id;
-            }
+        {
+            m_id = benchmark_id;
+        }
 
         /// @return the benchmark id
         uint32_t id() const
-            {
-                return m_id;
-            }
+        {
+            return m_id;
+        }
+
+        /// Add options to the available commandline argurments
+        virtual void add_options(commandline_arguements& /*options*/)
+        { }
 
         /// @return the test case name
         virtual std::string testcase_name() const
-            { return "unknown"; }
+        { return "unknown"; }
 
         /// @return the name of the benchmark in a test case
         virtual std::string benchmark_name() const
-            { return "unknown"; }
+        { return "unknown"; }
 
         /// @todo: consider to handle this differently since
         /// we now allow the user to override the number of
@@ -57,49 +62,49 @@ namespace gauge
         /// For how many iterations should we loop
         /// @return the iteration count
         virtual uint64_t iteration_count() const
-            { return 1; };
+        { return 1; };
 
         /// @return the number of configurations create for this
         ///         benchmark
         uint32_t configuration_count() const
-            { return m_configurations.size(); }
+        { return m_configurations.size(); }
 
         /// @return true if the benchmark has configurations
         bool has_configurations() const
-            { return configuration_count() > 0; }
+        { return configuration_count() > 0; }
 
         /// Updates the configuration index
         /// @param config_index, the new configuration index
         void set_current_configuration(uint32_t config_index)
-            {
-                assert(config_index < configuration_count());
-                m_config_index = config_index;
-            }
+        {
+            assert(config_index < configuration_count());
+            m_config_index = config_index;
+        }
 
         /// Updates the configuration index
         /// @param config_index, the new configuration index
         void add_configuration(const config_set &config)
-            {
-                m_configurations.push_back(config);
-            }
+        {
+            m_configurations.push_back(config);
+        }
 
         /// @return the current configuration index
         uint32_t current_configuration() const
-            {
-                assert(has_configurations());
-                return m_config_index;
-            }
+        {
+            assert(has_configurations());
+            return m_config_index;
+        }
 
         /// @return the current configuration set if this
         ///         function is not overridden by a sub-class
         ///         a default config_set is returned
         config_set get_current_configuration() const
-            {
-                assert(has_configurations());
-                assert(m_config_index < m_configurations.size());
+        {
+            assert(has_configurations());
+            assert(m_config_index < m_configurations.size());
 
-                return m_configurations[m_config_index];
-            }
+            return m_configurations[m_config_index];
+        }
 
         /// Starts a measurement
         virtual void start() = 0;
@@ -131,7 +136,7 @@ namespace gauge
         /// Called once after every test run. Allows a user to
         /// cleanup resources in between benchmark runs.
         virtual void tear_down()
-            {}
+        {}
 
     private:
 

@@ -5,7 +5,6 @@
 namespace gauge
 {
 
-    ///
     class output
     {
     public:
@@ -18,9 +17,9 @@ namespace gauge
 
         struct impl
         {
-            virtual void format_(uint64_t) = 0;
-            virtual void format_(uint32_t) = 0;
-            virtual void format_(double) = 0;
+            virtual void write_(uint64_t) = 0;
+            virtual void write_(uint32_t) = 0;
+            virtual void write_(double) = 0;
         };
 
         template<class T>
@@ -30,19 +29,19 @@ namespace gauge
                 : m_t(t)
             { }
 
-            void format_(uint32_t v)
+            void write_(uint32_t v)
             {
-                format(m_t, v);
+                write(m_t, v);
             }
 
-            void format_(uint64_t v)
+            void write_(uint64_t v)
             {
-                format(m_t, v);
+                write(m_t, v);
             }
 
-            void format_(double v)
+            void write_(double v)
             {
-                format(m_t, v);
+                write(m_t, v);
             }
 
 
@@ -53,9 +52,9 @@ namespace gauge
         };
 
         template<class U>
-        friend void format(output &o, U v)
+        friend void write(output &o, U v)
         {
-            o.m_impl->format_(v);
+            o.m_impl->write_(v);
         }
 
         std::unique_ptr<impl> m_impl;
@@ -65,22 +64,33 @@ namespace gauge
 
     /// Struct containing the benchmark results from a single
     /// run.
-    // template<class T>
-    // struct measurement
-    // {
+    template<class T>
+    struct result
+    {
 
-    //     /// The result per iteration
-    //     T m_result;
+        /// Constructor
+        result(const T &value, uint64_t iterations)
+            : m_value(value), m_iterations(iterations)
+        { }
 
-    //     /// The number of iterations performed to obtain the
-    //     /// corresponding result
-    //     uint64_t m_iterations;
+        /// The result per iteration
+        T m_value;
 
-    // };
+        /// The number of iterations performed to obtain the
+        /// corresponding result
+        uint64_t m_iterations;
+
+    };
 
     template<class T>
     struct measurement_data
     {
+
+        /// Add value
+        void add_result(T value, uint64_t iterations)
+        {
+            m_measurements.push_back(result<T>(value, iterations));
+        }
 
         /// The name of this result - describes the result type e.g.
         /// "time" or "throughput"
@@ -90,18 +100,28 @@ namespace gauge
         std::string m_unit;
 
         /// The collection of measurements
-        std::vector<T> m_measurements;
-
-        /// The number of iterations per measurement
-        std::vector<uint64_t> m_iterations;
+        std::vector< result<T> > m_measurements;
 
     };
 
     template<class T>
-    void mean(measurement_data<T> &m, output &out)
+    void write_mean(output &out, measurement_data<T> &m)
     {
-        format(out, m.m_measurements.size());
+        uint32_t size = m.m_measurements.size();
+
+        double sum = 0.0;
+        for(auto& v : m.m_measurements)
+            sum += (double) v.m_value;
+
+        write(out, sum / size);
     }
+
+    template<class T>
+    void write_max(output &out, measurement_data<T> &m)
+    {
+        write(out, 100U);
+    }
+
 
     class measurement
     {
@@ -114,7 +134,8 @@ namespace gauge
 
         struct impl
         {
-            virtual void mean_(output&) = 0;
+            virtual void write_mean_(output&) = 0;
+            virtual void write_max_(output&) = 0;
         };
 
         template<class T>
@@ -124,10 +145,16 @@ namespace gauge
                 : m_t(t)
             { }
 
-            void mean_(output &o)
+            void write_mean_(output &o)
             {
-                mean(m_t, o);
+                write_mean(o, m_t);
             }
+
+            void write_max_(output &o)
+            {
+                write_max(o, m_t);
+            }
+
 
         private:
 
@@ -135,14 +162,49 @@ namespace gauge
 
         };
 
-        friend void mean(measurement &m, output &o)
+        friend void write_mean(output &o, measurement &m)
         {
-            m.m_impl->mean_(o);
+            m.m_impl->write_mean_(o);
         }
+
+        friend void write_max(output &o, measurement &m)
+        {
+            m.m_impl->write_max_(o);
+        }
+
 
         std::unique_ptr<impl> m_impl;
 
     };
+
+    struct mean
+    {
+        mean(measurement &m)
+            : m_m(m)
+        { }
+
+        measurement &m_m;
+    };
+
+    struct max
+    {
+        max(measurement &m)
+            : m_m(m)
+        { }
+
+        measurement &m_m;
+    };
+
+
+    void write(output &out, const mean &m)
+    {
+        write_mean(out, m.m_m);
+    }
+
+    void write(output &out, const max &m)
+    {
+        write_max(out, m.m_m);
+    }
 
 
     // struct statisticts
@@ -184,7 +246,7 @@ namespace gauge
         {}
 
         template<class T>
-        friend void format(stream_output &, T);
+        friend void write(stream_output &, T);
 
     private:
 
@@ -192,7 +254,7 @@ namespace gauge
     };
 
     template<class T>
-    void format(stream_output &s, T v)
+    void write(stream_output &s, T v)
     {
         s.m_out << v;
     }

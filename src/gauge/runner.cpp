@@ -22,7 +22,10 @@ namespace gauge
         /// Test case map
         testcase_map m_testcases;
 
-        /// Program options
+        /// Command-line arguments
+        commandline_arguements m_commandline;
+
+        /// Parsed program options
         po::variables_map m_options;
 
         /// Id the the currently active benchmark
@@ -66,6 +69,9 @@ namespace gauge
 
     void runner::add_benchmark(benchmark_ptr bench)
     {
+        assert(bench);
+        assert(m_impl);
+
         uint32_t id = bench->id();
 
         m_impl->m_benchmarks[id] = bench;
@@ -74,6 +80,9 @@ namespace gauge
         std::string b_name = bench->benchmark_name();
 
         m_impl->m_testcases[t_name][b_name] = bench;
+
+        std::cout << "ADD" << std::endl;
+        bench->add_options(m_impl->m_commandline);
     }
 
     runner::benchmark_ptr runner::get_benchmark(uint32_t id)
@@ -90,10 +99,13 @@ namespace gauge
 
     void runner::run(int argc, const char *argv[])
     {
+        assert(m_impl);
+
+        std::cout << "RUN" << std::endl;
 
         try
         {
-            m_impl->m_options = parse_commandline(argc, argv);
+            m_impl->m_options = m_impl->m_commandline.parse(argc, argv);
         }
         catch(const std::exception &e)
         {

@@ -11,38 +11,46 @@ class using_configurations : public gauge::time_benchmark
 public:
 
     using_configurations()
+    {
+        // Add some different configurations, in this case
+        // we simply add them to the
+        for(uint32_t k = 1; k < 4; ++k)
         {
-            // Add some different configurations, in this case
-            // we simply add them to the
-            for(uint32_t k = 1; k < 4; ++k)
-            {
-                gauge::config_set cs;
-                cs.set_value<uint32_t>("vector_length", 1000*k);
-                add_configuration(cs);
-            }
-
             gauge::config_set cs;
-            cs.set_value<uint32_t>("vector_length", 1000000);
+            cs.set_value<uint32_t>("vector_length", 1000*k);
             add_configuration(cs);
         }
 
+        gauge::config_set cs;
+        cs.set_value<uint32_t>("vector_length", 1000000);
+        add_configuration(cs);
+    }
+
     void setup()
-        {
-            // Setup the test this could also be done inside the
-            // BENCHMARK macro
-            gauge::config_set cs = get_current_configuration();
+    {
+        std::cout << "SETUP" << std::endl;
 
-            uint32_t length = cs.get_value<uint32_t>("vector_length");
+        // Setup the test this could also be done inside the
+        // BENCHMARK macro
+        gauge::config_set cs = get_current_configuration();
 
-            m_vector.resize(length);
-            for(uint32_t i = 0; i < length; ++i)
-                m_vector[i] = rand() % 5;
-        }
+        uint32_t length = cs.get_value<uint32_t>("vector_length");
+
+        m_vector.resize(length);
+        for(uint32_t i = 0; i < length; ++i)
+            m_vector[i] = rand() % 5;
+    }
 
     void tear_down()
-        {
-            // No implementation required
-        }
+    {
+        // No implementation required
+    }
+
+    void add_options(gauge::commandline_arguements& options)
+    {
+        std::cout << "ADD OPTIONS" << std::endl;
+        options.add_option<uint32_t>("vector_length", "The length of a vector");
+    }
 
     std::vector<uint32_t> m_vector;
 
