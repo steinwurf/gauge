@@ -91,6 +91,9 @@ namespace gauge
 
     double time_benchmark::measurement()
     {
+        assert(m_impl);
+        assert(m_impl->m_started);
+        assert(m_impl->m_stopped);
         assert(m_impl->m_iterations > 0);
 
         return m_impl->m_result / m_impl->m_iterations;
