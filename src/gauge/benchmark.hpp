@@ -1,5 +1,4 @@
-#ifndef GAUGE_BENCHMARK_HPP
-#define GAUGE_BENCHMARK_HPP
+#pragma once
 
 #include <cassert>
 #include <vector>
@@ -37,8 +36,12 @@ namespace gauge
             return m_id;
         }
 
-        /// Add options to the available commandline argurments
-        virtual void add_options(commandline_arguements& /*options*/)
+        /// Add options to the available commandline arguments
+        virtual void set_options(po::options_description& /*options*/)
+        { }
+
+        /// Add options to the available commandline arguments
+        virtual void get_options(po::variables_map& /*options*/)
         { }
 
         /// @return the test case name
@@ -152,5 +155,4 @@ namespace gauge
     };
 }
 
-#endif
 

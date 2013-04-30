@@ -10,26 +10,8 @@ class using_configurations : public gauge::time_benchmark
 {
 public:
 
-    using_configurations()
-    {
-        // Add some different configurations, in this case
-        // we simply add them to the
-        for(uint32_t k = 1; k < 4; ++k)
-        {
-            gauge::config_set cs;
-            cs.set_value<uint32_t>("vector_length", 1000*k);
-            add_configuration(cs);
-        }
-
-        gauge::config_set cs;
-        cs.set_value<uint32_t>("vector_length", 1000000);
-        add_configuration(cs);
-    }
-
     void setup()
     {
-        std::cout << "SETUP" << std::endl;
-
         // Setup the test this could also be done inside the
         // BENCHMARK macro
         gauge::config_set cs = get_current_configuration();
@@ -46,10 +28,29 @@ public:
         // No implementation required
     }
 
-    void add_options(gauge::commandline_arguements& options)
+    void set_options(gauge::po::options_description& options)
     {
-        std::cout << "ADD OPTIONS" << std::endl;
-        options.add_option<uint32_t>("vector_length", "The length of a vector");
+        std::vector<int> v;
+        v.push_back(1000);
+        v.push_back(4000);
+
+        auto default_option =
+            gauge::po::value<std::vector<int> >()->default_value(
+                v, "")->multitoken();
+
+        options.add_options()
+            ("vector_length", default_option, "set vector length");
+    }
+
+    void get_options(gauge::po::variables_map& options)
+    {
+        auto values = options["vector_length"].as<std::vector<int> >();
+        for(auto v : values)
+        {
+            gauge::config_set cs;
+            cs.set_value<uint32_t>("vector_length", v);
+            add_configuration(cs);
+        }
     }
 
     std::vector<uint32_t> m_vector;

@@ -25,6 +25,9 @@ namespace gauge
         /// Command-line arguments
         commandline_arguements m_commandline;
 
+        /// The available program options
+        po::options_description m_options_description;
+
         /// Parsed program options
         po::variables_map m_options;
 
@@ -81,8 +84,7 @@ namespace gauge
 
         m_impl->m_testcases[t_name][b_name] = bench;
 
-        std::cout << "ADD" << std::endl;
-        bench->add_options(m_impl->m_commandline);
+        bench->set_options(m_impl->m_options_description);
     }
 
     runner::benchmark_ptr runner::get_benchmark(uint32_t id)
@@ -101,11 +103,26 @@ namespace gauge
     {
         assert(m_impl);
 
-        std::cout << "RUN" << std::endl;
+        po::options_description options("Gauge");
+
+        options.add_options()
+            ("help", "produce help message")
+            ("gauge_filter", po::value<std::string>(),
+             "Filter which benchmarks to run based on their name "
+              "for example ./benchmark --gauge_filter=MyTest.*")
+            ("runs", po::value<uint32_t>(),
+             "Sets the number of runs to complete. Overrides the "
+             "settings specified in the benchmark ex. --runs=50");
+
+        options.add(m_impl->m_options_description);
 
         try
         {
-            m_impl->m_options = m_impl->m_commandline.parse(argc, argv);
+            po::variables_map vm;
+            po::store(po::parse_command_line(argc, argv, options), vm);
+            po::notify(vm);
+
+            m_impl->m_options = vm;
         }
         catch(const std::exception &e)
         {
@@ -114,7 +131,10 @@ namespace gauge
         }
 
         if(m_impl->m_options.count("help"))
+        {
+            std::cout << options << std::endl;
             return;
+        }
 
         // Notify all printers that we are starting
         for(auto it = m_impl->m_printers.begin();
@@ -209,6 +229,11 @@ namespace gauge
 
     void runner::run_benchmark_configurations(benchmark_ptr bench)
     {
+        assert(bench);
+        assert(m_impl);
+
+        bench->get_options(m_impl->m_options);
+
         if(bench->has_configurations())
         {
             uint32_t configs = bench->configuration_count();
@@ -228,6 +253,8 @@ namespace gauge
     void runner::run_benchmark(benchmark_ptr bench)
     {
         assert(bench);
+        assert(m_impl);
+
         bench->init();
 
         assert(m_impl->m_current_id == 0);
