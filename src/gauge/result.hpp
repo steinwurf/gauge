@@ -62,34 +62,15 @@ namespace gauge
     };
 
 
-    /// Struct containing the benchmark results from a single
-    /// run.
-    template<class T>
-    struct result
-    {
-
-        /// Constructor
-        result(const T &value, uint64_t iterations)
-            : m_value(value), m_iterations(iterations)
-        { }
-
-        /// The result per iteration
-        T m_value;
-
-        /// The number of iterations performed to obtain the
-        /// corresponding result
-        uint64_t m_iterations;
-
-    };
 
     template<class T>
     struct measurement_data
     {
 
         /// Add value
-        void add_result(T value, uint64_t iterations)
+        void add_result(T value)
         {
-            m_measurements.push_back(result<T>(value, iterations));
+            m_measurements.push_back(value);
         }
 
         /// The name of this result - describes the result type e.g.
@@ -100,7 +81,7 @@ namespace gauge
         std::string m_unit;
 
         /// The collection of measurements
-        std::vector< result<T> > m_measurements;
+        std::vector<T> m_measurements;
 
     };
 
@@ -128,6 +109,17 @@ namespace gauge
         return 100.0;
     }
 
+    struct benchmark_measurement
+    {
+        benchmark_measurement(measurement results, measurement iterations)
+            : m_results(results),
+              m_iterations(iterations)
+        { }
+
+        measurement m_results;
+        measurement m_interations;
+    };
+
 
     class measurement
     {
@@ -144,11 +136,6 @@ namespace gauge
             virtual double max_() = 0;
             virtual double min_() = 0;
             virtual void write(output &o) = 0;
-
-            virtual double mean_() = 0;
-            virtual double max_() = 0;
-            virtual double min_() = 0;
-
         };
 
         template<class T>
