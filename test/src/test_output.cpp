@@ -4,8 +4,49 @@
 
 #include <gauge/result.hpp>
 
+namespace gauge
+{
+    class writable
+    {
+    public:
 
+    template<class T>
+    writable(const T& t)
+        : m_impl(new impl_t<T>(t))
+        { }
 
+        struct impl
+        {
+            virtual void write_(output &o) = 0;
+        };
+
+        template<class T>
+        struct impl_t : public impl
+        {
+            impl_t(const T& t)
+                : m_t(t)
+            { }
+
+            void write_(output &o)
+            {
+                write(o, m_t);
+            }
+
+        private:
+
+            T m_t;
+
+        };
+
+        void write(output &o)
+        {
+            m_impl->write_(o);
+        }
+
+    std::unique_ptr<impl> m_impl;
+
+    };
+}
 
 
 TEST(TestOutput, test_output)
@@ -35,6 +76,7 @@ TEST(TestOutput, test_output)
 
 
     write(o, gauge::mean(v[0]));
+    //write(o, v[0]);
 
     std::vector<gauge::measurement> c(std::move(v));
 

@@ -105,7 +105,7 @@ namespace gauge
     };
 
     template<class T>
-    void write_mean(output &out, measurement_data<T> &m)
+    double mean(output &out, measurement_data<T> &m)
     {
         uint32_t size = m.m_measurements.size();
 
@@ -113,13 +113,19 @@ namespace gauge
         for(auto& v : m.m_measurements)
             sum += (double) v.m_value;
 
-        write(out, sum / size);
+        return sum / size;
     }
 
     template<class T>
-    void write_max(output &out, measurement_data<T> &m)
+    double max(output &out, measurement_data<T> &m)
     {
-        write(out, 100U);
+        return 100.0;
+    }
+
+    template<class T>
+    double min(output &out, measurement_data<T> &m)
+    {
+        return 100.0;
     }
 
 
@@ -134,8 +140,15 @@ namespace gauge
 
         struct impl
         {
-            virtual void write_mean_(output&) = 0;
-            virtual void write_max_(output&) = 0;
+            virtual double mean_() = 0;
+            virtual double max_() = 0;
+            virtual double min_() = 0;
+            virtual void write(output &o) = 0;
+
+            virtual double mean_() = 0;
+            virtual double max_() = 0;
+            virtual double min_() = 0;
+
         };
 
         template<class T>
@@ -145,9 +158,9 @@ namespace gauge
                 : m_t(t)
             { }
 
-            void write_mean_(output &o)
+            void write_(output &o)
             {
-                write_mean(o, m_t);
+                write(o, m_t);
             }
 
             void write_max_(output &o)
