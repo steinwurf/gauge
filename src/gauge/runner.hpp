@@ -21,11 +21,8 @@ namespace gauge
         /// Pointer to a result printer
         typedef std::shared_ptr<printer> printer_ptr;
 
-        /// Benchmark container
-        typedef std::map<std::string, benchmark_ptr> benchmark_map;
-
-        /// Test case container
-        typedef std::map<std::string, benchmark_map> testcase_map;
+        /// Make benchmark function
+        typedef std::function<benchmark_ptr ()> make_benchmark;
 
         /// Creates a new runner with a default printer
         runner();
@@ -39,11 +36,12 @@ namespace gauge
         /// @return instance of the gauge benchmark runner
         static runner& instance();
 
-        /// Run all the benchmarks registered with the gauge benchmark runner
+        /// Run all the benchmarks registered with the gauge benchmark
+        /// runner
         static void run_benchmarks(int argc = 0, const char* argv[] = 0);
 
-        /// Registers an unique id for each benchmark type. All benchmarks call
-        /// this function once to get their id.
+        /// Registers an unique id for each benchmark type. All benchmarks
+        /// call this function once to get their id.
         /// @return the unique id for a benchmark.
         static uint32_t register_id();
 
@@ -52,18 +50,18 @@ namespace gauge
         void register_benchmark()
             {
                 uint32_t id = T::benchmark_id();
-                benchmark_ptr bench = std::make_shared<T>();
-                bench->set_id(id);
-                add_benchmark(bench);
+
+                benchmark_ptr benchmark = std::make_shared<T>();
+                add_benchmark(id, benchmark);
             }
 
         /// Adds a new benchmark
-        void add_benchmark(benchmark_ptr bench);
+        void add_benchmark(uint32_t id, benchmark_ptr benchmark);
 
         /// Returns the benchmark with the specific id
         /// @param id of the desired benchmark
         /// @return pointer to the benchmark
-        benchmark_ptr get_benchmark(uint32_t id);
+        //benchmark_ptr get_benchmark(uint32_t id);
 
         /// Returns the id of the currently active benchmark
         /// @return id of benchmark

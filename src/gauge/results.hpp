@@ -13,12 +13,21 @@ namespace gauge
     /// number of iterations performed to obtain m_results[0]
     struct results
     {
+
+        /// The name of this result - describes the result type e.g.
+        /// "time" or "throughput"
+        std::string m_name;
+
+        /// The unit of this result e.g. seconds or MB/s
+        std::string m_unit;
+
         /// The result per iteration
         std::vector<double> m_results;
 
         /// The number of iterations performed to obtain the
         /// corresponding result
         std::vector<uint64_t> m_iterations;
+
     };
 }
 

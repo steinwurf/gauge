@@ -24,6 +24,16 @@ namespace gauge
     {
     public:
 
+        benchmark()
+        {
+            std::cout << "benchmark()" << std::endl;
+        }
+
+        virtual ~benchmark()
+        {
+            std::cout << "~benchmark" << std::endl;
+        }
+
         /// @param benchmark_id sets the benchmark id
         void set_id(uint32_t benchmark_id)
         {

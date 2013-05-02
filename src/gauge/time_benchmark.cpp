@@ -33,6 +33,11 @@ namespace gauge
         bool m_started;
         bool m_stopped;
 
+        /// Stores whether the measurement was accepted
+        bool m_accepted;
+
+        /// Final result
+
     };
 
 
@@ -49,11 +54,10 @@ namespace gauge
 
     time_benchmark::time_benchmark()
         : m_impl(new time_benchmark::impl())
-    {
-    }
+    { }
 
     time_benchmark::~time_benchmark()
-    {}
+    { }
 
     void time_benchmark::init()
     {
@@ -87,6 +91,8 @@ namespace gauge
                 m_impl->m_stop-m_impl->m_start).count());
 
         assert(m_impl->m_iterations > 0);
+
+        store_measurement();
     }
 
     double time_benchmark::measurement()
@@ -102,6 +108,20 @@ namespace gauge
     bool time_benchmark::accept_measurement()
     {
         // Did you forget the RUN macro?
+        assert(m_impl);
+        assert(m_impl->m_started);
+        assert(m_impl->m_stopped);
+        assert(m_impl->m_threshold > 0);
+        assert(m_impl->m_iterations > 0);
+
+        return m_impl->m_accepted;
+    }
+
+
+    void time_benchmark::store_measurement()
+    {
+        // Did you forget the RUN macro?
+        assert(m_impl);
         assert(m_impl->m_started);
         assert(m_impl->m_stopped);
         assert(m_impl->m_threshold > 0);
@@ -118,7 +138,8 @@ namespace gauge
 
                 assert(m_impl->m_iterations > 0);
             }
-            return true;
+            m_impl->m_accepted = true;
+            return;
         }
 
         if(m_impl->m_result == 0)
@@ -133,7 +154,8 @@ namespace gauge
             // iterations
             m_impl->m_iterations = m_impl->m_iterations * 2;
             assert(m_impl->m_iterations > 0);
-            return false;
+            m_impl->m_accepted = false;
+            return;
         }
 
 
@@ -152,8 +174,10 @@ namespace gauge
 
         assert(m_impl->m_iterations > 0);
 
-        return false;
+        m_impl->m_accepted = false;
+
     }
+
 
     std::string time_benchmark::unit_text() const
     {

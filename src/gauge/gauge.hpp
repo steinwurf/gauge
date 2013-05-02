@@ -1,5 +1,4 @@
-#ifndef GAUGE_GAUGE_HPP
-#define GAUGE_GAUGE_HPP
+#pragma once
 
 #include "iteration_controller.hpp"
 #include "runner.hpp"
@@ -81,6 +80,21 @@
             __controller.is_done() == false; __controller.next())
 
 
+#define BENCHMARK_OPTION(option_name)                                \
+    static struct add_option__                                       \
+    {                                                                \
+        add_option__(){}                                             \
+    } add_option_reg;                                                \
+          // add_option__()                                             \
+          // {                                                          \
+          //     //gauge::runner::instance().add_options<add_option>(); \
+          // }                                                          \
+    //                                                                  \
+    //       static gauge::po::options_description add();               \
+    // } add_option_reg__;                                              \
+    //                                                                  \
+    // void add_option__::add()
 
-#endif
+
+
 

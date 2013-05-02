@@ -93,6 +93,10 @@ uint32_t count_naive(uint32_t v)
     return c;
 }
 
+BENCHMARK_OPTION(array_size)
+// {
+// }
+
 BENCHMARK_F(using_options, CountBits, count_bk, 10)
 {
 
