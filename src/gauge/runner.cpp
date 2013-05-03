@@ -24,7 +24,8 @@ namespace gauge
             {}
 
         /// The registered benchmarks
-        std::map<uint32_t, benchmark_ptr> m_benchmarks;
+        // std::map<uint32_t, benchmark_ptr> m_benchmarks;
+        std::map<uint32_t, make_benchmark> m_benchmarks;
 
         /// Container for all the registered printers.
         std::vector<printer_ptr> m_printers;
@@ -72,6 +73,15 @@ namespace gauge
     }
 
 
+    void runner::register_options(const po::options_description &options)
+    {
+        assert(m_impl);
+
+        const auto& opt = options.options();
+        for(const auto& o: opt)
+            m_impl->m_options_description.add(o);
+    }
+
     uint32_t runner::register_id()
     {
         // We start from one so we let 0 be an invalid benchmark id
@@ -83,45 +93,16 @@ namespace gauge
         return ++id;
     }
 
-    // void runner::add_benchmark(benchmark_ptr bench)
-    // {
-    //     assert(bench);
-    //     assert(m_impl);
-
-    //     uint32_t id = bench->id();
-
-    //     m_impl->m_benchmarks[id] = bench;
-
-    //     std::string t_name = bench->testcase_name();
-    //     std::string b_name = bench->benchmark_name();
-
-    //     m_impl->m_testcases[t_name][b_name] = id;
-
-    //     bench->set_options(m_impl->m_options_description);
-    // }
-
-    void runner::add_benchmark(uint32_t id, benchmark_ptr benchmark)
+    void runner::add_benchmark(uint32_t id,
+                               make_benchmark benchmark,
+                               std::string testcase_name,
+                               std::string benchmark_name)
     {
         assert(m_impl);
 
         m_impl->m_benchmarks[id] = benchmark;
-
-        std::string t_name = benchmark->testcase_name();
-        std::string b_name = benchmark->benchmark_name();
-
-        m_impl->m_testcases[t_name][b_name] = id;
-
-        benchmark->set_options(m_impl->m_options_description);
-
-        std::cout << "Adding " << id << " for " << t_name << " " << b_name << std::endl;
+        m_impl->m_testcases[testcase_name][benchmark_name] = id;
     }
-
-
-    // runner::benchmark_ptr runner::get_benchmark(uint32_t id)
-    // {
-    //     assert(m_impl->m_benchmarks.find(id) != m_impl->m_benchmarks.end());
-    //     return m_impl->m_benchmarks[id];
-    // }
 
     runner::benchmark_ptr runner::current_benchmark()
     {
@@ -196,24 +177,20 @@ namespace gauge
 
     }
 
-
     void runner::run_all()
     {
         assert(m_impl);
 
-        for(auto it = m_impl->m_benchmarks.begin();
-            it != m_impl->m_benchmarks.end();)
+        for(auto& m : m_impl->m_benchmarks)
         {
-            benchmark_ptr benchmark = it->second;
+            auto& make = m.second;
+            auto benchmark = make();
 
             assert(benchmark);
 
             run_benchmark_configurations(benchmark);
-
-            m_impl->m_benchmarks.erase(it++);
         }
     }
-
 
     void runner::run_filtered(const std::string &filter)
     {
@@ -256,8 +233,8 @@ namespace gauge
                 assert(m_impl->m_benchmarks.find(id) !=
                        m_impl->m_benchmarks.end());
 
-                benchmark_ptr benchmark = m_impl->m_benchmarks[id];
-                m_impl->m_benchmarks.erase(id);
+                auto& make = m_impl->m_benchmarks[id];
+                auto benchmark = make();
 
                 run_benchmark_configurations(benchmark);
             }
@@ -275,8 +252,8 @@ namespace gauge
             assert(m_impl->m_benchmarks.find(id) !=
                    m_impl->m_benchmarks.end());
 
-            benchmark_ptr benchmark = m_impl->m_benchmarks[id];
-            m_impl->m_benchmarks.erase(id);
+            auto& make = m_impl->m_benchmarks[id];
+            auto benchmark = make();
 
             run_benchmark_configurations(benchmark);
         }

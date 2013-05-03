@@ -47,16 +47,41 @@ namespace gauge
 
         /// Creates the desired benchmark with the runner
         template<class T>
-        void register_benchmark()
-            {
-                uint32_t id = T::benchmark_id();
+        void register_benchmark(std::string testcase_name,
+                                std::string benchmark_name)
+        {
+            uint32_t id = T::benchmark_id();
 
-                benchmark_ptr benchmark = std::make_shared<T>();
-                add_benchmark(id, benchmark);
-            }
+            make_benchmark benchmark = std::bind(std::make_shared<T>);
+            add_benchmark(id, benchmark, testcase_name, benchmark_name);
+        }
+
+        // template<class T>
+        // void register_benchmark()
+        // {
+        //     uint32_t id = T::benchmark_id();
+
+        //     benchmark_ptr benchmark = std::make_shared<T>();
+        //     add_benchmark(id, benchmark);
+        // }
+
+
+        /// Fetch the options for a specific benchmark
+        template<class T>
+        void register_options()
+        {
+            T::add_options();
+        }
+
+        /// Stores the registered options with the runner
+        void register_options(const po::options_description &options);
 
         /// Adds a new benchmark
-        void add_benchmark(uint32_t id, benchmark_ptr benchmark);
+        // void add_benchmark(uint32_t id, benchmark_ptr benchmark);
+        void add_benchmark(uint32_t id,
+                           make_benchmark benchmark,
+                           std::string testcase_name,
+                           std::string benchmark_name);
 
         /// Returns the benchmark with the specific id
         /// @param id of the desired benchmark

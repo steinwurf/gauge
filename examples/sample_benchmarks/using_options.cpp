@@ -27,34 +27,11 @@ public:
         // No implementation required
     }
 
-    void set_options(gauge::po::options_description& options)
-    {
-        // Optionally check if the options has already been added,
-        // if this is the case possible solutions are:
-        // 1) Skip adding that option, and reuse the existing. This
-        //    may be acceptable in cases where e.g. the same test fixture
-        //    is reused between tests.
-        // 2) Rename one of the options e.g. using the benchmark name.
-        //
-        // Since we reuse this test fixture we will skip adding the option
-        // if it already exists
-        if(options.find_nothrow("array_size", false) != 0)
-            return;
-
-        std::vector<int> size;
-        size.push_back(10);
-        size.push_back(40);
-
-        auto default_size =
-            gauge::po::value<std::vector<int> >()->default_value(
-                size, "")->multitoken();
-
-        options.add_options()
-            ("array_size", default_size, "Set bit array size");
-    }
-
     void get_options(gauge::po::variables_map& options)
     {
+        // The options specified are available by overriding the
+        // get_options() function and using the option name and
+        // type to access the variables_map.
         auto values = options["array_size"].as<std::vector<int> >();
         for(auto v : values)
         {
@@ -93,9 +70,27 @@ uint32_t count_naive(uint32_t v)
     return c;
 }
 
+/// Using this macro we may specify options. For specifying options
+/// we use the boost program options library. So you may additional
+/// details on how to do it in the manual for that library.
 BENCHMARK_OPTION(array_size)
-// {
-// }
+{
+    gauge::po::options_description options;
+
+    std::vector<int> size;
+    size.push_back(10);
+    size.push_back(40);
+
+    auto default_size =
+        gauge::po::value<std::vector<int> >()->default_value(
+            size, "")->multitoken();
+
+    options.add_options()
+        ("array_size", default_size, "Set bit array size");
+
+    gauge::runner::instance().register_options(options);
+}
+
 
 BENCHMARK_F(using_options, CountBits, count_bk, 10)
 {

@@ -52,7 +52,9 @@
         {                                                                   \
             typedef BENCHMARK_CLASS_NAME_(__testcase_name, __benchmark_name)\
                 benckmark_type;                                             \
-            gauge::runner::instance().register_benchmark<benckmark_type>(); \
+            auto& runner = gauge::runner::instance();                       \
+            runner.register_benchmark<benckmark_type>(                      \
+                #__testcase_name, #__benchmark_name);                       \
         }                                                                   \
     } x ## __testcase_name ## _ ## __benchmark_name##_RegClass ;            \
                                                                             \
@@ -80,20 +82,22 @@
             __controller.is_done() == false; __controller.next())
 
 
-#define BENCHMARK_OPTION(option_name)                                \
-    static struct add_option__                                       \
-    {                                                                \
-        add_option__(){}                                             \
-    } add_option_reg;                                                \
-          // add_option__()                                             \
-          // {                                                          \
-          //     //gauge::runner::instance().add_options<add_option>(); \
-          // }                                                          \
-    //                                                                  \
-    //       static gauge::po::options_description add();               \
-    // } add_option_reg__;                                              \
-    //                                                                  \
-    // void add_option__::add()
+#define BENCHMARK_OPTION_CLASS_NAME_(option_name)     \
+    opt_ ## option_name ## _Optionclass_
+
+#define BENCHMARK_OPTION(option_name)                                   \
+    static struct BENCHMARK_OPTION_CLASS_NAME_(option_name)             \
+    {                                                                   \
+        BENCHMARK_OPTION_CLASS_NAME_(option_name)()                     \
+        {                                                               \
+            add_options();                                              \
+        }                                                               \
+                                                                        \
+        static void add_options();                                      \
+                                                                        \
+    } add_option_reg ## option_name;                                    \
+                                                                        \
+    void BENCHMARK_OPTION_CLASS_NAME_(option_name)::add_options()       \
 
 
 
