@@ -7,26 +7,21 @@
 
 #include "config_set.hpp"
 #include "commandline_arguments.hpp"
+#include "results.hpp"
 
 namespace gauge
 {
-
-    // struct measurement_result
-    // {
-    //     std::string m_name;
-    //     std::string m_unit;
-    //     boost::any m_value;
-    // };
-
 
     /// Base class for all benchmark.
     class benchmark
     {
     public:
 
+        /// Constructor
         benchmark()
         { }
 
+        /// Destructor
         virtual ~benchmark()
         { }
 
@@ -42,9 +37,16 @@ namespace gauge
             return m_id;
         }
 
-        /// Add options to the available commandline arguments
-        virtual void set_options(po::options_description& /*options*/)
-        { }
+        virtual void store_results(temp_results &results) = 0;
+
+        /// Return the measurement names
+        // virtual std::vector<std::string> measurements()
+        // {
+        //     return std::vector<std::string>();
+        // }
+
+        // virtual std::string unit(std::string &)
+        // { assert(0); }
 
         /// Add options to the available commandline arguments
         virtual void get_options(po::variables_map& /*options*/)

@@ -37,6 +37,7 @@ namespace gauge
         bool m_accepted;
 
         /// Final result
+        results m_results;
 
     };
 
@@ -117,7 +118,6 @@ namespace gauge
         return m_impl->m_accepted;
     }
 
-
     void time_benchmark::store_measurement()
     {
         // Did you forget the RUN macro?
@@ -138,6 +138,9 @@ namespace gauge
 
                 assert(m_impl->m_iterations > 0);
             }
+
+            // m_impl->m_results.m_results.push_back(
+
             m_impl->m_accepted = true;
             return;
         }
@@ -183,5 +186,21 @@ namespace gauge
     {
         return "microseconds";
     }
+
+    void time_benchmark::store_results(temp_results &results)
+    {
+        auto& r = results["time"];
+        if(r.m_unit.empty())
+            r.m_unit = "microseconds";
+
+        assert(results.find("time") != results.end());
+
+        r.m_results.push_back(measurement());
+        r.m_iterations.push_back(iteration_count());
+
+        assert(r.m_results.size() == r.m_iterations.size());
+    }
+
+
 }
 

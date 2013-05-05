@@ -1,5 +1,4 @@
-#ifndef GAUGE_TIME_BENCHMARK_HPP
-#define GAUGE_TIME_BENCHMARK_HPP
+#pragma once
 
 #include <memory>
 
@@ -7,27 +6,42 @@
 
 namespace gauge
 {
+
     /// Base class for benchmarks measuring time
     class time_benchmark : public benchmark
     {
     public:
 
+        /// Constructor
         time_benchmark();
+
+        /// Destructor
         ~time_benchmark();
 
+    public: // From benchmark
+
+        /// @copydoc benchmark::init()
         virtual void init();
 
+        /// @copydoc benchmark::iteration_count() const
         virtual uint64_t iteration_count() const;
 
+        /// @copydoc benchmark::start()
         virtual void start();
 
+        /// @copydoc benchmark::stop()
         virtual void stop();
 
+        /// @copydoc benchmark::measurement()
         virtual double measurement();
 
+        /// @copydoc benchmark::accept_measurement()
         virtual bool accept_measurement();
 
-        std::string unit_text() const;
+        /// @copydoc benchmark::unit_text() const
+        virtual std::string unit_text() const;
+
+        virtual void store_results(temp_results &results);
 
     private:
 
@@ -40,5 +54,4 @@ namespace gauge
     };
 }
 
-#endif
 

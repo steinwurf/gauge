@@ -241,8 +241,7 @@ namespace gauge
     public:
 
         /// Create a new python printer
-        /// @param filename the filename to use e.g. out.py
-        python_printer(const std::string &filename);
+        python_printer();
 
     public: // From printer
 
@@ -254,6 +253,9 @@ namespace gauge
 
         /// @see printer::end_benchmark()
         void end_benchmark(/*const benchmark &info*/);
+
+        /// @see printer::set_options(po::variables_map&);
+        void set_options(po::variables_map& /*options*/);
 
     private:
 

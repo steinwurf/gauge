@@ -4,10 +4,8 @@
 #include "results.hpp"
 #include "commandline_arguments.hpp"
 
-
 namespace gauge
 {
-
 
     struct runner::impl
     {
@@ -65,13 +63,11 @@ namespace gauge
         return singleton;
     }
 
-
     void runner::run_benchmarks(int argc, const char* argv[])
     {
         runner& run = instance();
         run.run(argc, argv);
     }
-
 
     void runner::register_options(const po::options_description &options)
     {
@@ -148,6 +144,12 @@ namespace gauge
         {
             std::cout << options << std::endl;
             return;
+        }
+
+        // Deliver possible options to printers
+        for(auto& p: m_impl->m_printers)
+        {
+            p->set_options(m_impl->m_options);
         }
 
         // Notify all printers that we are starting
@@ -300,6 +302,7 @@ namespace gauge
             benchmark->tear_down();
         }
 
+        temp_results temp;
         results results;
 
         uint32_t runs = 0;
@@ -324,6 +327,8 @@ namespace gauge
 
             if(benchmark->accept_measurement())
             {
+                benchmark->store_results(temp);
+
                 uint64_t i = benchmark->iteration_count();
                 double r = benchmark->measurement();
 
@@ -334,16 +339,14 @@ namespace gauge
             }
         }
 
-        for(auto it = m_impl->m_printers.begin();
-            it != m_impl->m_printers.end(); ++it)
+        for(auto& printer : m_impl->m_printers)
         {
-            (*it)->benchmark_result(*benchmark, results);
+            printer->benchmark_result(runs, *benchmark, temp);
         }
 
-        m_impl->m_current_benchmark.reset();
+        m_impl->m_current_benchmark = benchmark_ptr();
 
     }
-
 
     std::vector<runner::printer_ptr>& runner::printers()
     {

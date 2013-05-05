@@ -1,4 +1,5 @@
 #include "python_printer.hpp"
+#include "runner.hpp"
 
 namespace gauge
 {
@@ -35,9 +36,20 @@ namespace gauge
     }
 
 
-    python_printer::python_printer(const std::string &filename)
-        : m_filename(filename)
-    { }
+    python_printer::python_printer()
+    {
+
+        // Add the filename option for this printer
+        gauge::po::options_description options;
+
+        auto default_name =
+            gauge::po::value<std::string>()->default_value("out.py");
+
+        options.add_options()
+            ("pyfile", default_name, "Set the output name of the python printer");
+
+        gauge::runner::instance().register_options(options);
+    }
 
     void python_printer::start_benchmark()
     { }
@@ -68,6 +80,12 @@ namespace gauge
         m_out << "results = ";
         pyprint(m_out, m_list);
         m_out.close();
+    }
+
+    void python_printer::set_options(po::variables_map& options)
+    {
+        m_filename = options["pyfile"].as<std::string>();
+        assert(!m_filename.empty());
     }
 }
 
