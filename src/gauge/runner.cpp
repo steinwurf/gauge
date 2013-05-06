@@ -16,11 +16,6 @@ namespace gauge
         /// Test case container
         typedef std::map<std::string, benchmark_map> testcase_map;
 
-
-        /// Constructor
-        impl() : m_current_id(0)
-            {}
-
         /// The registered benchmarks
         // std::map<uint32_t, benchmark_ptr> m_benchmarks;
         std::map<uint32_t, make_benchmark> m_benchmarks;
@@ -39,9 +34,6 @@ namespace gauge
 
         /// Parsed program options
         po::variables_map m_options;
-
-        /// Id the the currently active benchmark
-        uint32_t m_current_id;
 
         /// The currently active benchmark
         benchmark_ptr m_current_benchmark;
@@ -102,8 +94,6 @@ namespace gauge
 
     runner::benchmark_ptr runner::current_benchmark()
     {
-        // assert(m_impl->m_current_id != 0);
-        // return get_benchmark(m_impl->m_current_id);
         assert(m_impl->m_current_benchmark);
         return m_impl->m_current_benchmark;
 
@@ -229,9 +219,6 @@ namespace gauge
             {
                 uint32_t id = b.second;
 
-                std::cout << b.first << std::endl;
-                std::cout << "ID " << id << std::endl;
-
                 assert(m_impl->m_benchmarks.find(id) !=
                        m_impl->m_benchmarks.end());
 
@@ -302,9 +289,6 @@ namespace gauge
             benchmark->tear_down();
         }
 
-        temp_results temp;
-        results results;
-
         uint32_t runs = 0;
 
         if(m_impl->m_options.count("runs"))
@@ -327,22 +311,18 @@ namespace gauge
 
             if(benchmark->accept_measurement())
             {
-                benchmark->store_results(temp);
-
-                uint64_t i = benchmark->iteration_count();
-                double r = benchmark->measurement();
-
-                results.m_iterations.push_back(i);
-                results.m_results.push_back(r);
-
+                benchmark->store_run();
                 ++run;
             }
         }
 
-        for(auto& printer : m_impl->m_printers)
-        {
-            printer->benchmark_result(runs, *benchmark, temp);
-        }
+        std::vector<table> results;
+        benchmark->store_table(results);
+
+        // for(auto& printer : m_impl->m_printers)
+        // {
+        //     printer->benchmark_result(runs, *benchmark, results);
+        // }
 
         m_impl->m_current_benchmark = benchmark_ptr();
 

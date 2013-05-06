@@ -251,6 +251,9 @@ namespace gauge
         /// @see printer::benchmark_result()
         void benchmark_result(const benchmark &info, const results &result);
 
+        void benchmark_result(uint32_t runs, const benchmark& info,
+                              const temp_results& result);
+
         /// @see printer::end_benchmark()
         void end_benchmark(/*const benchmark &info*/);
 

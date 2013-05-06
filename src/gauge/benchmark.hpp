@@ -8,6 +8,7 @@
 #include "config_set.hpp"
 #include "commandline_arguments.hpp"
 #include "results.hpp"
+#include "table.hpp"
 
 namespace gauge
 {
@@ -37,7 +38,9 @@ namespace gauge
             return m_id;
         }
 
-        virtual void store_results(temp_results &results) = 0;
+        virtual void store_run() = 0;
+        virtual void store_table(std::vector<table> &results) = 0;
+
 
         /// Return the measurement names
         // virtual std::vector<std::string> measurements()

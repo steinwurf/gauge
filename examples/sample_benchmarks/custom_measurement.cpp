@@ -33,6 +33,14 @@ class custom_measurement : public gauge::benchmark
 {
 public:
 
+    custom_measurement()
+        : m_counts("counts"),
+          m_steps("step size")
+    {
+        m_counts.add_row("counts");
+        m_steps.add_row("steps");
+    }
+
     void start()
     {
         m_old_count = m_benchmark_me.m_count;
@@ -56,27 +64,21 @@ public:
     std::string unit_text() const
     { return "counts"; }
 
-    void store_results(gauge::temp_results &results)
+    void store_run()
     {
-        // Add the first measurement
-        auto& count = results["custom_counts"];
-
-        if(count.m_unit.empty())
-            count.m_unit = "counts";
+        m_counts.add_run(iteration_count());
+        m_steps.add_run(iteration_count());
 
         double diff = static_cast<double>(m_new_count - m_old_count);
 
-        count.m_results.push_back(diff);
-        count.m_iterations.push_back(iteration_count());
+        m_counts["counts"] = diff;
+        m_steps["steps"] = m_limit / diff;
+    }
 
-        // Add the second measurement
-        auto& step = results["custom_count_step_size"];
-
-        if(step.m_unit.empty())
-            step.m_unit = "step size";
-
-        step.m_results.push_back(m_limit / diff);
-        step.m_iterations.push_back(iteration_count());
+    void store_table(std::vector<gauge::table> &results)
+    {
+        results.push_back(m_counts);
+        results.push_back(m_steps);
     }
 
 
@@ -86,6 +88,9 @@ public:
     uint32_t m_old_count;
     uint32_t m_new_count;
     uint32_t m_limit;
+
+    gauge::table m_counts;
+    gauge::table m_steps;
 };
 
 

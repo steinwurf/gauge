@@ -10,6 +10,12 @@ namespace gauge
     {
     public:
 
+        impl() :
+            m_table("microseconds")
+        {
+            m_table.add_row("time");
+        }
+
         /// The number of iterations to run to get an
         /// acceptable result
         uint64_t m_iterations;
@@ -37,7 +43,7 @@ namespace gauge
         bool m_accepted;
 
         /// Final result
-        results m_results;
+        table m_table;
 
     };
 
@@ -187,18 +193,15 @@ namespace gauge
         return "microseconds";
     }
 
-    void time_benchmark::store_results(temp_results &results)
+    void time_benchmark::store_table(std::vector<table> &results)
     {
-        auto& r = results["time"];
-        if(r.m_unit.empty())
-            r.m_unit = "microseconds";
+        results.push_back(m_impl->m_table);
+    }
 
-        assert(results.find("time") != results.end());
-
-        r.m_results.push_back(measurement());
-        r.m_iterations.push_back(iteration_count());
-
-        assert(r.m_results.size() == r.m_iterations.size());
+    void time_benchmark::store_run()
+    {
+        m_impl->m_table.add_run(iteration_count());
+        m_impl->m_table["time"] = measurement();
     }
 
 

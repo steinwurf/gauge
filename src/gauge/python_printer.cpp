@@ -74,6 +74,12 @@ namespace gauge
         m_list.add(benchmark_dict);
     }
 
+    void python_printer::benchmark_result(uint32_t runs, const benchmark& info,
+                                          const temp_results& result)
+    {
+    }
+
+
     void python_printer::end_benchmark()
     {
         m_out.open(m_filename, std::ios::trunc);
