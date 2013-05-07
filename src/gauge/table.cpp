@@ -6,8 +6,7 @@
 namespace gauge
 {
 
-    table::table(const std::string& unit) :
-        m_unit(unit),
+    table::table() :
         m_runs(0)
     { }
 
@@ -15,6 +14,7 @@ namespace gauge
     {
         assert(m_results.find(row) == m_results.end());
         m_results[row].resize(m_runs, 0);
+        m_updated[row] = false;
     }
 
     void table::add_run(uint64_t iterations)
@@ -27,10 +27,21 @@ namespace gauge
         {
             v.second.resize(m_runs, 0);
         }
+
+        for(auto& v: m_updated)
+        {
+            v.second = false;
+        }
     }
 
     double& table::operator[](const std::string &row)
     {
+        if(m_results.find(row) == m_results.end())
+            add_row(row);
+
+        assert(m_updated[row] == false);
+        m_updated[row] = true;
+
         assert(m_runs > 0); // Did you forget to call add_row(..)
         auto& v = m_results[row];
         assert(v.size() == m_runs);
@@ -40,13 +51,19 @@ namespace gauge
         return v[m_runs - 1];
     }
 
-    uint32_t table::runs()
+    uint32_t table::runs() const
     {
         return m_runs;
     }
 
+    void table::set_unit(const std::string &unit)
+    {
+        m_unit = unit;
+    }
+
     const std::string& table::unit() const
     {
+        assert(!m_unit.empty());
         return m_unit;
     }
 

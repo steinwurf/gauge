@@ -46,10 +46,6 @@ namespace gauge
 
     private:
 
-        void store_measurement();
-
-    private:
-
         class impl;
         std::unique_ptr<impl> m_impl;
     };

@@ -76,7 +76,7 @@ namespace gauge
 
         void benchmark_result(uint32_t runs,
                               const benchmark &info,
-                              const temp_results &result)
+                              const std::vector<table> &results)
         {
 
             // Describe the beginning of the run.
@@ -95,48 +95,51 @@ namespace gauge
                           << info.get_current_configuration() << std::endl;
             }
 
-            for(const auto& r : result)
+            for(const auto& t : results)
             {
+                assert(runs == t.runs());
+
                 std::cout << console::textgreen << "[   RESULT ] "
                           << console::textdefault;
 
-                print_result(info, r.first, r.second);
+                print_result(info, t);
             }
 
             std::cout << console::textgreen << "[----------] "
-                      << console::textdefault << std::endl;;
-
+                      << console::textdefault << std::endl;
         }
 
         void print_result(const benchmark &info,
-                          const std::string &result_name,
-                          const result &result)
+                          const table &result)
         {
 
-            assert(result.m_results.size() == result.m_iterations.size());
-
-            statistics res = calculate_statistics(
-                result.m_results.begin(),
-                result.m_results.end());
-
             statistics iter = calculate_statistics(
-                result.m_iterations.begin(),
-                result.m_iterations.end());
+                result.iterations().cbegin(),
+                result.iterations().cend());
 
-            std::cout << result_name << " "
-                      << "(" << iter.m_mean << " iterations per run):"
-                      << std::endl
-                      << console::textgreen << "[          ] "
-                      << console::textdefault
-                      << "       Average result: " << res.m_mean
-                      << " " << result.m_unit << std::endl;
+            for(const auto& r : result)
+            {
+                statistics res = calculate_statistics(
+                    r.second.cbegin(),
+                    r.second.cend());
 
-            print("Max:", result.m_unit, res.m_max, res.m_mean);
-            print("Min:", result.m_unit, res.m_min, res.m_mean);
+                std::cout << r.first << " "
+                          << "(" << iter.m_mean << " iterations per run):"
+                          << std::endl
+                          << console::textgreen << "[          ] "
+                          << console::textdefault
+                          << "       Average result: " << res.m_mean
+                          << " " << result.unit() << std::endl;
+
+                print("Max:", result.unit(), res.m_max, res.m_mean);
+                print("Min:", result.unit(), res.m_min, res.m_mean);
+
+            }
+
         }
 
-
-        void print(std::string name, std::string unit, double value, double mean)
+        void print(std::string name, std::string unit,
+                   double value, double mean)
         {
             std::cout << console::textgreen << "[          ] "
                       << console::textdefault

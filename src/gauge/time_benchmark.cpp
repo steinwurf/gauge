@@ -10,12 +10,6 @@ namespace gauge
     {
     public:
 
-        impl() :
-            m_table("microseconds")
-        {
-            m_table.add_row("time");
-        }
-
         /// The number of iterations to run to get an
         /// acceptable result
         uint64_t m_iterations;
@@ -72,6 +66,9 @@ namespace gauge
         m_impl->m_threshold = 10000.0;
         m_impl->m_started = false;
         m_impl->m_stopped = false;
+        m_impl->m_table = table();
+        m_impl->m_table.set_unit("microseconds");
+        m_impl->m_table.add_row("time");
     }
 
     uint64_t time_benchmark::iteration_count() const
@@ -98,8 +95,6 @@ namespace gauge
                 m_impl->m_stop-m_impl->m_start).count());
 
         assert(m_impl->m_iterations > 0);
-
-        store_measurement();
     }
 
     double time_benchmark::measurement()
@@ -114,18 +109,7 @@ namespace gauge
 
     bool time_benchmark::accept_measurement()
     {
-        // Did you forget the RUN macro?
-        assert(m_impl);
-        assert(m_impl->m_started);
-        assert(m_impl->m_stopped);
-        assert(m_impl->m_threshold > 0);
-        assert(m_impl->m_iterations > 0);
 
-        return m_impl->m_accepted;
-    }
-
-    void time_benchmark::store_measurement()
-    {
         // Did you forget the RUN macro?
         assert(m_impl);
         assert(m_impl->m_started);
@@ -145,10 +129,7 @@ namespace gauge
                 assert(m_impl->m_iterations > 0);
             }
 
-            // m_impl->m_results.m_results.push_back(
-
-            m_impl->m_accepted = true;
-            return;
+            return true;
         }
 
         if(m_impl->m_result == 0)
@@ -163,8 +144,7 @@ namespace gauge
             // iterations
             m_impl->m_iterations = m_impl->m_iterations * 2;
             assert(m_impl->m_iterations > 0);
-            m_impl->m_accepted = false;
-            return;
+            return false;
         }
 
 
@@ -183,10 +163,8 @@ namespace gauge
 
         assert(m_impl->m_iterations > 0);
 
-        m_impl->m_accepted = false;
-
+        return false;
     }
-
 
     std::string time_benchmark::unit_text() const
     {
@@ -203,7 +181,6 @@ namespace gauge
         m_impl->m_table.add_run(iteration_count());
         m_impl->m_table["time"] = measurement();
     }
-
 
 }
 

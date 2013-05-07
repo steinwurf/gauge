@@ -38,18 +38,7 @@ namespace gauge
             return m_id;
         }
 
-        virtual void store_run() = 0;
-        virtual void store_table(std::vector<table> &results) = 0;
-
-
-        /// Return the measurement names
-        // virtual std::vector<std::string> measurements()
-        // {
-        //     return std::vector<std::string>();
-        // }
-
-        // virtual std::string unit(std::string &)
-        // { assert(0); }
+        virtual void store_run(table &results) = 0;
 
         /// Add options to the available commandline arguments
         virtual void get_options(po::variables_map& /*options*/)

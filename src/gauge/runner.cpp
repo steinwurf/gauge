@@ -300,9 +300,12 @@ namespace gauge
             runs = benchmark->runs();
         }
 
-        assert(runs > 0);
+        table results;
+        results->set_unit(benchmark->unit());
 
+        assert(runs > 0);
         uint32_t run = 0;
+
         while(run < runs)
         {
             benchmark->setup();
@@ -311,18 +314,16 @@ namespace gauge
 
             if(benchmark->accept_measurement())
             {
-                benchmark->store_run();
+                results.add_run(benchmark->iterations());
+                benchmark->store_run(results);
                 ++run;
             }
         }
 
-        std::vector<table> results;
-        benchmark->store_table(results);
-
-        // for(auto& printer : m_impl->m_printers)
-        // {
-        //     printer->benchmark_result(runs, *benchmark, results);
-        // }
+        for(auto& printer : m_impl->m_printers)
+        {
+            printer->benchmark_result(runs, *benchmark, results);
+        }
 
         m_impl->m_current_benchmark = benchmark_ptr();
 

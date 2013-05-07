@@ -33,12 +33,16 @@ class custom_measurement : public gauge::benchmark
 {
 public:
 
-    custom_measurement()
-        : m_counts("counts"),
-          m_steps("step size")
+    void init()
     {
+        m_counts = gauge::table();
+        m_steps = gauge::table();
+
+        m_counts.set_unit("counts");
         m_counts.add_row("counts");
+        m_steps.set_unit("step_size");
         m_steps.add_row("steps");
+
     }
 
     void start()

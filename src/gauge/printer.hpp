@@ -36,6 +36,11 @@ namespace gauge
                                       const temp_results &/*result*/)
         { }
 
+        virtual void benchmark_result(uint32_t/*runs*/,
+                                      const benchmark &/*info*/,
+                                      const std::vector<table> &/*result*/)
+        { }
+
         /// Add options to the available commandline arguments
         virtual void set_options(po::variables_map& /*options*/)
         { }

@@ -31,8 +31,7 @@ namespace gauge
     public:
 
         /// Construct a new table
-        /// @param unit The measurement unit used in the table
-        table(const std::string& unit);
+        table();
 
         /// Adds a new row to the table, a "row" measures the occurrence
         /// of a specific event or measurement type e.g. time elapsed.
@@ -42,7 +41,8 @@ namespace gauge
         /// Called when new results are ready to be registered. This
         /// function essentially adds a new column to the table for all
         /// current rows, with zero initialized values.
-        /// @param iterations The number of iterations performed for this run.
+        /// @param iterations The number of iterations performed for this
+        ///        run.
         void add_run(uint64_t iterations);
 
         /// Updates the result for a specific row
@@ -50,7 +50,11 @@ namespace gauge
         double& operator[](const std::string &row);
 
         /// @return The number of runs performed
-        uint32_t runs();
+        uint32_t runs() const;
+
+        /// Set the unit of the results store in the table
+        /// @param unit The unit used.
+        void set_unit(const std::string &unit);
 
         /// @return The unit of the results stored in the table
         const std::string& unit() const;
@@ -90,6 +94,11 @@ namespace gauge
 
         /// The results per row
         std::map<std::string, std::vector<double> > m_results;
+
+        /// Keeps track of which rows have been updated, this
+        /// it to prevent multiple writers overwriting each other
+        /// by accident
+        std::map<std::string, bool> m_updated;
     };
 
 }
