@@ -52,37 +52,15 @@ namespace gauge
         gauge::runner::instance().register_options(options);
     }
 
-    void python_printer::start_benchmark()
-    { }
-
     void python_printer::benchmark_result(const benchmark &info,
-                                          const results &result)
+                                          const table &results)
     {
         pydict benchmark_dict;
 
         benchmark_dict.add("testcase", info.testcase_name());
         benchmark_dict.add("benchmark", info.benchmark_name());
-        benchmark_dict.add("unit", info.unit_text());
-
-        if(info.has_configurations())
-        {
-            benchmark_dict.add("config", info.get_current_configuration());
-        }
-
-        benchmark_dict.add("data", result.m_results);
-        benchmark_dict.add("iterations", result.m_iterations);
-
-        m_list.add(benchmark_dict);
-    }
-
-    void python_printer::benchmark_result(uint32_t runs,
-                                          const benchmark& info,
-                                          const std::vector<table>& results)
-    {
-        pydict benchmark_dict;
-
-        benchmark_dict.add("testcase", info.testcase_name());
-        benchmark_dict.add("benchmark", info.benchmark_name());
+        benchmark_dict.add("unit", results.unit());
+        benchmark_dict.add("iterations", results.iterations());
 
         if(info.has_configurations())
         {
@@ -90,26 +68,15 @@ namespace gauge
         }
 
         pydict table_dict;
-        for(const auto& t : results)
+        for(const auto& r: results)
         {
-            for(const auto& r: t)
-            {
-                pydict result_dict;
-                result_dict.add("unit", t.unit());
-                result_dict.add("iterations", t.iterations());
-                result_dict.add("values", r.second);
-
-                table_dict.add(r.first, result_dict);
-            }
+            table_dict.add(r.first, r.second);
         }
 
-        benchmark_dict.add("result", table_dict);
+        benchmark_dict.add("results", table_dict);
 
         m_list.add(benchmark_dict);
-
-
     }
-
 
     void python_printer::end_benchmark()
     {

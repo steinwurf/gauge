@@ -19,8 +19,8 @@ public:
         }
     }
 
-    uint32_t m_limit;
     uint32_t m_count;
+    uint32_t m_limit;
 };
 
 /// A custom benchmark where we do not measure time
@@ -32,18 +32,6 @@ public:
 class custom_measurement : public gauge::benchmark
 {
 public:
-
-    void init()
-    {
-        m_counts = gauge::table();
-        m_steps = gauge::table();
-
-        m_counts.set_unit("counts");
-        m_counts.add_row("counts");
-        m_steps.set_unit("step_size");
-        m_steps.add_row("steps");
-
-    }
 
     void start()
     {
@@ -68,23 +56,10 @@ public:
     std::string unit_text() const
     { return "counts"; }
 
-    void store_run()
+    void store_run(gauge::table& results)
     {
-        m_counts.add_run(iteration_count());
-        m_steps.add_run(iteration_count());
-
-        double diff = static_cast<double>(m_new_count - m_old_count);
-
-        m_counts["counts"] = diff;
-        m_steps["steps"] = m_limit / diff;
+        results["counts"] = measurement();
     }
-
-    void store_table(std::vector<gauge::table> &results)
-    {
-        results.push_back(m_counts);
-        results.push_back(m_steps);
-    }
-
 
     /// The class being bench-marked
     benchmark_me m_benchmark_me;

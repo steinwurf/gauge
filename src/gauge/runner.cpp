@@ -301,7 +301,7 @@ namespace gauge
         }
 
         table results;
-        results->set_unit(benchmark->unit());
+        results.set_unit(benchmark->unit_text());
 
         assert(runs > 0);
         uint32_t run = 0;
@@ -314,15 +314,17 @@ namespace gauge
 
             if(benchmark->accept_measurement())
             {
-                results.add_run(benchmark->iterations());
+                results.add_run(benchmark->iteration_count());
                 benchmark->store_run(results);
                 ++run;
             }
         }
 
+        assert(results.runs() == run);
+
         for(auto& printer : m_impl->m_printers)
         {
-            printer->benchmark_result(runs, *benchmark, results);
+            printer->benchmark_result(*benchmark, results);
         }
 
         m_impl->m_current_benchmark = benchmark_ptr();

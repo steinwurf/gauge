@@ -13,6 +13,8 @@ namespace gauge
     void table::add_row(const std::string &row)
     {
         assert(m_results.find(row) == m_results.end());
+        assert(m_updated.find(row) == m_updated.end());
+
         m_results[row].resize(m_runs, 0);
         m_updated[row] = false;
     }
@@ -38,6 +40,9 @@ namespace gauge
     {
         if(m_results.find(row) == m_results.end())
             add_row(row);
+
+        assert(m_results.find(row) != m_results.end());
+        assert(m_updated.find(row) != m_updated.end());
 
         assert(m_updated[row] == false);
         m_updated[row] = true;

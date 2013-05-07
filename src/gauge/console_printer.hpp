@@ -74,9 +74,8 @@ namespace gauge
         }
 
 
-        void benchmark_result(uint32_t runs,
-                              const benchmark &info,
-                              const std::vector<table> &results)
+        void benchmark_result(const benchmark &info,
+                              const table &results)
         {
 
             // Describe the beginning of the run.
@@ -84,8 +83,8 @@ namespace gauge
                       << console::textdefault << " "
                       << info.testcase_name() << "."
                       << info.benchmark_name()
-                      << " (" << runs
-                      << (runs == 1 ? " run)" : " runs)")
+                      << " (" << results.runs()
+                      << (results.runs() == 1 ? " run)" : " runs)")
                       << std::endl;
 
             if(info.has_configurations())
@@ -95,29 +94,14 @@ namespace gauge
                           << info.get_current_configuration() << std::endl;
             }
 
-            for(const auto& t : results)
-            {
-                assert(runs == t.runs());
-
-                std::cout << console::textgreen << "[   RESULT ] "
-                          << console::textdefault;
-
-                print_result(info, t);
-            }
-
-            std::cout << console::textgreen << "[----------] "
-                      << console::textdefault << std::endl;
-        }
-
-        void print_result(const benchmark &info,
-                          const table &result)
-        {
+            std::cout << console::textgreen << "[   RESULT ] "
+                      << console::textdefault;
 
             statistics iter = calculate_statistics(
-                result.iterations().cbegin(),
-                result.iterations().cend());
+                results.iterations().cbegin(),
+                results.iterations().cend());
 
-            for(const auto& r : result)
+            for(const auto& r : results)
             {
                 statistics res = calculate_statistics(
                     r.second.cbegin(),
@@ -129,13 +113,15 @@ namespace gauge
                           << console::textgreen << "[          ] "
                           << console::textdefault
                           << "       Average result: " << res.m_mean
-                          << " " << result.unit() << std::endl;
+                          << " " << results.unit() << std::endl;
 
-                print("Max:", result.unit(), res.m_max, res.m_mean);
-                print("Min:", result.unit(), res.m_min, res.m_mean);
+                print("Max:", results.unit(), res.m_max, res.m_mean);
+                print("Min:", results.unit(), res.m_min, res.m_mean);
 
             }
 
+            std::cout << console::textgreen << "[----------] "
+                      << console::textdefault << std::endl;
         }
 
         void print(std::string name, std::string unit,

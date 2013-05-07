@@ -23,7 +23,7 @@ TEST(TestTable, test_table)
     t.add_run(100);
     t["ok"] = 6.5;
 
-    t.add_row("blabla");
+    // Check the operator[] with a non-existing row
     t["blabla"] = 342.23;
 
     t.add_run(1000);

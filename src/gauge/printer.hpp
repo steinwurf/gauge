@@ -22,23 +22,14 @@ namespace gauge
         { }
 
         /// Called when the benchmark program is started
-        virtual void start_benchmark(/*const gauge_info &info*/)
+        virtual void start_benchmark()
         { }
 
         /// Called when a result from a benchmark is ready
-        /// @param result the benchmark results
+        /// @param info The benchmark
+        /// @param result The benchmark results
         virtual void benchmark_result(const benchmark &/*info*/,
-                                      const results &/*result*/)
-        { }
-
-        virtual void benchmark_result(uint32_t/*runs*/,
-                                      const benchmark &/*info*/,
-                                      const temp_results &/*result*/)
-        { }
-
-        virtual void benchmark_result(uint32_t/*runs*/,
-                                      const benchmark &/*info*/,
-                                      const std::vector<table> &/*result*/)
+                                      const table &/*results*/)
         { }
 
         /// Add options to the available commandline arguments
@@ -46,7 +37,7 @@ namespace gauge
         { }
 
         /// Called when the benchmark program is finished
-        virtual void end_benchmark(/*const gauge_info &info*/)
+        virtual void end_benchmark()
         { }
 
     };

@@ -245,20 +245,14 @@ namespace gauge
 
     public: // From printer
 
-        /// @see printer::start_benchmark()
-        void start_benchmark(/*const gauge_info &infouint32_t benchmarks*/);
-
-        /// @see printer::benchmark_result()
-        void benchmark_result(const benchmark &info, const results &result);
-
-        void benchmark_result(uint32_t runs, const benchmark& info,
-                              const std::vector<table>& result);
+        /// @see printer::benchmark_result(const benchmark&,const table&)
+        void benchmark_result(const benchmark& info, const table& results);
 
         /// @see printer::end_benchmark()
-        void end_benchmark(/*const benchmark &info*/);
+        void end_benchmark();
 
         /// @see printer::set_options(po::variables_map&);
-        void set_options(po::variables_map& /*options*/);
+        void set_options(po::variables_map& options);
 
     private:
 

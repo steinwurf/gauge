@@ -36,9 +36,6 @@ namespace gauge
         /// Stores whether the measurement was accepted
         bool m_accepted;
 
-        /// Final result
-        table m_table;
-
     };
 
 
@@ -66,9 +63,6 @@ namespace gauge
         m_impl->m_threshold = 10000.0;
         m_impl->m_started = false;
         m_impl->m_stopped = false;
-        m_impl->m_table = table();
-        m_impl->m_table.set_unit("microseconds");
-        m_impl->m_table.add_row("time");
     }
 
     uint64_t time_benchmark::iteration_count() const
@@ -171,15 +165,9 @@ namespace gauge
         return "microseconds";
     }
 
-    void time_benchmark::store_table(std::vector<table> &results)
+    void time_benchmark::store_run(table &results)
     {
-        results.push_back(m_impl->m_table);
-    }
-
-    void time_benchmark::store_run()
-    {
-        m_impl->m_table.add_run(iteration_count());
-        m_impl->m_table["time"] = measurement();
+        results["time"] = measurement();
     }
 
 }
