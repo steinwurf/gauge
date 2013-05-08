@@ -38,6 +38,8 @@ namespace gauge
             return m_id;
         }
 
+        /// Store the results of the test run in the result table
+        /// @param results The table containing the final results
         virtual void store_run(table &results) = 0;
 
         /// Add options to the available commandline arguments
@@ -120,9 +122,6 @@ namespace gauge
 
         /// @return true if the previous measurement was accepted
         virtual bool accept_measurement(){ return true; }
-
-        /// @return the result of the latest measurement
-        virtual double measurement() = 0;
 
         /// Returns the unit we are measuring
         virtual std::string unit_text() const = 0;
