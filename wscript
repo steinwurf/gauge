@@ -28,8 +28,8 @@ def options(opt):
     bundle.add_dependency(opt,
         resolve.ResolveGitMajorVersion(
             name = 'boost',
-            git_repository = 'git://github.com/steinwurf/external-boost.git',
-            major_version = 4))
+            git_repository = 'git://github.com/steinwurf/external-boost-light.git',
+            major_version = 1))
 
     opt.load('wurf_dependency_bundle')
     opt.load('wurf_tools')
