@@ -78,50 +78,50 @@ namespace gauge
                               const table &results)
         {
 
-            // Describe the beginning of the run.
-            std::cout << std::fixed << console::textgreen << "[ RUN      ]"
-                      << console::textdefault << " "
-                      << info.testcase_name() << "."
-                      << info.benchmark_name()
-                      << " (" << results.runs()
-                      << (results.runs() == 1 ? " run)" : " runs)")
-                      << std::endl;
+            // // Describe the beginning of the run.
+            // std::cout << std::fixed << console::textgreen << "[ RUN      ]"
+            //           << console::textdefault << " "
+            //           << info.testcase_name() << "."
+            //           << info.benchmark_name()
+            //           << " (" << results.runs()
+            //           << (results.runs() == 1 ? " run)" : " runs)")
+            //           << std::endl;
 
-            if(info.has_configurations())
-            {
-                std::cout << console::textyellow << "[  CONFIG  ]"
-                          << console::textdefault << " "
-                          << info.get_current_configuration() << std::endl;
-            }
+            // if(info.has_configurations())
+            // {
+            //     std::cout << console::textyellow << "[  CONFIG  ]"
+            //               << console::textdefault << " "
+            //               << info.get_current_configuration() << std::endl;
+            // }
 
-            std::cout << console::textgreen << "[   RESULT ] "
-                      << console::textdefault;
+            // std::cout << console::textgreen << "[   RESULT ] "
+            //           << console::textdefault;
 
-            statistics iter = calculate_statistics(
-                results.iterations().cbegin(),
-                results.iterations().cend());
+            // statistics iter = calculate_statistics(
+            //     results.iterations().cbegin(),
+            //     results.iterations().cend());
 
-            for(const auto& r : results)
-            {
-                statistics res = calculate_statistics(
-                    r.second.cbegin(),
-                    r.second.cend());
+            // for(const auto& r : results)
+            // {
+            //     statistics res = calculate_statistics(
+            //         r.second.cbegin(),
+            //         r.second.cend());
 
-                std::cout << r.first << " "
-                          << "(" << iter.m_mean << " iterations per run):"
-                          << std::endl
-                          << console::textgreen << "[          ] "
-                          << console::textdefault
-                          << "       Average result: " << res.m_mean
-                          << " " << results.unit() << std::endl;
+            //     std::cout << r.first << " "
+            //               << "(" << iter.m_mean << " iterations per run):"
+            //               << std::endl
+            //               << console::textgreen << "[          ] "
+            //               << console::textdefault
+            //               << "       Average result: " << res.m_mean
+            //               << " " << results.unit() << std::endl;
 
-                print("Max:", results.unit(), res.m_max, res.m_mean);
-                print("Min:", results.unit(), res.m_min, res.m_mean);
+            //     print("Max:", results.unit(), res.m_max, res.m_mean);
+            //     print("Min:", results.unit(), res.m_min, res.m_mean);
 
-            }
+            // }
 
-            std::cout << console::textgreen << "[----------] "
-                      << console::textdefault << std::endl;
+            // std::cout << console::textgreen << "[----------] "
+            //           << console::textdefault << std::endl;
         }
 
         void print(std::string name, std::string unit,

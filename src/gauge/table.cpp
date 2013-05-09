@@ -6,115 +6,115 @@
 namespace gauge
 {
 
-    table::table() :
-        m_runs(0)
+    table::table()
+        : m_rows(0)
     { }
 
-    void table::add_row(const std::string &row)
+    void table::add_column(const std::string &column)
     {
-        assert(m_results.find(row) == m_results.end());
-        assert(m_updated.find(row) == m_updated.end());
+        assert(m_columns.find(column) == m_columns.end());
+        assert(m_columns_info.find(column) == m_columns_info.end());
 
-        m_results[row].resize(m_runs, 0);
-        m_updated[row] = false;
+        m_columns[column].resize(m_rows);
+        auto& info = m_columns_info[column];
+
+        info.m_updated = false;
+        // info.m_fill = fill;
+        // if(!m_fill
     }
 
-    void table::add_run(uint64_t iterations)
+    void table::add_row()
     {
-        ++m_runs;
-        m_iterations.push_back(iterations);
-        assert(m_runs == m_iterations.size());
+        ++m_rows;
 
-        for(auto& v: m_results)
+        for(auto& v: m_columns)
         {
-            v.second.resize(m_runs, 0);
+            v.second.resize(m_rows);
         }
 
-        for(auto& v: m_updated)
+        for(auto& v: m_columns_info)
         {
-            v.second = false;
+            v.second.m_updated = false;
         }
     }
 
-    double& table::operator[](const std::string &row)
+    void table::set_value(const std::string& column, const boost::any& value)
     {
-        if(m_results.find(row) == m_results.end())
-            add_row(row);
+        if(m_columns.find(column) == m_columns.end())
+            add_column(column);
 
-        assert(m_results.find(row) != m_results.end());
-        assert(m_updated.find(row) != m_updated.end());
+        assert(m_columns.find(column) != m_columns.end());
+        assert(m_columns_info.find(column) != m_columns_info.end());
 
-        assert(m_updated[row] == false);
-        m_updated[row] = true;
+        assert(m_columns_info[column].m_updated == false);
 
-        assert(m_runs > 0); // Did you forget to call add_row(..)
-        auto& v = m_results[row];
-        assert(v.size() == m_runs);
 
-        // Access the "current" run if we are on run 1,
+        assert(m_rows > 0); // Did you forget to call add_row(..)
+        auto& v = m_columns[column];
+        assert(v.size() == m_rows);
+
+        // Access the "current" row if we are on row 1,
         // this is index 0
-        return v[m_runs - 1];
+        v[m_rows - 1] = value;
     }
 
-    uint32_t table::runs() const
+    // uint32_t table::runs() const
+    // {
+    //     return m_runs;
+    // }
+
+    // void table::set_unit(const std::string &unit)
+    // {
+    //     m_unit = unit;
+    // }
+
+    // const std::string& table::unit() const
+    // {
+    //     assert(!m_unit.empty());
+    //     return m_unit;
+    // }
+
+    void table::print(std::ostream& o, const default_any_print& fmt)
     {
-        return m_runs;
-    }
 
-    void table::set_unit(const std::string &unit)
-    {
-        m_unit = unit;
-    }
-
-    const std::string& table::unit() const
-    {
-        assert(!m_unit.empty());
-        return m_unit;
-    }
-
-    void table::print(std::ostream& o)
-    {
-
-        o << "unit: " << m_unit << std::endl;
-
-        o << "  " << "iterations: ";
-        for(auto& i: m_iterations)
+        for(auto& v: m_columns)
         {
-            o << i << " ";
+            o << v.first << "\t";
         }
         o << std::endl;
 
-        for(auto& v: m_results)
+        for(auto& v: m_columns)
         {
             o << "  " << v.first << ": ";
-            for(auto& r: v.second)
+            for(const auto& r: v.second)
             {
-                o << r << " ";
+                fmt.print(o, r);
+                o << " ";
             }
             o << std::endl;
         }
     }
 
-    const std::vector<double>& table::row(const std::string &row) const
-    {
-        assert(m_results.find(row) != m_results.end());
-        return m_results.at(row);
-    }
+    // const std::vector<double>& table::row(const std::string &row) const
+    // {
+    //     assert(m_results.find(row) != m_results.end());
+    //     return m_results.at(row);
+    // }
 
-    const std::vector<uint64_t>& table::iterations() const
-    {
-        return m_iterations;
-    }
+    // const std::vector<uint64_t>& table::iterations() const
+    // {
+    //     return m_iterations;
+    // }
 
-    table::const_iterator table::begin() const
-    {
-        return m_results.cbegin();
-    }
+    // table::const_iterator table::begin() const
+    // {
+    //     return m_results.cbegin();
+    // }
 
-    table::const_iterator table::end() const
-    {
-        return m_results.cend();
-    }
+    // table::const_iterator table::end() const
+    // {
+    //     return m_results.cend();
+    // }
 
 
 }

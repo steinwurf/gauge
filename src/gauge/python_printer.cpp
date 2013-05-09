@@ -55,27 +55,30 @@ namespace gauge
     void python_printer::benchmark_result(const benchmark &info,
                                           const table &results)
     {
-        pydict benchmark_dict;
+        // pydict benchmark_dict;
 
-        benchmark_dict.add("testcase", info.testcase_name());
-        benchmark_dict.add("benchmark", info.benchmark_name());
-        benchmark_dict.add("unit", results.unit());
-        benchmark_dict.add("iterations", results.iterations());
+        // benchmark_dict.add("testcase", info.testcase_name());
+        // benchmark_dict.add("benchmark", info.benchmark_name());
+        // benchmark_dict.add("unit", results.unit());
+        // benchmark_dict.add("iterations", results.iterations());
 
-        if(info.has_configurations())
-        {
-            benchmark_dict.add("config", info.get_current_configuration());
-        }
+        // if(info.has_configurations())
+        // {
+        //     const auto& c = info.get_current_configuration();
+        //     for(const auto& v : c)
+        //     {
+        //         std::stringstream ss;
+        //         v.second->print(ss, python_format());
+        //         benchmark_dict.add(v.first, ss.str());
+        //     }
+        // }
 
-        pydict table_dict;
-        for(const auto& r: results)
-        {
-            table_dict.add(r.first, r.second);
-        }
+        // for(const auto& r: results)
+        // {
+        //     benchmark_dict.add(r.first, r.second);
+        // }
 
-        benchmark_dict.add("results", table_dict);
-
-        m_list.add(benchmark_dict);
+        // m_list.add(benchmark_dict);
     }
 
     void python_printer::end_benchmark()
