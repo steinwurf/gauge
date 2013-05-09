@@ -6,9 +6,13 @@
 
 TEST(TestTable, test_table)
 {
+
     std::string unit("seconds");
 
     gauge::table t;
+
+
+
     // t.set_unit(unit);
 
     // EXPECT_EQ(t.unit(), unit);

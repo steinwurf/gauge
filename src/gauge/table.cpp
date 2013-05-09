@@ -23,6 +23,15 @@ namespace gauge
         // if(!m_fill
     }
 
+    void table::set_column_type(const std::string& column, const std::type_info& info)
+    {
+
+    }
+
+    void table::set_column_fill(const std::string& column, const boost::any& value)
+    {
+    }
+
     void table::add_row()
     {
         ++m_rows;
@@ -41,7 +50,11 @@ namespace gauge
     void table::set_value(const std::string& column, const boost::any& value)
     {
         if(m_columns.find(column) == m_columns.end())
+        {
             add_column(column);
+            assert(!value.empty());
+            set_column_type(column, value.type());
+        }
 
         assert(m_columns.find(column) != m_columns.end());
         assert(m_columns_info.find(column) != m_columns_info.end());

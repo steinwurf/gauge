@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstdint>
 #include <iostream>
+#include <cassert>
 
 #include <boost/any.hpp>
 
@@ -20,32 +21,42 @@ namespace gauge
             s << val;
         }
 
-        virtual void print(std::ostream &s, short val) const
+        virtual void print(std::ostream &s, int8_t val) const
         {
             s << val;
         }
 
-        virtual void print(std::ostream &s, unsigned short val) const
+        virtual void print(std::ostream &s, uint8_t val) const
         {
             s << val;
         }
 
-        virtual void print(std::ostream &s, int val) const
+        virtual void print(std::ostream &s, int16_t val) const
         {
             s << val;
         }
 
-        virtual void print(std::ostream &s, unsigned int val) const
+        virtual void print(std::ostream &s, uint16_t val) const
         {
             s << val;
         }
 
-        virtual void print(std::ostream &s, long val) const
+        virtual void print(std::ostream &s, int32_t val) const
         {
             s << val;
         }
 
-        virtual void print(std::ostream &s, unsigned long val) const
+        virtual void print(std::ostream &s, uint32_t val) const
+        {
+            s << val;
+        }
+
+        virtual void print(std::ostream &s, int64_t val) const
+        {
+            s << val;
+        }
+
+        virtual void print(std::ostream &s, uint64_t val) const
         {
             s << val;
         }
@@ -60,16 +71,6 @@ namespace gauge
             s << val;
         }
 
-        virtual void print(std::ostream &s, long double val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, const void* val) const
-        {
-            s << val;
-        }
-
         virtual void print(std::ostream &s, const std::string &val) const
         {
             s << val;
@@ -79,6 +80,43 @@ namespace gauge
         {
             if(typeid(bool) == val.type())
                 return print(s, boost::any_cast<bool>(val));
+
+            if(typeid(int8_t) == val.type())
+                return print(s, boost::any_cast<int8_t>(val));
+
+            if(typeid(uint8_t) == val.type())
+                return print(s, boost::any_cast<uint8_t>(val));
+
+            if(typeid(int16_t) == val.type())
+                return print(s, boost::any_cast<int16_t>(val));
+
+            if(typeid(uint16_t) == val.type())
+                return print(s, boost::any_cast<uint16_t>(val));
+
+            if(typeid(int32_t) == val.type())
+                return print(s, boost::any_cast<int32_t>(val));
+
+            if(typeid(uint32_t) == val.type())
+                return print(s, boost::any_cast<uint32_t>(val));
+
+            if(typeid(int64_t) == val.type())
+                return print(s, boost::any_cast<int64_t>(val));
+
+            if(typeid(uint64_t) == val.type())
+                return print(s, boost::any_cast<uint64_t>(val));
+
+            if(typeid(float) == val.type())
+                return print(s, boost::any_cast<float>(val));
+
+            if(typeid(double) == val.type())
+                return print(s, boost::any_cast<double>(val));
+
+            if(typeid(std::string) == val.type())
+                return print(s, boost::any_cast<std::string>(val));
+
+            // We don't know how to convert this type
+            assert(0);
+
         }
 
 
@@ -117,6 +155,8 @@ namespace gauge
 
         void add_column(const std::string& column);
 
+        void set_column_type(const std::string& column, const std::type_info& info);
+
     //     /// Called when new results are ready to be registered. This
     //     /// function essentially adds a new column to the table for all
     //     /// current rows, with zero initialized values.
@@ -129,6 +169,7 @@ namespace gauge
         {
             set_value(column, boost::any(value));
         }
+
         void set_value(const std::string& column, const boost::any& value);
 
     //     /// Updates the result for a specific row
@@ -184,7 +225,7 @@ namespace gauge
         struct column_info
         {
             bool m_updated;
-            //std::type_info::hash_code m_hash_code;
+            size_t m_hash_code;
             // boost::any m_fill;
         };
 
