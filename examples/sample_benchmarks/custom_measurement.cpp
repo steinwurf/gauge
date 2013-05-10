@@ -58,7 +58,7 @@ public:
 
     void store_run(gauge::table& results)
     {
-        results["counts"] = measurement();
+        results.set_value("counts", measurement());
     }
 
     /// The class being bench-marked

@@ -14,13 +14,8 @@ namespace gauge
         /// The output file stream
         std::ofstream m_out;
 
-        ///
-        std::set<std::string> m_configs;
-
-        ///
-        std::set<std::string> m_results;
-
-        std::map<std::string, std::vector<boost::spirit::hold_any> > m_csv;
+        /// The output table
+        table m_final;
 
     };
 
@@ -44,18 +39,21 @@ namespace gauge
     {
     }
 
-    void csv_printer::add_row()
-    {
-        for(auto& i : m_impl->m_csv)
-        {
-            i.second.resize(i.second.size() + 1);
-        }
-    }
+    // void csv_printer::add_row()
+    // {
+    //     for(auto& i : m_impl->m_csv)
+    //     {
+    //         i.second.resize(i.second.size() + 1);
+    //     }
+    // }
 
     void csv_printer::benchmark_result(const benchmark &info,
                                        const table &results)
     {
-        init_header(info, results);
+        m_impl->m_final.merge(results);
+
+        // results.print(std::cout);
+        // init_header(info, results);
         // pydict benchmark_dict;
 
         // benchmark_dict.add("testcase", info.testcase_name());
@@ -103,17 +101,7 @@ namespace gauge
     void csv_printer::end_benchmark()
     {
 
-        std::cout << "Print empty holdany" << std::endl;
-
-        boost::spirit::hold_any a;
-        boost::any ba;
-
-        std::string sss("dsfsdljkfjdsl");
-        auto b = boost::spirit::hold_any(sss);
-        a = b;
-
-        std::cout << ", " << a << ", " << std::endl;
-
+        m_impl->m_final.print(std::cout);
         // std::stringstream header;
         // header << "benchmark" << ","
         //        << "testcase" << ","

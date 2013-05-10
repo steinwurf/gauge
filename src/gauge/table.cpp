@@ -35,7 +35,10 @@ namespace gauge
     {
         assert(!value.empty());
 
-        assert(m_columns.find(column) != m_columns.end());
+        if(m_columns.find(column) == m_columns.end())
+        {
+            add_column(column);
+        }
 
         auto& c = m_columns[column];
 
@@ -107,36 +110,36 @@ namespace gauge
         return m_rows;
     }
 
-    void table::print(std::ostream& o, const format& fmt)
+    void table::print(std::ostream& o, const format& fmt) const
     {
 
-        for(auto& c: m_columns)
+        for(const auto& c: m_columns)
         {
             o << "  " << c.first << ": ";
+
+            bool first = true;
             for(const auto& v: c.second.m_values)
             {
+                if(!first)
+                    o << ",";
                 fmt.print(o, v);
                 o << " ";
+
+                first = false;
             }
             o << std::endl;
         }
     }
 
+    table::const_iterator table::begin() const
+    {
+        return m_columns.cbegin();
+    }
 
-    // const std::vector<uint64_t>& table::iterations() const
-    // {
-    //     return m_iterations;
-    // }
-
-    // table::const_iterator table::begin() const
-    // {
-    //     return m_results.cbegin();
-    // }
-
-    // table::const_iterator table::end() const
-    // {
-    //     return m_results.cend();
-    // }
+    table::const_iterator table::end() const
+    {
+        return m_columns.cend();
+    }
 
 
 }

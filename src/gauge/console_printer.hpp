@@ -15,46 +15,17 @@ namespace gauge
     {
     public: // From printer
 
-        /// @see printer::start_benchmark
-        void start_benchmark(/*const gauge_info &info*/)
-        {
-/*
-            std::cout << std::fixed;
-            std::cout << console::textGreen << "[==========]"
-                      << console::textDefault << " Running "
-                      << m_benchmarks
-                      << (m_benchmarks == 1 ?
-                          " benchmark." :
-                          " benchmarks.")
-                          << std::endl; */
-        }
-
         void benchmark_result(const benchmark &info,
-                              const results &result)
+                              const table &results)
         {
+
             // Describe the beginning of the run.
             std::cout << std::fixed << console::textgreen << "[ RUN      ]"
                       << console::textdefault << " "
                       << info.testcase_name() << "."
                       << info.benchmark_name()
-                      << " (" << result.m_results.size()
-                      << (result.m_results.size() == 1 ? " run)" : " runs)")
-                      << std::endl;
-
-            statistics res = calculate_statistics(
-                result.m_results.begin(),
-                result.m_results.end());
-
-            statistics iter = calculate_statistics(
-                result.m_iterations.begin(),
-                result.m_iterations.end());
-
-            // Describe the end of the run.
-            std::cout << console::textgreen << "[     DONE ]"
-                      << console::textdefault << " "
-                      << info.testcase_name() << "."
-                      << info.benchmark_name() << " "
-                      << "(" << iter.m_mean << " iterations per run)"
+                      << " (" << results.rows()
+                      << (results.rows() == 1 ? " run)" : " runs)")
                       << std::endl;
 
             if(info.has_configurations())
@@ -64,64 +35,43 @@ namespace gauge
                           << info.get_current_configuration() << std::endl;
             }
 
-            std::cout << console::textyellow << "[   RUNS   ] "
-                      << console::textdefault
-                      << "       Average result: " << res.m_mean
-                      << " " << info.unit_text() << std::endl;
+            std::cout << console::textgreen << "[   RESULT ] "
+                      << console::textdefault;
 
-            print("Max:", info.unit_text(), res.m_max, res.m_mean);
-            print("Min:", info.unit_text(), res.m_min, res.m_mean);
-        }
+            std::vector<uint64_t> iterations =
+                results.column_as<uint64_t>("iterations");
 
+            statistics iter = calculate_statistics(
+                iterations.cbegin(),
+                iterations.cend());
 
-        void benchmark_result(const benchmark &info,
-                              const table &results)
-        {
+            for(const auto& r : results)
+            {
+                if(!results.is_column<double>(r.first))
+                    continue;
 
-            // // Describe the beginning of the run.
-            // std::cout << std::fixed << console::textgreen << "[ RUN      ]"
-            //           << console::textdefault << " "
-            //           << info.testcase_name() << "."
-            //           << info.benchmark_name()
-            //           << " (" << results.runs()
-            //           << (results.runs() == 1 ? " run)" : " runs)")
-            //           << std::endl;
+                std::vector<double> value =
+                    results.column_as<double>(r.first);
 
-            // if(info.has_configurations())
-            // {
-            //     std::cout << console::textyellow << "[  CONFIG  ]"
-            //               << console::textdefault << " "
-            //               << info.get_current_configuration() << std::endl;
-            // }
+                statistics res = calculate_statistics(
+                    value.cbegin(),
+                    value.cend());
 
-            // std::cout << console::textgreen << "[   RESULT ] "
-            //           << console::textdefault;
+                std::cout << r.first << " "
+                          << "(" << iter.m_mean << " iterations per run):"
+                          << std::endl
+                          << console::textgreen << "[          ] "
+                          << console::textdefault
+                          << "       Average result: " << res.m_mean
+                          << " " << info.unit_text() << std::endl;
 
-            // statistics iter = calculate_statistics(
-            //     results.iterations().cbegin(),
-            //     results.iterations().cend());
+                print("Max:", info.unit_text(), res.m_max, res.m_mean);
+                print("Min:", info.unit_text(), res.m_min, res.m_mean);
 
-            // for(const auto& r : results)
-            // {
-            //     statistics res = calculate_statistics(
-            //         r.second.cbegin(),
-            //         r.second.cend());
+            }
 
-            //     std::cout << r.first << " "
-            //               << "(" << iter.m_mean << " iterations per run):"
-            //               << std::endl
-            //               << console::textgreen << "[          ] "
-            //               << console::textdefault
-            //               << "       Average result: " << res.m_mean
-            //               << " " << results.unit() << std::endl;
-
-            //     print("Max:", results.unit(), res.m_max, res.m_mean);
-            //     print("Min:", results.unit(), res.m_min, res.m_mean);
-
-            // }
-
-            // std::cout << console::textgreen << "[----------] "
-            //           << console::textdefault << std::endl;
+            std::cout << console::textgreen << "[----------] "
+                      << console::textdefault << std::endl;
         }
 
         void print(std::string name, std::string unit,

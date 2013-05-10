@@ -11,15 +11,9 @@ TEST(TestTable, test_table)
 
     gauge::table t;
 
-
-
-    // t.set_unit(unit);
-
-    // EXPECT_EQ(t.unit(), unit);
-
     t.add_column("ok");
     t.add_column("unit");
-    t.set_column_fill("unit", std::string("MB/s"));
+    t.set_column_fill("unit", unit);
     t.set_column_fill("ok", true);
     t.add_row();
     t.set_value("ok", false);

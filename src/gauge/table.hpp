@@ -35,6 +35,17 @@ namespace gauge
     {
     public:
 
+        /// Represents a column in the table
+        struct column
+        {
+            std::vector<boost::any> m_values;
+            bool m_updated;
+            boost::optional<size_t> m_type_hash;
+            boost::any m_fill;
+        };
+
+    public:
+
         /// Construct a new table
         table();
 
@@ -57,11 +68,11 @@ namespace gauge
         void set_column_fill(const std::string& column,
                              const boost::any& fill);
 
-    //     /// Called when new results are ready to be registered. This
-    //     /// function essentially adds a new column to the table for all
-    //     /// current rows, with zero initialized values.
-    //     /// @param iterations The number of iterations performed for this
-    //     ///        run.
+        /// Called when new results are ready to be registered. This
+        /// function essentially adds a new column to the table for all
+        /// current rows, with zero initialized values.
+        /// @param iterations The number of iterations performed for this
+        ///        run.
         void add_row();
 
         template<class T>
@@ -77,19 +88,26 @@ namespace gauge
             set_value(column, std::string(value));
         }
 
+        void merge(const table& src)
+        {
+            for(uint32_t i = 0; i < src.rows(); ++i)
+            {
+                add_row();
+
+                for(const auto& t : src)
+                {
+                    set_value(t.first, t.second.m_values[i]);
+                }
+
+            }
+        }
+
         /// @return The number of rows
         uint32_t rows() const;
 
-    //     /// Set the unit of the results store in the table
-    //     /// @param unit The unit used.
-    //     void set_unit(const std::string &unit);
-
-    //     /// @return The unit of the results stored in the table
-    //     const std::string& unit() const;
-
-    //     /// Print the table to the output stream
-    //     /// @param o The output stream to which the table should be printed.
-        void print(std::ostream& o, const format& fmt = format());
+        /// Print the table to the output stream
+        /// @param o The output stream to which the table should be printed.
+        void print(std::ostream& o, const format& fmt = format()) const;
 
         template<class T>
         bool is_column(const std::string &column) const
@@ -99,9 +117,6 @@ namespace gauge
 
         bool is_column(const std::string &column,
                        const std::type_info& type) const;
-
-    //     /// @return The vector tracking the iterations per run
-    //     const std::vector<uint64_t>& iterations() const;
 
         /// @return The vector containing the results for a specific column
         template<class T>
@@ -126,39 +141,21 @@ namespace gauge
 
         }
 
+    public: // Iterator access to the results
 
-    // public: // Iterator access to the results
+        typedef std::map<std::string, column>::const_iterator
+            const_iterator;
 
-    //     typedef std::map<std::string, std::vector<double> >::const_iterator
-    //         const_iterator;
+        /// @return const iterator to the first row
+        const_iterator begin() const;
 
-    //     /// @return const iterator to the first row
-    //     const_iterator begin() const;
+        /// @return const iterator to the last row
+        const_iterator end() const;
 
-    //     /// @return const iterator to the last row
-    //     const_iterator end() const;
+    private:
 
-    // private:
-
-    //     /// The unit of the measurements
-    //     std::string m_unit;
-
-    //     /// Keeps track of the number of columns
+        /// Keeps track of the number of columns
         uint32_t m_rows;
-
-    //     /// Keeps track of the number of iterations per run
-    //     std::vector<uint64_t> m_iterations;
-
-        /// The results per row
-        // std::map<std::string,  > m_columns;
-
-        struct column
-        {
-            std::vector<boost::any> m_values;
-            bool m_updated;
-            boost::optional<size_t> m_type_hash;
-            boost::any m_fill;
-        };
 
         /// Keeps track of which rows have been updated, this
         /// it to prevent multiple writers overwriting each other

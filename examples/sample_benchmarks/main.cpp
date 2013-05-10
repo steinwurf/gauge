@@ -13,8 +13,8 @@ int main(int argc, const char* argv[])
     gauge::runner::instance().printers().push_back(
         std::make_shared<gauge::console_printer>());
 
-    gauge::runner::instance().printers().push_back(
-        std::make_shared<gauge::python_printer>());
+    // gauge::runner::instance().printers().push_back(
+    //     std::make_shared<gauge::python_printer>());
 
     gauge::runner::instance().printers().push_back(
         std::make_shared<gauge::csv_printer>());

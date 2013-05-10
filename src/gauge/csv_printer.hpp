@@ -39,7 +39,7 @@ namespace gauge
 
         void init_header(const benchmark& info, const table& results);
 
-        void add_row();
+        // void add_row();
 
     private:
 

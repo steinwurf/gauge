@@ -301,7 +301,9 @@ namespace gauge
         }
 
         table results;
-        // results.set_unit(benchmark->unit_text());
+        results.set_column_fill("unit", benchmark->unit_text());
+        results.set_column_fill("benchmark", benchmark->benchmark_name());
+        results.set_column_fill("testcase", benchmark->testcase_name());
 
         assert(runs > 0);
         uint32_t run = 0;
@@ -314,8 +316,9 @@ namespace gauge
 
             if(benchmark->accept_measurement())
             {
-                // results.add_run(benchmark->iteration_count());
-                // benchmark->store_run(results);
+                results.add_row();
+                results.set_value("iterations", benchmark->iteration_count());
+                benchmark->store_run(results);
                 ++run;
             }
         }

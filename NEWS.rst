@@ -7,6 +7,7 @@ of every change, see the Git log.
 Latest
 ------
 * Update waf to version 1.7.9 and use the wurf_install_path tool.
+* Minor: Updated to waf-tools 2
 
 4.0.0
 -----
