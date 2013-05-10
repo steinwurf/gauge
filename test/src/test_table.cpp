@@ -16,6 +16,9 @@ TEST(TestTable, test_table)
     t.set_column_fill("unit", unit);
     t.set_column_fill("ok", true);
     t.add_row();
+
+
+
     t.set_value("ok", false);
 
     t.add_row();
