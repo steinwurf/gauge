@@ -72,12 +72,13 @@ namespace gauge
 
         void set_value(const std::string& column, const boost::any& value);
 
-    //     /// Updates the result for a specific row
-    //     /// @param row The identifier for the row
-    //     double& operator[](const std::string &row);
+        void set_value(const std::string& column, const char* value)
+        {
+            set_value(column, std::string(value));
+        }
 
-    //     /// @return The number of runs performed
-    //     uint32_t runs() const;
+        /// @return The number of rows
+        uint32_t rows() const;
 
     //     /// Set the unit of the results store in the table
     //     /// @param unit The unit used.
@@ -107,15 +108,14 @@ namespace gauge
         std::vector<T> column_as(const std::string &column) const
         {
             assert(m_columns.find(column) != m_columns.end());
-            assert(m_columns_info.find(column) != m_columns_info.end());
 
             assert(is_column<T>(column));
 
             std::vector<T> v;
 
-            const auto& m = m_columns.at(column);
+            const auto& c = m_columns.at(column);
 
-            for(const auto& i : m)
+            for(const auto& i : c.m_values)
             {
                 assert(!i.empty());
                 T t = boost::any_cast<T>(i);
@@ -150,10 +150,11 @@ namespace gauge
     //     std::vector<uint64_t> m_iterations;
 
         /// The results per row
-        std::map<std::string, std::vector<boost::any> > m_columns;
+        // std::map<std::string,  > m_columns;
 
-        struct column_info
+        struct column
         {
+            std::vector<boost::any> m_values;
             bool m_updated;
             boost::optional<size_t> m_type_hash;
             boost::any m_fill;
@@ -162,7 +163,7 @@ namespace gauge
         /// Keeps track of which rows have been updated, this
         /// it to prevent multiple writers overwriting each other
         /// by accident
-        std::map<std::string, column_info> m_columns_info;
+        std::map<std::string, column> m_columns;
 
     };
 

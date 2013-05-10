@@ -18,6 +18,7 @@ TEST(TestTable, test_table)
     // EXPECT_EQ(t.unit(), unit);
 
     t.add_column("ok");
+    t.add_column("unit");
     t.set_column_fill("unit", std::string("MB/s"));
     t.set_column_fill("ok", true);
     t.add_row();
@@ -28,7 +29,7 @@ TEST(TestTable, test_table)
 
     t.add_row();
     t.set_value("ok", false);
-    t.set_value("name", std::string("morten"));
+    t.set_value("name", "morten");
     t.set_column_fill("unit", std::string("ms"));
 
     t.add_row();
