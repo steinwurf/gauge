@@ -8,123 +8,12 @@
 #include <cassert>
 
 #include <boost/any.hpp>
+#include <boost/optional.hpp>
+
+#include "format.hpp"
 
 namespace gauge
 {
-
-    struct default_any_print
-    {
-    public:
-
-        virtual void print(std::ostream &s, bool val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, int8_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, uint8_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, int16_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, uint16_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, int32_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, uint32_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, int64_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, uint64_t val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, float val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, double val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, const std::string &val) const
-        {
-            s << val;
-        }
-
-        virtual void print(std::ostream &s, const boost::any &val) const
-        {
-            if(typeid(bool) == val.type())
-                return print(s, boost::any_cast<bool>(val));
-
-            if(typeid(int8_t) == val.type())
-                return print(s, boost::any_cast<int8_t>(val));
-
-            if(typeid(uint8_t) == val.type())
-                return print(s, boost::any_cast<uint8_t>(val));
-
-            if(typeid(int16_t) == val.type())
-                return print(s, boost::any_cast<int16_t>(val));
-
-            if(typeid(uint16_t) == val.type())
-                return print(s, boost::any_cast<uint16_t>(val));
-
-            if(typeid(int32_t) == val.type())
-                return print(s, boost::any_cast<int32_t>(val));
-
-            if(typeid(uint32_t) == val.type())
-                return print(s, boost::any_cast<uint32_t>(val));
-
-            if(typeid(int64_t) == val.type())
-                return print(s, boost::any_cast<int64_t>(val));
-
-            if(typeid(uint64_t) == val.type())
-                return print(s, boost::any_cast<uint64_t>(val));
-
-            if(typeid(float) == val.type())
-                return print(s, boost::any_cast<float>(val));
-
-            if(typeid(double) == val.type())
-                return print(s, boost::any_cast<double>(val));
-
-            if(typeid(std::string) == val.type())
-                return print(s, boost::any_cast<std::string>(val));
-
-            // We don't know how to convert this type
-            assert(0);
-
-        }
-
-
-    };
-
-
-
-
     /// The table class represents a set of measurements on for every
     /// run. The table consists of rows, the rows represent an event
     /// we have measured. In many cases we know the rows in advance,
@@ -155,7 +44,18 @@ namespace gauge
 
         void add_column(const std::string& column);
 
-        void set_column_type(const std::string& column, const std::type_info& info);
+        void set_column_type(const std::string& column,
+                             const std::type_info& type_info);
+
+        template<class T>
+        void set_column_fill(const std::string& column,
+                             const T& fill)
+        {
+            set_column_fill(column, boost::any(fill));
+        }
+
+        void set_column_fill(const std::string& column,
+                             const boost::any& fill);
 
     //     /// Called when new results are ready to be registered. This
     //     /// function essentially adds a new column to the table for all
@@ -188,13 +88,43 @@ namespace gauge
 
     //     /// Print the table to the output stream
     //     /// @param o The output stream to which the table should be printed.
-        void print(std::ostream& o, const default_any_print& fmt = default_any_print());
+        void print(std::ostream& o, const format& fmt = format());
+
+        template<class T>
+        bool is_column(const std::string &column) const
+        {
+            return is_column(column, typeid(T));
+        }
+
+        bool is_column(const std::string &column,
+                       const std::type_info& type) const;
 
     //     /// @return The vector tracking the iterations per run
     //     const std::vector<uint64_t>& iterations() const;
 
-    //     /// @return The vector containing the results for a specific row
-    //     const std::vector<double>& row(const std::string &row) const;
+        /// @return The vector containing the results for a specific column
+        template<class T>
+        std::vector<T> column_as(const std::string &column) const
+        {
+            assert(m_columns.find(column) != m_columns.end());
+            assert(m_columns_info.find(column) != m_columns_info.end());
+
+            assert(is_column<T>(column));
+
+            std::vector<T> v;
+
+            const auto& m = m_columns.at(column);
+
+            for(const auto& i : m)
+            {
+                assert(!i.empty());
+                T t = boost::any_cast<T>(i);
+                v.push_back(t);
+            }
+
+            return v;
+
+        }
 
 
     // public: // Iterator access to the results
@@ -225,8 +155,8 @@ namespace gauge
         struct column_info
         {
             bool m_updated;
-            size_t m_hash_code;
-            // boost::any m_fill;
+            boost::optional<size_t> m_type_hash;
+            boost::any m_fill;
         };
 
         /// Keeps track of which rows have been updated, this

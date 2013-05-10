@@ -18,11 +18,32 @@ TEST(TestTable, test_table)
     // EXPECT_EQ(t.unit(), unit);
 
     t.add_column("ok");
+    t.set_column_fill("unit", std::string("MB/s"));
+    t.set_column_fill("ok", true);
     t.add_row();
     t.set_value("ok", false);
 
     t.add_row();
     t.set_value("ok", true);
+
+    t.add_row();
+    t.set_value("ok", false);
+    t.set_value("name", std::string("morten"));
+    t.set_column_fill("unit", std::string("ms"));
+
+    t.add_row();
+    t.add_row();
+
+    std::cout << t.is_column<bool>("ok") << std::endl;
+
+    std::vector<bool> v = t.column_as<bool>("ok");
+
+    for(auto i : v)
+    {
+        std::cout << i << " ";
+    }
+
+    std::cout << std::endl;
 
 // t.add_run(10);
     // t.add_run(10);
