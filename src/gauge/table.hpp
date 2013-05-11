@@ -88,19 +88,7 @@ namespace gauge
             set_value(column, std::string(value));
         }
 
-        void merge(const table& src)
-        {
-            for(uint32_t i = 0; i < src.rows(); ++i)
-            {
-                add_row();
-
-                for(const auto& t : src)
-                {
-                    set_value(t.first, t.second.m_values[i]);
-                }
-
-            }
-        }
+        void merge(const table& src);
 
         /// @return The number of rows
         uint32_t rows() const;

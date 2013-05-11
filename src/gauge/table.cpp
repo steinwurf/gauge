@@ -1,7 +1,7 @@
 #include "table.hpp"
 
 #include <cassert>
-
+#include <iomanip>
 
 namespace gauge
 {
@@ -112,24 +112,50 @@ namespace gauge
 
     void table::print(std::ostream& o, const format& fmt) const
     {
+        // Print headers
+        auto it = m_columns.begin();
 
-        for(const auto& c: m_columns)
+        while(it != m_columns.end())
         {
-            o << "  " << c.first << ": ";
+            o << it->first;
+            ++it;
 
+            if(it != m_columns.end())
+                o << ",";
+        }
+
+        o << std::endl;
+
+        // Print columns
+        for(uint32_t i = 0; i < m_rows; ++i)
+        {
             bool first = true;
-            for(const auto& v: c.second.m_values)
+            for(const auto& c: m_columns)
             {
                 if(!first)
                     o << ",";
-                fmt.print(o, v);
-                o << " ";
 
+                fmt.print(o, c.second.m_values[i]);
                 first = false;
             }
             o << std::endl;
         }
     }
+
+    void table::merge(const table& src)
+    {
+        for(uint32_t i = 0; i < src.rows(); ++i)
+        {
+            add_row();
+
+            for(const auto& t : src)
+            {
+                set_value(t.first, t.second.m_values[i]);
+            }
+
+        }
+    }
+
 
     table::const_iterator table::begin() const
     {
