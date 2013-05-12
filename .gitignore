@@ -12,6 +12,7 @@
 *.a
 
 # For projects that use Waf for building: http://code.google.com/p/waf/
+waf-*
 .waf-*
 .lock-*
 build
@@ -23,5 +24,26 @@ GRTAGS
 GSYMS
 GTAGS
 
+# Emacs temp / auto save
+\#*#
+*~
 
+#Eclipse ignore
+.cproject
+*.project
+.metadata
+local.properties
+.classpath
+.settings/
+
+# Visual Studio ignore
+*.bat
+*.sln
+*.suo
+*.user
+*.ncb
+*.sdf
+*.opensdf
+*.log
+VSProjects
 
