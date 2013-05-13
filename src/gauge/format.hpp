@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <cstdint>
+#include <vector>
 #include <boost/any.hpp>
 
 namespace gauge

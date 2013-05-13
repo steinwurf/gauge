@@ -41,7 +41,6 @@ public:
     void stop()
     {
         m_new_count = m_benchmark_me.m_count;
-        m_limit = m_benchmark_me.m_limit;
     }
 
     double measurement()
@@ -66,10 +65,6 @@ public:
 
     uint32_t m_old_count;
     uint32_t m_new_count;
-    uint32_t m_limit;
-
-    gauge::table m_counts;
-    gauge::table m_steps;
 };
 
 

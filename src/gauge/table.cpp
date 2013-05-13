@@ -18,6 +18,11 @@ namespace gauge
         auto& c = m_columns[column];
         c.m_values.resize(m_rows, fill);
         c.m_updated = false;
+
+        if(!fill.empty())
+        {
+            set_column_fill(column, fill);
+        }
     }
 
     void table::set_column_type(const std::string& column,
@@ -74,7 +79,8 @@ namespace gauge
         }
     }
 
-    void table::set_value(const std::string& column, const boost::any& value)
+    void table::set_value(const std::string& column,
+                          const boost::any& value)
     {
         assert(!value.empty());
 
@@ -104,6 +110,11 @@ namespace gauge
         // Access the "current" row if we are on row 1,
         // this is index 0
         c.m_values[m_rows - 1] = value;
+    }
+
+    bool table::has_column(const std::string& column) const
+    {
+        return m_columns.find(column) != m_columns.end();
     }
 
     uint32_t table::rows() const

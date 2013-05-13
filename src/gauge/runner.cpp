@@ -37,6 +37,9 @@ namespace gauge
 
         /// The currently active benchmark
         benchmark_ptr m_current_benchmark;
+
+        /// Custom columns
+        std::map<std::string, std::string> m_columns;
     };
 
     runner::runner()
@@ -112,7 +115,13 @@ namespace gauge
               "for example ./benchmark --gauge_filter=MyTest.*")
             ("runs", po::value<uint32_t>(),
              "Sets the number of runs to complete. Overrides the "
-             "settings specified in the benchmark ex. --runs=50");
+             "settings specified in the benchmark ex. --runs=50")
+            ("add_column",
+             po::value<std::vector<std::string> >()->multitoken(),
+             "Add a column to the test results, this can be use to "
+             "add custom information to the result files "
+             "./benchmark --add_column cpu=i7 "
+             "\"date=Monday 1st June 2021\"");
 
         options.add(m_impl->m_options_description);
 
@@ -128,6 +137,15 @@ namespace gauge
         {
             std::cout << "Error:" << e.what() << std::endl;
             return;
+        }
+
+        if(m_impl->m_options.count("add_column"))
+        {
+            auto v = m_impl->m_options["add_column"].as<
+                std::vector<std::string> >();
+
+            for(const auto& s : v)
+                parse_add_column(s);
         }
 
         if(m_impl->m_options.count("help"))
@@ -168,6 +186,34 @@ namespace gauge
         }
 
     }
+
+    void runner::parse_add_column(const std::string &option)
+    {
+        std::istringstream sstream(option);
+
+        std::string column_name;
+        std::string column_value;
+
+        std::getline(sstream, column_name, '=');
+
+        if(!sstream)
+            throw std::runtime_error("Error malformed add_column"
+                                     " (example cpu=i7)");
+
+        std::getline(sstream, column_value);
+
+        if(!sstream)
+        {
+            throw std::runtime_error("Error malformed add_column"
+                                     " (example cpu=i7)");
+        }
+
+        assert(m_impl->m_columns.find(column_name) ==
+               m_impl->m_columns.end());
+
+        m_impl->m_columns[column_name] = column_value;
+    }
+
 
     void runner::run_all()
     {
@@ -301,9 +347,11 @@ namespace gauge
         }
 
         table results;
-        // results.set_column_fill("unit", benchmark->unit_text());
-        // results.set_column_fill("benchmark", benchmark->benchmark_name());
-        // results.set_column_fill("testcase", benchmark->testcase_name());
+
+        for(const auto &o : m_impl->m_columns)
+        {
+            results.add_column(o.first, o.second);
+        }
 
         assert(runs > 0);
         uint32_t run = 0;

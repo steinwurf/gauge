@@ -115,7 +115,11 @@ namespace gauge
         /// @return access to the runners printers
         std::vector<printer_ptr>& printers();
 
-    private: // @todo move to pimpl
+        /// Parse the add_column options
+        /// @param column Value from the input options
+        void parse_add_column(const std::string &option);
+
+    private:
 
         struct impl;
         std::unique_ptr<impl> m_impl;
