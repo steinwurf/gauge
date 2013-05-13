@@ -8,7 +8,7 @@
 
 int main(int argc, const char* argv[])
 {
-    srand(time(0));
+    srand((uint32_t)time(0));
 
     gauge::runner::instance().printers().push_back(
         std::make_shared<gauge::console_printer>());
