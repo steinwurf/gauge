@@ -32,7 +32,7 @@ namespace gauge
 
         /// @copydoc format::print(std::ostream&, const std::vector&) const
         template<class T, class Alloc>
-        void print(std::ostream &s, const std::vector<T,Alloc> &val) const
+        void print(std::ostream &s, const std::vector<T, Alloc> &val) const
         {
             auto it = val.begin();
 
@@ -59,7 +59,7 @@ namespace gauge
 
         }
 
-
     };
 
 }
+
