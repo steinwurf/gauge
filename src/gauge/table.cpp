@@ -10,12 +10,13 @@ namespace gauge
         : m_rows(0)
     { }
 
-    void table::add_column(const std::string &column)
+    void table::add_column(const std::string &column,
+                           const boost::any& fill)
     {
         assert(m_columns.find(column) == m_columns.end());
 
         auto& c = m_columns[column];
-        c.m_values.resize(m_rows);
+        c.m_values.resize(m_rows, fill);
         c.m_updated = false;
     }
 
@@ -37,7 +38,7 @@ namespace gauge
 
         if(m_columns.find(column) == m_columns.end())
         {
-            add_column(column);
+            add_column(column, value);
         }
 
         auto& c = m_columns[column];

@@ -53,7 +53,8 @@ namespace gauge
         /// of a specific event or measurement type e.g. time elapsed.
         /// @param row The identifier for the new row.
 
-        void add_column(const std::string& column);
+        void add_column(const std::string& column,
+                        const boost::any& fill = boost::any());
 
         void set_column_type(const std::string& column,
                              const std::type_info& type_info);

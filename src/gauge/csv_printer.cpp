@@ -40,7 +40,21 @@ namespace gauge
     void csv_printer::benchmark_result(const benchmark &info,
                                        const table &results)
     {
-        m_impl->m_final.merge(results);
+        table r = results;
+        r.add_column("unit", info.unit_text());
+        r.add_column("benchmark", info.benchmark_name());
+        r.add_column("testcase", info.testcase_name());
+
+        if(info.has_configurations())
+        {
+            const auto& c = info.get_current_configuration();
+            for(const auto& v : c)
+            {
+                r.add_column(v.first, v.second);
+            }
+        }
+
+        m_impl->m_final.merge(r);
     }
 
     void csv_printer::end_benchmark()

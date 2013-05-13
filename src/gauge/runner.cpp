@@ -301,9 +301,9 @@ namespace gauge
         }
 
         table results;
-        results.set_column_fill("unit", benchmark->unit_text());
-        results.set_column_fill("benchmark", benchmark->benchmark_name());
-        results.set_column_fill("testcase", benchmark->testcase_name());
+        // results.set_column_fill("unit", benchmark->unit_text());
+        // results.set_column_fill("benchmark", benchmark->benchmark_name());
+        // results.set_column_fill("testcase", benchmark->testcase_name());
 
         assert(runs > 0);
         uint32_t run = 0;
