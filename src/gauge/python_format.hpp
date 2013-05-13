@@ -7,8 +7,8 @@
 namespace gauge
 {
 
-    class pylist;
-    class pydict;
+    struct pylist;
+    struct pydict;
 
     /// Prints to the ostrea in Python format
     struct python_format : public format

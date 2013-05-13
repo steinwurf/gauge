@@ -40,7 +40,7 @@ namespace gauge
         const_iterator end() const
         { return m_values.end(); }
 
-        uint32_t size() const
+        uint64_t size() const
         {
             return m_values.size();
         }

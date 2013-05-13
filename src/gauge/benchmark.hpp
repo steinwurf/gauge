@@ -71,7 +71,7 @@ namespace gauge
 
         /// @return the number of configurations create for this
         ///         benchmark
-        uint32_t configuration_count() const
+        uint64_t configuration_count() const
         { return m_configurations.size(); }
 
         /// @return true if the benchmark has configurations
