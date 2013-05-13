@@ -168,6 +168,17 @@ namespace gauge
 
         }
 
+        virtual std::string vector_begin() const
+        { return ""; }
+
+        virtual std::string vector_seperator() const
+        { return ","; }
+
+
+        virtual std::string vector_end() const
+        { return ""; }
+
+
         /// Prints the value to the ostream
         /// @param s The output stream
         /// @param val The value to be printed
@@ -175,6 +186,8 @@ namespace gauge
         void print(std::ostream &s, const std::vector<T,Alloc> &val) const
         {
             auto it = val.begin();
+
+            s << vector_begin();
 
             while(val.size() > 0)
             {
@@ -188,9 +201,11 @@ namespace gauge
                 }
                 else
                 {
-                    s << ",";
+                    s << vector_seperator();
                 }
             }
+
+            s << vector_end();
 
         }
 

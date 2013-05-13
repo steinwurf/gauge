@@ -30,34 +30,11 @@ namespace gauge
         /// @copydoc format::print(std::ostream&, const std::string&) const
         void print(std::ostream &s, const std::string &val) const;
 
-        /// @copydoc format::print(std::ostream&, const std::vector&) const
-        template<class T, class Alloc>
-        void print(std::ostream &s, const std::vector<T, Alloc> &val) const
-        {
-            auto it = val.begin();
+        std::string vector_begin() const
+        { return "["; }
 
-            s << "[";
-
-
-            while(val.size() > 0)
-            {
-                print(s, *it);
-
-                ++it;
-
-                if(it == val.end())
-                {
-                    break;
-                }
-                else
-                {
-                    s << ",";
-                }
-            }
-
-            s << "]";
-
-        }
+        std::string vector_end() const
+        { return "]"; }
 
     };
 
