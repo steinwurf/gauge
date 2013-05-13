@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstdint>
 #include <vector>
+#include <string>
 #include <boost/any.hpp>
 
 namespace gauge
