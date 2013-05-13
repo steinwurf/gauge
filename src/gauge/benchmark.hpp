@@ -80,7 +80,7 @@ namespace gauge
 
         /// Updates the configuration index
         /// @param config_index, the new configuration index
-        void set_current_configuration(uint32_t config_index)
+        void set_current_configuration(uint64_t config_index)
         {
             assert(config_index < configuration_count());
             m_config_index = config_index;
@@ -147,7 +147,7 @@ namespace gauge
         uint32_t m_id;
 
         /// Stores the current configuration index
-        uint32_t m_config_index;
+        uint64_t m_config_index;
 
         /// Stores the different configurations
         std::vector<config_set> m_configurations;
