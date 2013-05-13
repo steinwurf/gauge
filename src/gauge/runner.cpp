@@ -304,9 +304,9 @@ namespace gauge
 
         if(benchmark->has_configurations())
         {
-            uint64_t configs = benchmark->configuration_count();
+            uint32_t configs = benchmark->configuration_count();
 
-            for(uint64_t i = 0; i < configs; ++i)
+            for(uint32_t i = 0; i < configs; ++i)
             {
                 benchmark->set_current_configuration(i);
                 run_benchmark(benchmark);
