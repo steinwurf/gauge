@@ -94,7 +94,7 @@ namespace gauge
         }
 
         /// @return the current configuration index
-        uint32_t current_configuration() const
+        uint64_t current_configuration() const
         {
             assert(has_configurations());
             return m_config_index;
