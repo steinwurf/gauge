@@ -27,7 +27,7 @@ namespace gauge
     template<class Iterator>
     double mean(Iterator begin, Iterator end)
     {
-        uint32_t size = std::distance(begin, end);
+        uint64_t size = std::distance(begin, end);
         assert(size > 0);
 
         return std::accumulate(begin, end, 0.0) / size;
