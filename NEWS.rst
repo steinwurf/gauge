@@ -6,6 +6,10 @@ of every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+5.0.0
+-----
 * Minor: Update waf to version 1.7.10 and use the wurf_install_path tool.
 * Minor: Updated to waf-tools version 2.x.y
 * Minor: Added csv (comma separated values) printer.
@@ -16,7 +20,7 @@ Latest
 * Minor: The benchmark fixtures are now only allocated when needed and destroyed
   after completing a benchmark. This releases resources allocated by previous
   benchmarks.
-* Minor: Added a number of unit-test.
+* Minor: Added a number of unit-test for testing gauge itself.
 
 4.0.0
 -----
