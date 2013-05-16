@@ -1,6 +1,6 @@
 Introduction
 ------------
- 
+
 gauge is a flexible C++ benchmarking tool.
 
 Dependencies
@@ -81,7 +81,7 @@ code provide or save the following code in a file called ``main.cpp``
 
 In the above we use the ``BENCHMARK`` macro which takes 3 parameters:
 
-1. The name of the test-case in this case``MyTest``
+1. The name of the test-case in this case ``MyTest``
 2. The name of the benchmark in this case ``RunThis``
 3. The number of runs to complete in this case 100.
 
