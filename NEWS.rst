@@ -8,6 +8,13 @@ Latest
 ------
 * tbd
 
+5.1.0
+-----
+* Minor: Adding time-stamping to the console printer to give an overview of the
+  time spent in every step.
+* Minor: Added the option to control the CSV printer's value separator, the
+  default is comma however this can now be changed command-line.
+
 5.0.0
 -----
 * Minor: Update waf to version 1.7.10 and use the wurf_install_path tool.
