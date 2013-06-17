@@ -25,10 +25,9 @@ namespace gauge
         virtual void start()
         { }
 
-
+        /// Called when a specific benchmark is started
         virtual void start_benchmark()
         { }
-
 
         /// Called when a result from a benchmark is ready
         /// @param info The benchmark
@@ -41,7 +40,7 @@ namespace gauge
         virtual void set_options(po::variables_map& /*options*/)
         { }
 
-        /// Called when the benchmark program is finished
+        /// Called when a specific benchmark is finished
         virtual void end_benchmark()
         { }
 
