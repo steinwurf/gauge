@@ -164,7 +164,7 @@ namespace gauge
         for(auto it = m_impl->m_printers.begin();
             it != m_impl->m_printers.end(); ++it)
         {
-            (*it)->start_benchmark();
+            (*it)->start();
         }
         // Check whether we should run all tests or whether we
         // should use a filter
@@ -182,7 +182,7 @@ namespace gauge
         for(auto it = m_impl->m_printers.begin();
             it != m_impl->m_printers.end(); ++it)
         {
-            (*it)->end_benchmark();
+            (*it)->end();
         }
 
     }
@@ -353,6 +353,12 @@ namespace gauge
             results.add_column(o.first, o.second);
         }
 
+        for(auto& printer : m_impl->m_printers)
+        {
+            printer->start_benchmark();
+        }
+
+
         assert(runs > 0);
         uint32_t run = 0;
 
@@ -372,7 +378,11 @@ namespace gauge
             }
         }
 
-        // assert(results.runs() == run);
+        // Notify all printers that we are done
+        for(auto& printer : m_impl->m_printers)
+        {
+            printer->end_benchmark();
+        }
 
         for(auto& printer : m_impl->m_printers)
         {

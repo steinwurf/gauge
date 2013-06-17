@@ -16,26 +16,37 @@ namespace gauge
     {
     public: // From printer
 
-        void start_benchmark()
+        void start()
         {
-            m_start = boost::chrono::high_resolution_clock::now();
+            m_total_start = boost::chrono::high_resolution_clock::now();
         }
 
-        void end_benchmark()
+        void end()
         {
-            m_stop = boost::chrono::high_resolution_clock::now();
+            m_total_stop = boost::chrono::high_resolution_clock::now();
 
             double time = static_cast<double>(
                 boost::chrono::duration_cast<boost::chrono::microseconds>(
-                    m_stop-m_start).count());
+                    m_total_stop-m_total_start).count());
 
-            std::cout << std::fixed << console::textgreen << "[ TIME     ]"
+            std::cout << std::fixed << console::textgreen << "[     DONE ]"
                       << console::textdefault << " " << (time / 1000000)
-                      << " seconds total" << std::endl;
+                      << " seconds in total" << std::endl;
             std::cout << console::textgreen << "[----------] "
                       << console::textdefault << std::endl;
 
         }
+
+        void start_benchmark()
+        {
+            m_benchmark_start = boost::chrono::high_resolution_clock::now();
+        }
+
+        void end_benchmark()
+        {
+            m_benchmark_stop = boost::chrono::high_resolution_clock::now();
+        }
+
 
         void benchmark_result(const benchmark &info,
                               const table &results)
@@ -66,6 +77,15 @@ namespace gauge
                           << console::textdefault << " "
                           << info.get_current_configuration() << std::endl;
             }
+
+            double time = static_cast<double>(
+                boost::chrono::duration_cast<boost::chrono::microseconds>(
+                    m_benchmark_stop-m_benchmark_start).count());
+
+            std::cout << std::fixed << console::textyellow << "[   TIME   ]"
+                      << console::textdefault << " " << (time / 1000)
+                      << " milliseconds" << std::endl;
+
 
             for(const auto& r : results)
             {
@@ -149,10 +169,17 @@ namespace gauge
     private:
 
         /// The start time
-        boost::chrono::high_resolution_clock::time_point m_start;
+        boost::chrono::high_resolution_clock::time_point m_total_start;
 
         /// The stop time
-        boost::chrono::high_resolution_clock::time_point m_stop;
+        boost::chrono::high_resolution_clock::time_point m_total_stop;
+
+        /// The start time
+        boost::chrono::high_resolution_clock::time_point m_benchmark_start;
+
+        /// The stop time
+        boost::chrono::high_resolution_clock::time_point m_benchmark_stop;
+
 
     };
 }

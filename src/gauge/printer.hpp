@@ -22,8 +22,13 @@ namespace gauge
         { }
 
         /// Called when the benchmark program is started
+        virtual void start()
+        { }
+
+
         virtual void start_benchmark()
         { }
+
 
         /// Called when a result from a benchmark is ready
         /// @param info The benchmark
@@ -39,6 +44,11 @@ namespace gauge
         /// Called when the benchmark program is finished
         virtual void end_benchmark()
         { }
+
+        /// Called when the benchmark program is finished
+        virtual void end()
+        { }
+
 
     };
 
