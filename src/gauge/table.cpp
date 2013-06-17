@@ -122,7 +122,8 @@ namespace gauge
         return m_rows;
     }
 
-    void table::print(std::ostream& o, const format& fmt) const
+    void table::print(std::ostream& o, const format& fmt,
+                      const std::string& seperator) const
     {
         // Print headers
         auto it = m_columns.begin();
@@ -133,7 +134,7 @@ namespace gauge
             ++it;
 
             if(it != m_columns.end())
-                o << ",";
+                o << seperator;
         }
 
         o << std::endl;
@@ -145,7 +146,7 @@ namespace gauge
             for(const auto& c: m_columns)
             {
                 if(!first)
-                    o << ",";
+                    o << seperator;
 
                 fmt.print(o, c.second.m_values[i]);
                 first = false;

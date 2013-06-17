@@ -10,6 +10,9 @@ namespace gauge
         /// Store the filename of the output file
         std::string m_filename;
 
+        /// Store the value separator
+        std::string m_value_seperator;
+
         /// The output file stream
         std::ofstream m_out;
 
@@ -29,6 +32,13 @@ namespace gauge
         options.add_options()
             ("csvfile", default_name,
              "Set the output name of the csv printer");
+
+        auto default_value_seperator =
+            gauge::po::value<std::string>()->default_value(",");
+
+        options.add_options()
+            ("csvseperator", default_value_seperator,
+             "Set the value separator for the csv file writer");
 
         gauge::runner::instance().register_options(options);
     }
@@ -62,13 +72,15 @@ namespace gauge
         assert(m_impl);
 
         m_impl->m_out.open(m_impl->m_filename, std::ios::trunc);
-        m_impl->m_final.print(m_impl->m_out);
+        m_impl->m_final.print(m_impl->m_out, format(),
+                              m_impl->m_value_seperator);
         m_impl->m_out.close();
     }
 
     void csv_printer::set_options(po::variables_map& options)
     {
         m_impl->m_filename = options["csvfile"].as<std::string>();
+        m_impl->m_value_seperator = options["csvseperator"].as<std::string>();
         assert(!m_impl->m_filename.empty());
     }
 }

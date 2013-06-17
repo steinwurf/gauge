@@ -2,6 +2,8 @@
 
 #include <iomanip>
 
+#include <boost/chrono.hpp>
+
 #include "printer.hpp"
 #include "statistics.hpp"
 #include "console_colors.hpp"
@@ -13,6 +15,27 @@ namespace gauge
     class console_printer : public printer
     {
     public: // From printer
+
+        void start_benchmark()
+        {
+            m_start = boost::chrono::high_resolution_clock::now();
+        }
+
+        void end_benchmark()
+        {
+            m_stop = boost::chrono::high_resolution_clock::now();
+
+            double time = static_cast<double>(
+                boost::chrono::duration_cast<boost::chrono::microseconds>(
+                    m_stop-m_start).count());
+
+            std::cout << std::fixed << console::textgreen << "[ TIME     ]"
+                      << console::textdefault << " " << (time / 1000000)
+                      << " seconds total" << std::endl;
+            std::cout << console::textgreen << "[----------] "
+                      << console::textdefault << std::endl;
+
+        }
 
         void benchmark_result(const benchmark &info,
                               const table &results)
@@ -122,6 +145,14 @@ namespace gauge
                       << ((value-mean) * 100.0 / mean) << " %"
                       << console::textdefault << ")" << std::endl;
         }
+
+    private:
+
+        /// The start time
+        boost::chrono::high_resolution_clock::time_point m_start;
+
+        /// The stop time
+        boost::chrono::high_resolution_clock::time_point m_stop;
 
     };
 }

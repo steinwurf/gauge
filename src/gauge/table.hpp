@@ -125,7 +125,8 @@ namespace gauge
 
         /// Print the table to the output stream
         /// @param o The output stream to which the table should be printed.
-        void print(std::ostream& o, const format& fmt = format()) const;
+        void print(std::ostream& o, const format& fmt = format(),
+                   const std::string& seperator = ",") const;
 
         /// Checks whether the column has a specific data type
         /// @param column The name of the column
