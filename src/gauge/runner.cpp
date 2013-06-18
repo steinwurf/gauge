@@ -110,9 +110,9 @@ namespace gauge
             ("result_filter",
              po::value<std::vector<std::string> >()->multitoken(),
              "Filter which results should be stored "
-              "for example ./benchmark --gauge_filter=MyTest.* the filter "
+              "for example ./benchmark --result_filter=time multiple filters "
               "can be a comma separated list of filters e.g. "
-              "--result_filter=MyTest.one MyTest.two")
+              "--result_filter=time throughput")
             ("gauge_filter",
              po::value<std::vector<std::string> >()->multitoken(),
              "Filter which benchmarks to run based on their name "
