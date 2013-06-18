@@ -372,7 +372,7 @@ namespace gauge
             {
                 results.add_row();
                 results.set_value("iterations", benchmark->iteration_count());
-                results.set_value("runs", run);
+                results.set_value("run_number", run);
                 benchmark->store_run(results);
                 ++run;
             }

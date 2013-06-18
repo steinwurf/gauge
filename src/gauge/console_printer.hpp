@@ -92,6 +92,9 @@ namespace gauge
                 if(r.first == "iterations")
                     continue;
 
+                if(r.first == "run_number")
+                    continue;
+
                 if(print_column<double>(r.first,info.unit_text(),results))
                    continue;
                 if(print_column<float>(r.first,info.unit_text(),results))
