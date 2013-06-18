@@ -67,7 +67,7 @@ namespace gauge
         m_impl->m_final.merge(r);
     }
 
-    void csv_printer::end_benchmark()
+    void csv_printer::end()
     {
         assert(m_impl);
 

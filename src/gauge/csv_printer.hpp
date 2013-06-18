@@ -29,8 +29,8 @@ namespace gauge
         /// @see printer::benchmark_result(const benchmark&,const table&)
         void benchmark_result(const benchmark& info, const table& results);
 
-        /// @see printer::end_benchmark()
-        void end_benchmark();
+        /// @see printer::end()
+        void end();
 
         /// @see printer::set_options(po::variables_map&);
         void set_options(po::variables_map& options);
