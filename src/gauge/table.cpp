@@ -117,6 +117,12 @@ namespace gauge
         return m_columns.find(column) != m_columns.end();
     }
 
+    void table::drop_column(const std::string& column)
+    {
+        assert(has_column(column));
+        m_columns.erase(column);
+    }
+
     uint32_t table::rows() const
     {
         return m_rows;

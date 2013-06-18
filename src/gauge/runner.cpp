@@ -107,11 +107,18 @@ namespace gauge
 
         options.add_options()
             ("help", "produce help message")
-            ("gauge_filter", po::value<std::string>(),
-             "Filter which benchmarks to run based on their name "
+            ("result_filter",
+             po::value<std::vector<std::string> >()->multitoken(),
+             "Filter which results should be stored "
               "for example ./benchmark --gauge_filter=MyTest.* the filter "
               "can be a comma separated list of filters e.g. "
-              "--gauge_filter=MyTest.one,MyTest.two")
+              "--result_filter=MyTest.one MyTest.two")
+            ("gauge_filter",
+             po::value<std::vector<std::string> >()->multitoken(),
+             "Filter which benchmarks to run based on their name "
+              "for example ./benchmark --gauge_filter=MyTest.* multiple filters "
+              "can also be specified e.g. "
+              "--gauge_filter=MyTest.one MyTest.two")
             ("runs", po::value<uint32_t>(),
              "Sets the number of runs to complete. Overrides the "
              "settings specified in the benchmark ex. --runs=50")
@@ -169,7 +176,7 @@ namespace gauge
         // should use a filter
         if(m_impl->m_options.count("gauge_filter"))
         {
-            auto f = m_impl->m_options["gauge_filter"].as<std::string>();
+            auto f = m_impl->m_options["gauge_filter"].as<std::vector<std::string> >();
             run_all_filters(f);
         }
         else
@@ -229,14 +236,11 @@ namespace gauge
         }
     }
 
-    void runner::run_all_filters(const std::string &filter)
+    void runner::run_all_filters(const std::vector<std::string> &filters)
     {
-        std::istringstream ss(filter);
-        std::string token;
-
-        while(std::getline(ss, token, ','))
+        for(const auto& f : filters)
         {
-            run_single_filter(token);
+            run_single_filter(f);
         }
     }
 
@@ -388,6 +392,21 @@ namespace gauge
                 ++run;
             }
         }
+
+        // Clean out unwanted results
+        if(m_impl->m_options.count("result_filter"))
+        {
+            auto f = m_impl->m_options["result_filter"].as<std::vector<std::string> >();
+
+            for(auto& i : f)
+            {
+                if(!results.has_column(i))
+                    continue;
+
+                results.drop_column(i);
+            }
+        }
+
 
         // Notify all printers that we are done
         for(auto& printer : m_impl->m_printers)

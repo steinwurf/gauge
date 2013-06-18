@@ -149,6 +149,10 @@ namespace gauge
         /// @return True if the column exists
         bool has_column(const std::string& column) const;
 
+        /// Drops a specific column
+        /// @param column The name of the column
+        void drop_column(const std::string& column);
+
         /// Returns a specific column.
         /// @param column The name of the column
         /// @return The vector containing the results for a specific column
