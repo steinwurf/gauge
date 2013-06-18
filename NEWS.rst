@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+5.3.0
+-----
+* Minor: Improved filtering options for filtering benchmarks and results.
+
 5.2.1
 -----
 * Bug: Fix file printers so that they correctly detect the end of all benchmarks.
