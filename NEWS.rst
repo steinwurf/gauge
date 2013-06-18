@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+5.2.1
+-----
+* Bug: Fix file printers so that they correctly detect the end of all benchmarks.
+
 5.2.0
 -----
 * Minor: Adding time-stamping to the console printer to give an overview of the
