@@ -44,13 +44,10 @@ namespace gauge
 
     runner::runner()
         : m_impl(new runner::impl())
-    {
-        //m_printers.push_back(std::make_shared<console_printer>());
-    }
+    { }
 
     runner::~runner()
-    {
-    }
+    { }
 
     runner& runner::instance()
     {
@@ -112,7 +109,9 @@ namespace gauge
             ("help", "produce help message")
             ("gauge_filter", po::value<std::string>(),
              "Filter which benchmarks to run based on their name "
-              "for example ./benchmark --gauge_filter=MyTest.*")
+              "for example ./benchmark --gauge_filter=MyTest.* the filter "
+              "can be a comma separated list of filters e.g. "
+              "--gauge_filter=MyTest.one,MyTest.two")
             ("runs", po::value<uint32_t>(),
              "Sets the number of runs to complete. Overrides the "
              "settings specified in the benchmark ex. --runs=50")
@@ -171,7 +170,7 @@ namespace gauge
         if(m_impl->m_options.count("gauge_filter"))
         {
             auto f = m_impl->m_options["gauge_filter"].as<std::string>();
-            run_filtered(f);
+            run_all_filters(f);
         }
         else
         {
@@ -230,7 +229,19 @@ namespace gauge
         }
     }
 
-    void runner::run_filtered(const std::string &filter)
+    void runner::run_all_filters(const std::string &filter)
+    {
+        std::istringstream ss(filter);
+        std::string token;
+
+        while(std::getline(ss, token, ','))
+        {
+            run_single_filter(token);
+        }
+    }
+
+
+    void runner::run_single_filter(const std::string &filter)
     {
         std::istringstream sstream(filter);
 

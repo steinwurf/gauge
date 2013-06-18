@@ -103,7 +103,12 @@ namespace gauge
 
         /// Run the benchmarks matching the specified filter
         /// @param filter name e.g. MyTest.*
-        void run_filtered(const std::string &filter);
+        void run_single_filter(const std::string &filter);
+
+        /// Run the benchmarks matching the specified filter given as a
+        /// comma separated file.
+        /// @param filter name e.g. MyTest.*,MyOtherTest.Yir
+        void run_all_filters(const std::string &filter);
 
         /// Runs the benchmark with the specified id
         void run_benchmark(benchmark_ptr bench);
