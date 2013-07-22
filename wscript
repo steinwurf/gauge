@@ -49,6 +49,7 @@ def configure(conf):
         conf.load_external_tool('mkspec', 'wurf_cxx_mkspec_tool')
         conf.load_external_tool('runners', 'wurf_runner')
         conf.load_external_tool('install_path', 'wurf_install_path')
+        conf.load_external_tool('project_gen', 'wurf_project_generator')
 
         recurse_helper(conf, 'boost')
         recurse_helper(conf, 'gtest')
@@ -56,8 +57,8 @@ def configure(conf):
 def build(bld):
 
     bld.stlib(features = 'cxx',
-	      source   = bld.path.ant_glob('src/gauge/*.cpp'),
-	      target   = 'gauge',
+              source   = bld.path.ant_glob('src/gauge/*.cpp'),
+              target   = 'gauge',
               export_includes = ['src'],
               use = ['boost_chrono', 'boost_system', 'boost_program_options'])
 
