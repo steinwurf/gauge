@@ -50,7 +50,6 @@ namespace gauge
     void python_printer::end()
     {
         m_out.open(m_filename, std::ios::trunc);
-        m_out << "results = ";
 
         python_format f;
         f.print(m_out, m_list);
