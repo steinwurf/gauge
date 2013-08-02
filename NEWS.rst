@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+5.4.0
+-----
+* Minor: Eased use of python output file.
+
 5.3.0
 -----
 * Minor: Improved filtering options for filtering benchmarks and results.
