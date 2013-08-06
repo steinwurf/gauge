@@ -18,8 +18,9 @@ namespace gauge
     {
     public:
 
-        /// Constructor
-        csv_printer();
+        /// Create a new csv printer
+        /// @param default_name The default output file name
+        csv_printer(const std::string& default_name = "out.csv");
 
         /// Destructor
         ~csv_printer();
