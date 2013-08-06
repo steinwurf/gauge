@@ -22,6 +22,7 @@ namespace gauge
     class python_printer : public printer
     {
     public:
+        
         /// Create a new python printer
         /// @param default_name The default output file name
         python_printer(const std::string& default_name = "out.py");
