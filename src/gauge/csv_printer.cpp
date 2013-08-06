@@ -20,17 +20,17 @@ namespace gauge
         table m_final;
     };
 
-    csv_printer::csv_printer()
+    csv_printer::csv_printer(const std::string& default_name)
         : m_impl(new csv_printer::impl())
     {
         // Add the filename option for this printer
         gauge::po::options_description options;
 
-        auto default_name =
-            gauge::po::value<std::string>()->default_value("out.csv");
+        auto output_name =
+            gauge::po::value<std::string>()->default_value(default_name);
 
         options.add_options()
-            ("csvfile", default_name,
+            ("csvfile", output_name,
              "Set the output name of the csv printer");
 
         auto default_value_seperator =

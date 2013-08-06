@@ -8,6 +8,11 @@ Latest
 ------
 * tbd
 
+5.5.0
+-----
+* Minor: The python- and csv-printers can now take the default output filename 
+  as a parameter.
+
 5.4.0
 -----
 * Minor: Eased use of python output file.
