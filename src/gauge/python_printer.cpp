@@ -5,17 +5,17 @@
 namespace gauge
 {
 
-    python_printer::python_printer()
+    python_printer::python_printer(const std::string& default_name)
     {
 
         // Add the filename option for this printer
         gauge::po::options_description options;
 
-        auto default_name =
-            gauge::po::value<std::string>()->default_value("out.py");
+        auto output_name =
+            gauge::po::value<std::string>()->default_value(default_name);
 
         options.add_options()
-            ("pyfile", default_name,
+            ("pyfile", output_name,
              "Set the output name of the python printer");
 
         gauge::runner::instance().register_options(options);
