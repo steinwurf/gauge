@@ -49,5 +49,3 @@ namespace gauge
         std::unique_ptr<impl> m_impl;
     };
 }
-
-

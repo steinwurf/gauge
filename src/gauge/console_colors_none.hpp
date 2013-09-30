@@ -1,8 +1,7 @@
 /// Modified from Nick Bruun's Hayai C++ Benchmark library
 /// See LICENSE.rst
 
-#ifndef GAUGE_CONSOLE_COLORS_NONE_HPP
-#define GAUGE_CONSOLE_COLORS_NONE_HPP
+#pragma once
 
 #include "console_colors.hpp"
 
@@ -20,6 +19,3 @@ namespace gauge
             }
     };
 }
-
-#endif
-

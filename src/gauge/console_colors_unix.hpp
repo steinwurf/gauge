@@ -1,8 +1,7 @@
 /// Modified from Nick Bruun's Hayai C++ Benchmark library
 /// See LICENSE.rst
 
-#ifndef GAUGE_CONSOLE_COLORS_UNIX_HPP
-#define GAUGE_CONSOLE_COLORS_UNIX_HPP
+#pragma once
 
 #include <unistd.h>
 #include <cstdlib>
@@ -69,6 +68,3 @@ namespace gauge
             }
     };
 }
-
-#endif
-

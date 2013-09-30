@@ -1,5 +1,4 @@
-#ifndef GAUGE_ITERATION_CONTROLLER_HPP
-#define GAUGE_ITERATION_CONTROLLER_HPP
+#pragma once
 
 #include "benchmark.hpp"
 #include "runner.hpp"
@@ -64,6 +63,3 @@ namespace gauge
         benchmark_ptr m_benchmark;
     };
 }
-
-#endif
-

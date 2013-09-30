@@ -1,5 +1,4 @@
-#ifndef GAUGE_STATISTICS_HPP
-#define GAUGE_STATISTICS_HPP
+#pragma once
 
 #include <algorithm>
 #include <numeric>
@@ -54,6 +53,3 @@ namespace gauge
         return s;
     }
 }
-
-#endif
-

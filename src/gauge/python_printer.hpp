@@ -56,6 +56,3 @@ namespace gauge
     };
 
 }
-
-
-
