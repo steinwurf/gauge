@@ -1,21 +1,20 @@
-#include "csv_printer.hpp"
-#include "runner.hpp"
+#include <ostream>
 
-#include <boost/spirit/home/support/detail/hold_any.hpp>
+#include <boost/program_options.hpp>
+
+#include <tables/csv_format.hpp>
+#include <tables/table.hpp>
+
+#include "csv_printer.hpp"
+#include "file_writer.hpp"
+#include "runner.hpp"
 
 namespace gauge
 {
-    csv_printer::csv_printer(const std::string& default_name)
+    csv_printer::csv_printer() : file_printer("csv", "csv")
     {
         // Add the filename option for this printer
         gauge::po::options_description options;
-
-        auto output_name =
-            gauge::po::value<std::string>()->default_value(default_name);
-
-        options.add_options()
-            ("csvfile", output_name,
-             "Set the output name of the csv printer");
 
         auto default_value_seperator =
             gauge::po::value<std::string>()->default_value(",");
@@ -27,40 +26,23 @@ namespace gauge
         gauge::runner::instance().register_options(options);
     }
 
-    void csv_printer::benchmark_result(const benchmark &info,
-                                       const tables::table &results)
+    void csv_printer::print_to_stream(std::ostream &s)
     {
-        tables::table r = results;
-        r.add_column("unit", info.unit_text());
-        r.add_column("benchmark", info.benchmark_name());
-        r.add_column("testcase", info.testcase_name());
-
-        if(info.has_configurations())
+        tables::table combined_results;
+        for (auto i = m_tables.begin(); i != m_tables.end(); ++i)
         {
-            const auto& c = info.get_current_configuration();
-            for(const auto& v : c)
-            {
-                r.add_column(v.first, v.second);
-            }
+            combined_results.merge(*i);
         }
 
-        m_final.merge(r);
-    }
+        tables::csv_format format;
 
-    void csv_printer::end()
-    {
-
-        m_out.open(m_filename, std::ios::trunc);
-        m_final.print(m_out, tables::format(),
-                              m_value_seperator);
-        m_out.close();
+        format.print(s, table);
     }
 
     void csv_printer::set_options(po::variables_map& options)
     {
-        m_filename = options["csvfile"].as<std::string>();
+        file_writer::set_options(options);
         m_value_seperator = options["csvseperator"].as<std::string>();
-        assert(!m_filename.empty());
     }
 }
 

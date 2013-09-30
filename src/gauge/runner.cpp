@@ -46,9 +46,6 @@ namespace gauge
         : m_impl(new runner::impl())
     { }
 
-    runner::~runner()
-    { }
-
     runner& runner::instance()
     {
         static runner singleton;
@@ -367,6 +364,10 @@ namespace gauge
         {
             results.add_column(o.first, o.second);
         }
+
+        results.add_column("unit", benchmark->unit_text());
+        results.add_column("benchmark", benchmark->benchmark_name());
+        results.add_column("testcase", benchmark->testcase_name());
 
         for(auto& printer : m_impl->m_printers)
         {

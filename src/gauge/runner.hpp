@@ -26,9 +26,6 @@ namespace gauge
         /// Creates a new runner with a default printer
         runner();
 
-        /// Destructor
-        ~runner();
-
         /// Access to the gauge benchmark runner instance. Even though we
         /// don't like singletons we use it here since it reduces complexity
         /// of registering and running benchmarks
@@ -54,16 +51,6 @@ namespace gauge
             make_benchmark benchmark = std::bind(std::make_shared<T>);
             add_benchmark(id, benchmark, testcase_name, benchmark_name);
         }
-
-        // template<class T>
-        // void register_benchmark()
-        // {
-        //     uint32_t id = T::benchmark_id();
-
-        //     benchmark_ptr benchmark = std::make_shared<T>();
-        //     add_benchmark(id, benchmark);
-        // }
-
 
         /// Fetch the options for a specific benchmark
         template<class T>
