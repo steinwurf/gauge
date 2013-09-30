@@ -41,7 +41,7 @@ namespace gauge
         /// @copydoc benchmark::unit_text() const
         virtual std::string unit_text() const;
 
-        virtual void store_run(table &results);
+        virtual void store_run(tables::table &results);
 
     private:
 

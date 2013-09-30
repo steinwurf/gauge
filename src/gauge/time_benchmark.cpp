@@ -165,7 +165,7 @@ namespace gauge
         return "microseconds";
     }
 
-    void time_benchmark::store_run(table &results)
+    void time_benchmark::store_run(tables::table &results)
     {
         results.set_value("time", measurement());
     }

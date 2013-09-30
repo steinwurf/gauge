@@ -1,6 +1,7 @@
+#include <tables/pydict.hpp>
+
 #include "python_printer.hpp"
 #include "runner.hpp"
-#include "pydict.hpp"
 
 namespace gauge
 {
@@ -22,9 +23,9 @@ namespace gauge
     }
 
     void python_printer::benchmark_result(const benchmark &info,
-                                          const table &results)
+                                          const tables::table &results)
     {
-        pydict benchmark_dict;
+        tables::pydict benchmark_dict;
 
         benchmark_dict.add("unit", info.unit_text());
         benchmark_dict.add("benchmark", info.benchmark_name());
@@ -51,7 +52,7 @@ namespace gauge
     {
         m_out.open(m_filename, std::ios::trunc);
 
-        python_format f;
+        tables::python_format f;
         f.print(m_out, m_list);
         m_out.close();
     }

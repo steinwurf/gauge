@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tables/table.hpp>
+
 #include "benchmark.hpp"
 #include "results.hpp"
 
@@ -33,7 +35,7 @@ namespace gauge
         /// @param info The benchmark
         /// @param result The benchmark results
         virtual void benchmark_result(const benchmark &/*info*/,
-                                      const table &/*results*/)
+                                      const tables::table &/*results*/)
         { }
 
         /// Add options to the available commandline arguments

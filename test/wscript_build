@@ -5,4 +5,4 @@ bld.program(
     features = 'cxx test',
     source   = ['gauge_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
     target   = 'gauge_tests',
-    use = ['gauge', 'gtest', 'boost_includes'])
+    use = ['gauge', 'tables', 'gtest', 'boost_includes'])

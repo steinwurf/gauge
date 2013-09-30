@@ -5,10 +5,11 @@
 
 #include <boost/any.hpp>
 
+#include <tables/table.hpp>
+
 #include "config_set.hpp"
 #include "commandline_arguments.hpp"
 #include "results.hpp"
-#include "table.hpp"
 
 namespace gauge
 {
@@ -40,7 +41,7 @@ namespace gauge
 
         /// Store the results of the test run in the result table
         /// @param results The table containing the final results
-        virtual void store_run(table &results) = 0;
+        virtual void store_run(tables::table &results) = 0;
 
         /// Add options to the available commandline arguments
         virtual void get_options(po::variables_map& /*options*/)

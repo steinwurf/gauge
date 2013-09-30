@@ -17,7 +17,7 @@ namespace gauge
         std::ofstream m_out;
 
         /// The output table
-        table m_final;
+        tables::table m_final;
     };
 
     csv_printer::csv_printer(const std::string& default_name)
@@ -48,9 +48,9 @@ namespace gauge
     }
 
     void csv_printer::benchmark_result(const benchmark &info,
-                                       const table &results)
+                                       const tables::table &results)
     {
-        table r = results;
+        tables::table r = results;
         r.add_column("unit", info.unit_text());
         r.add_column("benchmark", info.benchmark_name());
         r.add_column("testcase", info.testcase_name());
@@ -72,7 +72,7 @@ namespace gauge
         assert(m_impl);
 
         m_impl->m_out.open(m_impl->m_filename, std::ios::trunc);
-        m_impl->m_final.print(m_impl->m_out, format(),
+        m_impl->m_final.print(m_impl->m_out, tables::format(),
                               m_impl->m_value_seperator);
         m_impl->m_out.close();
     }

@@ -361,7 +361,7 @@ namespace gauge
             runs = benchmark->runs();
         }
 
-        table results;
+        tables::table results;
 
         for(const auto &o : m_impl->m_columns)
         {
