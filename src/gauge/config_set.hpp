@@ -6,8 +6,7 @@
 #include <cstdint>
 #include <string>
 #include <boost/any.hpp>
-
-#include "format.hpp"
+#include <tables/format.hpp>
 
 namespace gauge
 {
@@ -49,7 +48,7 @@ namespace gauge
         {
             auto it = begin();
 
-            format f;
+            tables::format f;
 
             if(it != end())
             {

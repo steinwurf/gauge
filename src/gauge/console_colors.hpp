@@ -1,8 +1,7 @@
 /// Modified from Nick Bruun's Hayai C++ Benchmark library
 /// See LICENSE.rst
 
-#ifndef GAUGE_CONSOLE_COLORS_HPP
-#define GAUGE_CONSOLE_COLORS_HPP
+#pragma once
 
 #include <iostream>
 
@@ -55,7 +54,3 @@ namespace gauge
     std::ostream& operator <<(std::ostream& stream,
                               const gauge::console::textcolor& color);
 }
-
-
-#endif
-

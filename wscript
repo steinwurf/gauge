@@ -38,6 +38,12 @@ def options(opt):
             git_repository = 'github.com/steinwurf/external-boost-light.git',
             major_version = 1))
 
+    bundle.add_dependency(opt,
+        resolve.ResolveGitMajorVersion(
+            name = 'tables',
+            git_repository = 'github.com/steinwurf/tables.git',
+            major_version = 1))
+
     opt.load('wurf_dependency_bundle')
     opt.load('wurf_tools')
 
@@ -53,6 +59,7 @@ def configure(conf):
 
         recurse_helper(conf, 'boost')
         recurse_helper(conf, 'gtest')
+        recurse_helper(conf, 'tables')
 
 def build(bld):
 
@@ -60,11 +67,13 @@ def build(bld):
               source   = bld.path.ant_glob('src/gauge/*.cpp'),
               target   = 'gauge',
               export_includes = ['src'],
-              use = ['boost_chrono', 'boost_system', 'boost_program_options'])
+              use = ['tables', 'boost_chrono', 'boost_system',
+              'boost_program_options'])
 
     if bld.is_toplevel():
         recurse_helper(bld, 'boost')
         recurse_helper(bld, 'gtest')
+        recurse_helper(bld, 'tables')
 
         bld.recurse('examples/sample_benchmarks')
         bld.recurse('test')

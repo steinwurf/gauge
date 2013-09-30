@@ -49,7 +49,7 @@ namespace gauge
 
 
         void benchmark_result(const benchmark &info,
-                              const table &results)
+                              const tables::table &results)
         {
 
             std::vector<uint64_t> iterations =
@@ -125,7 +125,7 @@ namespace gauge
         template<class T>
         bool print_column(const std::string& column,
                           const std::string& unit,
-                          const table& results)
+                          const tables::table& results)
         {
             if(!results.is_column<T>(column))
                 return false;

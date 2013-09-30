@@ -5,23 +5,7 @@
 
 namespace gauge
 {
-    struct csv_printer::impl
-    {
-        /// Store the filename of the output file
-        std::string m_filename;
-
-        /// Store the value separator
-        std::string m_value_seperator;
-
-        /// The output file stream
-        std::ofstream m_out;
-
-        /// The output table
-        table m_final;
-    };
-
     csv_printer::csv_printer(const std::string& default_name)
-        : m_impl(new csv_printer::impl())
     {
         // Add the filename option for this printer
         gauge::po::options_description options;
@@ -43,14 +27,10 @@ namespace gauge
         gauge::runner::instance().register_options(options);
     }
 
-    csv_printer::~csv_printer()
-    {
-    }
-
     void csv_printer::benchmark_result(const benchmark &info,
-                                       const table &results)
+                                       const tables::table &results)
     {
-        table r = results;
+        tables::table r = results;
         r.add_column("unit", info.unit_text());
         r.add_column("benchmark", info.benchmark_name());
         r.add_column("testcase", info.testcase_name());
@@ -64,24 +44,23 @@ namespace gauge
             }
         }
 
-        m_impl->m_final.merge(r);
+        m_final.merge(r);
     }
 
     void csv_printer::end()
     {
-        assert(m_impl);
 
-        m_impl->m_out.open(m_impl->m_filename, std::ios::trunc);
-        m_impl->m_final.print(m_impl->m_out, format(),
-                              m_impl->m_value_seperator);
-        m_impl->m_out.close();
+        m_out.open(m_filename, std::ios::trunc);
+        m_final.print(m_out, tables::format(),
+                              m_value_seperator);
+        m_out.close();
     }
 
     void csv_printer::set_options(po::variables_map& options)
     {
-        m_impl->m_filename = options["csvfile"].as<std::string>();
-        m_impl->m_value_seperator = options["csvseperator"].as<std::string>();
-        assert(!m_impl->m_filename.empty());
+        m_filename = options["csvfile"].as<std::string>();
+        m_value_seperator = options["csvseperator"].as<std::string>();
+        assert(!m_filename.empty());
     }
 }
 

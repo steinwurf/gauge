@@ -1,5 +1,4 @@
-#ifndef GAUGE_RUNNER_HPP
-#define GAUGE_RUNNER_HPP
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -130,6 +129,3 @@ namespace gauge
         std::unique_ptr<impl> m_impl;
     };
 }
-
-#endif
-
