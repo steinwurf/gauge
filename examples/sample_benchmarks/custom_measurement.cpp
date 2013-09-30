@@ -1,4 +1,5 @@
 #include <gauge/gauge.hpp>
+#include <tables/table.hpp>
 #include <cstdlib>
 
 class benchmark_me
@@ -55,7 +56,7 @@ public:
     std::string unit_text() const
     { return "counts"; }
 
-    void store_run(gauge::table& results)
+    void store_run(tables::table& results)
     {
         results.set_value("counts", measurement());
     }

@@ -6,11 +6,14 @@
 #include <cassert>
 #include <fstream>
 
+#include <tables/python_format.hpp>
+#include <tables/pylist.hpp>
+#include <tables/table.hpp>
+
 #include "printer.hpp"
 #include "benchmark.hpp"
 #include "config_set.hpp"
-#include "python_format.hpp"
-#include "pylist.hpp"
+
 
 namespace gauge
 {
@@ -22,7 +25,7 @@ namespace gauge
     class python_printer : public printer
     {
     public:
-        
+
         /// Create a new python printer
         /// @param default_name The default output file name
         python_printer(const std::string& default_name = "out.py");
@@ -30,7 +33,8 @@ namespace gauge
     public: // From printer
 
         /// @see printer::benchmark_result(const benchmark&,const table&)
-        void benchmark_result(const benchmark& info, const table& results);
+        void benchmark_result(const benchmark& info,
+            const tables::table& results);
 
         /// @see printer::end()
         void end();
@@ -42,7 +46,7 @@ namespace gauge
 
         /// Results are printed as a python list using this
         /// pylist
-        pylist m_list;
+        tables::pylist m_list;
 
         /// Store the filename of the output file
         std::string m_filename;
@@ -52,6 +56,3 @@ namespace gauge
     };
 
 }
-
-
-

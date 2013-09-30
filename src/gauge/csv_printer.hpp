@@ -1,5 +1,4 @@
-#ifndef GAUGE_CSV_PRINTER_HPP
-#define GAUGE_CSV_PRINTER_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -22,13 +21,11 @@ namespace gauge
         /// @param default_name The default output file name
         csv_printer(const std::string& default_name = "out.csv");
 
-        /// Destructor
-        ~csv_printer();
-
     public: // From printer
 
         /// @see printer::benchmark_result(const benchmark&,const table&)
-        void benchmark_result(const benchmark& info, const table& results);
+        void benchmark_result(const benchmark& info,
+            const tables::table& results);
 
         /// @see printer::end()
         void end();
@@ -38,18 +35,24 @@ namespace gauge
 
     private:
 
-        void init_header(const benchmark& info, const table& results);
+        void init_header(const benchmark& info, const tables::table& results);
 
         // void add_row();
 
     private:
 
-        struct impl;
-        std::unique_ptr<impl> m_impl;
+        /// Store the filename of the output file
+        std::string m_filename;
+
+        /// Store the value separator
+        std::string m_value_seperator;
+
+        /// The output file stream
+        std::ofstream m_out;
+
+        /// The output table
+        tables::table m_final;
 
     };
 
 }
-
-#endif
-
