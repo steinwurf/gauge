@@ -11,7 +11,9 @@
 
 namespace gauge
 {
-    csv_printer::csv_printer() : file_printer("csv", "csv")
+    csv_printer::csv_printer(
+        const std::string& default_filename)
+        : file_printer("csv", "csv", default_filename)
     {
         // Add the filename option for this printer
         gauge::po::options_description options;

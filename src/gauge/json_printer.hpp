@@ -7,17 +7,15 @@
 
 namespace gauge
 {
-
-    /// A python result printer implementation. The purpose
-    /// of this printer is to "dump" results to a .py file
-    /// which then may be easily used in python scripts for
-    /// plotting etc.
+    /// A json result printer implementation. The purpose
+    /// of this printer is to "dump" results to a .json file
     class json_printer : public file_printer
     {
     public:
-
-        /// Create a new python printer
-        json_printer();
+        /// Create a new json printer
+        /// @param default_filename The default name of the outputted file
+        /// without the file extension
+        json_printer(const std::string& default_filename = "out");
 
     public: // From file_printer
 

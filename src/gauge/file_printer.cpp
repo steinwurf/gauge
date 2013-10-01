@@ -13,11 +13,12 @@
 
 namespace gauge
 {
-    file_printer::file_printer(const std::string& name,
-        const std::string& extension)
+    file_printer::file_printer(const std::string& printer_name,
+        const std::string& extension,
+        const std::string& default_filename)
     {
         std::stringstream default_filename_ss;
-        default_filename_ss << "out." << extension;
+        default_filename_ss << default_filename << "." << extension;
 
         std::stringstream filename_option_ss;
         filename_option_ss << extension << "file";
@@ -25,7 +26,7 @@ namespace gauge
 
         std::stringstream filename_option_desc_ss;
         filename_option_desc_ss << "Set the output name of the "
-                                << name << " printer";
+                                << printer_name << " printer";
 
         // Add the filename option for this printer
         gauge::po::options_description options;

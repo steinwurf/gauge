@@ -10,7 +10,6 @@
 #include "printer.hpp"
 #include "benchmark.hpp"
 
-
 namespace gauge
 {
 
@@ -23,10 +22,13 @@ namespace gauge
     public:
 
         /// Create a new python printer
-        /// @param name The name of the printer type
+        /// @param printer_name The name of the printer type
         /// @param extension The file extension of the result file
-        file_printer(const std::string& name,
-                     const std::string& extension);
+        /// @param default_filename The default name of the outputted file
+        /// without the file extension
+        file_printer(const std::string& printer_name,
+                     const std::string& extension,
+                     const std::string& default_filename);
 
     public: // From printer
 

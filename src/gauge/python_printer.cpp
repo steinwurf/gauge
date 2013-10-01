@@ -8,7 +8,9 @@
 namespace gauge
 {
 
-    python_printer::python_printer() : file_printer("python", "py")
+    python_printer::python_printer(
+        const std::string& default_filename)
+        : file_printer("python", "py", default_filename)
     { }
 
     void python_printer::print_to_stream(std::ostream &s)
@@ -17,4 +19,3 @@ namespace gauge
         format.print(s, m_tables);
     }
 }
-

@@ -8,7 +8,9 @@
 namespace gauge
 {
 
-    json_printer::json_printer() : file_printer("json", "json")
+    json_printer::json_printer(
+        const std::string& default_filename)
+        : file_printer("json", "json", default_filename)
     { }
 
     void json_printer::print_to_stream(std::ostream &s)
