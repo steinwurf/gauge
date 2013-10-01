@@ -274,6 +274,11 @@ namespace gauge
 
         auto &benchmarks = m_impl->m_testcases[testcase_name];
 
+        if(benchmarks.find(benchmark_name) == benchmarks.end())
+        {
+            throw std::runtime_error("Error benchmark not found");
+        }
+
         if(benchmark_name == "*")
         {
             for(auto& b : benchmarks)
@@ -289,13 +294,26 @@ namespace gauge
                 run_benchmark_configurations(benchmark);
             }
         }
-        else
+        else if(testcase_name == "*")
         {
+            // REVISA ESTE CODIGO
+            uint32_t id = benchmarks.find(benchmark_name)->second;
+            assert(m_impl->m_benchmarks.find(id) !=
+                   m_impl->m_benchmarks.end());
 
-            if(benchmarks.find(benchmark_name) == benchmarks.end())
+            for(auto& t : m_impl->m_testcases)
             {
-                throw std::runtime_error("Error benchmark not found");
+
+                if(t.second.begin()->second == id)
+                {
+                    auto& make = m_impl->m_benchmarks[id];
+                    auto benchmark = make();
+                    run_benchmark_configurations(benchmark);
+                }
             }
+
+        } else
+        {
 
             uint32_t id = benchmarks.find(benchmark_name)->second;
 
