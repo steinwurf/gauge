@@ -42,7 +42,7 @@ namespace gauge
     }
 
     void file_printer::benchmark_result(const benchmark &info,
-                                          const tables::table &results)
+                                        const tables::table &results)
     {
         tables::table r = results;
         if(info.has_configurations())

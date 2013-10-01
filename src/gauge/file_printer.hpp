@@ -46,7 +46,7 @@ namespace gauge
         /// @param s Steam to write to.
         virtual void print_to_stream(std::ostream &s) = 0;
 
-    private:
+    protected:
 
         /// Store the filename of the output file
         std::string m_filename;

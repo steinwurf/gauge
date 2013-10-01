@@ -6,7 +6,6 @@
 #include <cstdint>
 #include <string>
 #include <boost/any.hpp>
-#include <tables/format.hpp>
 
 namespace gauge
 {
@@ -44,38 +43,8 @@ namespace gauge
             return m_values.size();
         }
 
-        void print(std::ostream &os) const
-        {
-            auto it = begin();
-
-            tables::format f;
-
-            if(it != end())
-            {
-                os << (it->first) << "=";
-                f.print(os, it->second);
-            }
-            ++it;
-
-            while(it != end())
-            {
-                os << ", " << (it->first) << "=";
-                f.print(os, it->second);
-                ++it;
-            }
-        }
-
         config_map m_values;
     };
-
-
-    inline std::ostream& operator<<(std::ostream &os, const config_set &cs)
-    {
-        cs.print(os);
-        return os;
-    }
-
-
 }
 
 

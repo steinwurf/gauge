@@ -11,10 +11,9 @@ namespace gauge
     python_printer::python_printer() : file_printer("python", "py")
     { }
 
-    void file_printer::print_to_stream(std::ostream &s)
+    void python_printer::print_to_stream(std::ostream &s)
     {
         tables::python_format format;
-
         format.print(s, m_tables);
     }
 }

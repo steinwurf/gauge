@@ -3,10 +3,12 @@
 #include <iomanip>
 
 #include <boost/chrono.hpp>
+#include <tables/format.hpp>
 
 #include "printer.hpp"
 #include "statistics.hpp"
 #include "console_colors.hpp"
+
 
 namespace gauge
 {
@@ -14,6 +16,7 @@ namespace gauge
     /// benchmarks to the console (std::cout)
     class console_printer : public printer
     {
+
     public: // From printer
 
         void start()
@@ -74,8 +77,21 @@ namespace gauge
             if(info.has_configurations())
             {
                 std::cout << console::textyellow << "[  CONFIG  ]"
-                          << console::textdefault << " "
-                          << info.get_current_configuration() << std::endl;
+                          << console::textdefault << " ";
+                const auto& c = info.get_current_configuration();
+                bool first = true;
+                tables::format f;
+                for(const auto& v : c)
+                {
+                    if(!first)
+                        std::cout << ",";
+                    first = false;
+                    std::cout << v.first << "=";
+
+                    f.print(std::cout, v.second);
+                }
+
+                std::cout << std::endl;
             }
 
             double time = static_cast<double>(
@@ -186,5 +202,3 @@ namespace gauge
 
     };
 }
-
-

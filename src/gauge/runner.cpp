@@ -374,7 +374,6 @@ namespace gauge
             printer->start_benchmark();
         }
 
-
         assert(runs > 0);
         uint32_t run = 0;
 

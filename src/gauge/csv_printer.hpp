@@ -3,6 +3,8 @@
 #include <string>
 #include <ostream>
 
+#include "file_printer.hpp"
+
 namespace gauge
 {
 
@@ -14,9 +16,6 @@ namespace gauge
         csv_printer();
 
     public: // From printer
-
-        /// @see printer::end()
-        void end();
 
         /// @see printer::set_options(po::variables_map&);
         void set_options(po::variables_map& options);
@@ -31,5 +30,4 @@ namespace gauge
         /// Store the value separator
         std::string m_value_seperator;
     };
-
 }

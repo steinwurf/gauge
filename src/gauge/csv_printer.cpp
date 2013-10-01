@@ -6,7 +6,7 @@
 #include <tables/table.hpp>
 
 #include "csv_printer.hpp"
-#include "file_writer.hpp"
+#include "file_printer.hpp"
 #include "runner.hpp"
 
 namespace gauge
@@ -36,12 +36,12 @@ namespace gauge
 
         tables::csv_format format;
 
-        format.print(s, table);
+        format.print(s, combined_results);
     }
 
     void csv_printer::set_options(po::variables_map& options)
     {
-        file_writer::set_options(options);
+        file_printer::set_options(options);
         m_value_seperator = options["csvseperator"].as<std::string>();
     }
 }

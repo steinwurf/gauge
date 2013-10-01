@@ -12,12 +12,12 @@ namespace gauge
     /// of this printer is to "dump" results to a .py file
     /// which then may be easily used in python scripts for
     /// plotting etc.
-    class python_printer : public file_printer
+    class json_printer : public file_printer
     {
     public:
 
         /// Create a new python printer
-        python_printer();
+        json_printer();
 
     public: // From file_printer
 
