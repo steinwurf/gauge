@@ -14,7 +14,6 @@ namespace gauge
     public:
         /// Create a new json printer
         /// @param default_filename The default name of the outputted file
-        /// without the file extension
         json_printer(const std::string& default_filename = "out");
 
     public: // From file_printer

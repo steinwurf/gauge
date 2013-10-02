@@ -54,7 +54,6 @@ namespace gauge
         void benchmark_result(const benchmark &info,
                               const tables::table &results)
         {
-
             std::vector<uint64_t> iterations =
                 results.column_as<uint64_t>("iterations");
 

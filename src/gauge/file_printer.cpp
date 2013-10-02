@@ -13,31 +13,21 @@
 
 namespace gauge
 {
-    file_printer::file_printer(const std::string& printer_name,
-        const std::string& extension,
+
+    file_printer::file_printer(const std::string& filename_option,
+        const std::string& description,
         const std::string& default_filename)
+            : m_filename_option(filename_option)
     {
-        std::stringstream default_filename_ss;
-        default_filename_ss << default_filename << "." << extension;
-
-        std::stringstream filename_option_ss;
-        filename_option_ss << extension << "file";
-        m_filename_option = filename_option_ss.str();
-
-        std::stringstream filename_option_desc_ss;
-        filename_option_desc_ss << "Set the output name of the "
-                                << printer_name << " printer";
-
         // Add the filename option for this printer
         gauge::po::options_description options;
 
-        auto default_filename_value =
-            gauge::po::value<std::string>()->default_value(
-                default_filename_ss.str());
+        auto default_filename_value = gauge::po::value<std::string>()->
+            default_value(default_filename);
 
         options.add_options()
             (m_filename_option.c_str(), default_filename_value,
-             filename_option_desc_ss.str().c_str());
+             description.c_str());
 
         gauge::runner::instance().register_options(options);
     }
@@ -45,17 +35,8 @@ namespace gauge
     void file_printer::benchmark_result(const benchmark &info,
                                         const tables::table &results)
     {
-        tables::table r = results;
-        if(info.has_configurations())
-        {
-            const auto& c = info.get_current_configuration();
-            for(const auto& v : c)
-            {
-                r.add_column(v.first, v.second);
-            }
-        }
-
-        m_tables.insert(m_tables.end(), r);
+        (void)info;
+        m_tables.insert(m_tables.end(), results);
     }
 
     void file_printer::end()

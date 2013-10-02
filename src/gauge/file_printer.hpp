@@ -12,23 +12,19 @@
 
 namespace gauge
 {
-
-    /// A python result printer implementation. The purpose
-    /// of this printer is to "dump" results to a .py file
-    /// which then may be easily used in python scripts for
-    /// plotting etc.
     class file_printer : public printer
     {
     public:
 
-        /// Create a new python printer
-        /// @param printer_name The name of the printer type
-        /// @param extension The file extension of the result file
+        /// Create a new file printer
+        /// @param filename_option The name of option for specifying the name of
+        /// the output file
+        /// @param description The description for the output filename option
         /// @param default_filename The default name of the outputted file
         /// without the file extension
-        file_printer(const std::string& printer_name,
-                     const std::string& extension,
-                     const std::string& default_filename);
+        file_printer(const std::string& filename_option,
+            const std::string& description,
+            const std::string& default_filename);
 
     public: // From printer
 
