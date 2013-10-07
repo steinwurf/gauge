@@ -266,21 +266,45 @@ namespace gauge
                                      " (example MyTest.*)");
         }
 
-        if(m_impl->m_testcases.find(testcase_name) ==
-           m_impl->m_testcases.end())
+        if(testcase_name == "*" && benchmark_name == "*")
         {
-            throw std::runtime_error("Error testcase not found");
+            run_all();
         }
-
-        auto &benchmarks = m_impl->m_testcases[testcase_name];
-
-        if(benchmarks.find(benchmark_name) == benchmarks.end())
+        else if(testcase_name == "*")
         {
-            throw std::runtime_error("Error benchmark not found");
-        }
 
-        if(benchmark_name == "*")
+            for(auto t = m_impl->m_testcases.begin();
+                t != m_impl->m_testcases.end(); ++t)
+            {
+
+                for(auto b = t->second.begin(); b != t->second.end(); ++b)
+                {
+
+                    if(benchmark_name == b->first)
+                    {
+
+                        uint32_t id = b->second;
+                        assert(m_impl->m_benchmarks.find(id) !=
+                        m_impl->m_benchmarks.end());
+
+                        auto& make = m_impl->m_benchmarks[id];
+                        auto benchmark = make();
+                        run_benchmark_configurations(benchmark);
+                    }
+                }
+            }
+
+        } else if (benchmark_name == "*")
         {
+
+            if(m_impl->m_testcases.find(testcase_name) ==
+               m_impl->m_testcases.end())
+            {
+                throw std::runtime_error("Error testcase not found");
+            }
+
+            auto &benchmarks = m_impl->m_testcases[testcase_name];
+
             for(auto& b : benchmarks)
             {
                 uint32_t id = b.second;
@@ -293,27 +317,22 @@ namespace gauge
 
                 run_benchmark_configurations(benchmark);
             }
-        }
-        else if(testcase_name == "*")
-        {
-            // REVISA ESTE CODIGO
-            uint32_t id = benchmarks.find(benchmark_name)->second;
-            assert(m_impl->m_benchmarks.find(id) !=
-                   m_impl->m_benchmarks.end());
-
-            for(auto& t : m_impl->m_testcases)
-            {
-
-                if(t.second.begin()->second == id)
-                {
-                    auto& make = m_impl->m_benchmarks[id];
-                    auto benchmark = make();
-                    run_benchmark_configurations(benchmark);
-                }
-            }
 
         } else
+
         {
+            if(m_impl->m_testcases.find(testcase_name) ==
+               m_impl->m_testcases.end())
+            {
+                throw std::runtime_error("Error testcase not found");
+            }
+
+            auto &benchmarks = m_impl->m_testcases[testcase_name];
+
+            if(benchmarks.find(benchmark_name) == benchmarks.end())
+            {
+                throw std::runtime_error("Error benchmark not found");
+            }
 
             uint32_t id = benchmarks.find(benchmark_name)->second;
 
