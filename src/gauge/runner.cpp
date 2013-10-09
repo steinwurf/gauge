@@ -267,7 +267,7 @@ namespace gauge
                                      " (example MyTest.*)");
         }
 
-        // This if-else-if branch evaluates all possible filter combinations
+        // Evaluate all possible filter combinations
         if(testcase_name == "*" && benchmark_name == "*")
         {
             run_all();
@@ -275,11 +275,11 @@ namespace gauge
         else if(testcase_name == "*")
         {
 
-            //In this case, the benchmark must be runned for each of the
-            //testcases for which it belongs. If the requested benchmark is not
-            //found, throw an error
+            // The benchmark must be run for each of the testcases for which 
+            // it belongs. If the requested benchmark is not found, throw an 
+            // error
 
-            bool benchmark_found = 0;
+            bool benchmark_found = false;
 
             for(const auto& testcase : m_impl->m_testcases)
             {
@@ -297,13 +297,13 @@ namespace gauge
                         auto& make = m_impl->m_benchmarks[id];
                         auto benchmark = make();
                         run_benchmark_configurations(benchmark);
-                        benchmark_found = 1;
+                        benchmark_found = true;
                     }
 
                 }
             }
 
-            if(benchmark_found == 0)
+            if(!benchmark_found)
             {
                 throw std::runtime_error("Error benchmark not found");
             }
@@ -313,8 +313,8 @@ namespace gauge
         else if (benchmark_name == "*")
         {
 
-            //In this case, all the benchmarks from a testcase must be runned
-            //If the testcase is not found, throw an error
+            // All the benchmarks from a testcase must be run. If the requested 
+            // testcase is not found, throw an error
 
             if(m_impl->m_testcases.find(testcase_name) ==
                m_impl->m_testcases.end())
@@ -340,7 +340,8 @@ namespace gauge
         }
         else
         {
-            //In this case, run the specific testcase_name.benchmark_name pair
+            // Run the specific testcase_name.benchmark_name pair
+
             if(m_impl->m_testcases.find(testcase_name) ==
                m_impl->m_testcases.end())
             {
