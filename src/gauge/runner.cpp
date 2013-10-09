@@ -362,19 +362,19 @@ namespace gauge
 
         for(const auto &o : m_impl->m_columns)
         {
-            results.add_column(o.first, o.second);
+            results.set_value(o.first, o.second);
         }
 
-        results.add_column("unit", benchmark->unit_text());
-        results.add_column("benchmark", benchmark->benchmark_name());
-        results.add_column("testcase", benchmark->testcase_name());
+        results.set_const_value("unit", benchmark->unit_text());
+        results.set_const_value("benchmark", benchmark->benchmark_name());
+        results.set_const_value("testcase", benchmark->testcase_name());
 
         if(benchmark->has_configurations())
         {
             const auto& c = benchmark->get_current_configuration();
             for(const auto& v : c)
             {
-                results.add_column(v.first, v.second);
+                results.set_const_value(v.first, v.second);
             }
         }
 

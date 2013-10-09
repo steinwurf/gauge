@@ -16,7 +16,7 @@ namespace gauge
     public:
         /// Create a new json printer
         /// @param default_filename The default name of the outputted file
-        python_printer(const std::string& default_filename = "out");
+        python_printer(const std::string& default_filename = "out.py");
 
     public: // From file_printer
 
