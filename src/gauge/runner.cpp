@@ -115,9 +115,10 @@ namespace gauge
               "--result_filter=time throughput")
             ("gauge_filter",
              po::value<std::vector<std::string> >()->multitoken(),
-             "Filter which benchmarks to run based on their name "
-              "for example ./benchmark --gauge_filter=MyTest.* multiple filters "
-              "can also be specified e.g. "
+             "Filter which testcases or benchmarks to run based on their name "
+              "for example ./benchmark --gauge_filter=MyTest.* or "
+              "--gauge_filter=*.MyBenchmark or even --gauge_filter=*.* "
+              "Multiple filters can also be specified e.g. "
               "--gauge_filter=MyTest.one MyTest.two")
             ("runs", po::value<uint32_t>(),
              "Sets the number of runs to complete. Overrides the "
@@ -266,6 +267,7 @@ namespace gauge
                                      " (example MyTest.*)");
         }
 
+        // This if-else-if branch evaluates all possible filter combinations
         if(testcase_name == "*" && benchmark_name == "*")
         {
             run_all();
@@ -273,29 +275,46 @@ namespace gauge
         else if(testcase_name == "*")
         {
 
-            for(auto t = m_impl->m_testcases.begin();
-                t != m_impl->m_testcases.end(); ++t)
+            //In this case, the benchmark must be runned for each of the
+            //testcases for which it belongs. If the requested benchmark is not
+            //found, throw an error
+
+            bool benchmark_found = 0;
+
+            for(const auto& testcase : m_impl->m_testcases)
             {
 
-                for(auto b = t->second.begin(); b != t->second.end(); ++b)
+                for(const auto& b : testcase.second)
                 {
 
-                    if(benchmark_name == b->first)
+                    if(benchmark_name == b.first)
                     {
 
-                        uint32_t id = b->second;
+                        uint32_t id = b.second;
                         assert(m_impl->m_benchmarks.find(id) !=
                         m_impl->m_benchmarks.end());
 
                         auto& make = m_impl->m_benchmarks[id];
                         auto benchmark = make();
                         run_benchmark_configurations(benchmark);
+                        benchmark_found = 1;
                     }
+
                 }
             }
 
-        } else if (benchmark_name == "*")
+            if(benchmark_found == 0)
+            {
+                throw std::runtime_error("Error benchmark not found");
+            }
+
+
+        }
+        else if (benchmark_name == "*")
         {
+
+            //In this case, all the benchmarks from a testcase must be runned
+            //If the testcase is not found, throw an error
 
             if(m_impl->m_testcases.find(testcase_name) ==
                m_impl->m_testcases.end())
@@ -318,9 +337,10 @@ namespace gauge
                 run_benchmark_configurations(benchmark);
             }
 
-        } else
-
+        }
+        else
         {
+            //In this case, run the specific testcase_name.benchmark_name pair
             if(m_impl->m_testcases.find(testcase_name) ==
                m_impl->m_testcases.end())
             {
