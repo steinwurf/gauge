@@ -275,8 +275,8 @@ namespace gauge
         else if(testcase_name == "*")
         {
 
-            // The benchmark must be run for each of the testcases for which 
-            // it belongs. If the requested benchmark is not found, throw an 
+            // The benchmark must be run for each of the testcases for which
+            // it belongs. If the requested benchmark is not found, throw an
             // error
 
             bool benchmark_found = false;
@@ -292,7 +292,7 @@ namespace gauge
 
                         uint32_t id = b.second;
                         assert(m_impl->m_benchmarks.find(id) !=
-                        m_impl->m_benchmarks.end());
+                               m_impl->m_benchmarks.end());
 
                         auto& make = m_impl->m_benchmarks[id];
                         auto benchmark = make();
@@ -313,7 +313,7 @@ namespace gauge
         else if (benchmark_name == "*")
         {
 
-            // All the benchmarks from a testcase must be run. If the requested 
+            // All the benchmarks from a testcase must be run. If the requested
             // testcase is not found, throw an error
 
             if(m_impl->m_testcases.find(testcase_name) ==
