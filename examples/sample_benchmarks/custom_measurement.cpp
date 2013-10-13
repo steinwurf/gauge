@@ -58,6 +58,9 @@ public:
 
     void store_run(tables::table& results)
     {
+        if(!results.has_column("counts"))
+            results.add_column("counts");
+
         results.set_value("counts", measurement());
     }
 

@@ -362,19 +362,22 @@ namespace gauge
 
         for(const auto &o : m_impl->m_columns)
         {
+            if(!results.has_column(o.first))
+                results.add_column(o.first);
+            
             results.set_value(o.first, o.second);
         }
 
-        results.set_const_value("unit", benchmark->unit_text());
-        results.set_const_value("benchmark", benchmark->benchmark_name());
-        results.set_const_value("testcase", benchmark->testcase_name());
+        results.add_const_column("unit", benchmark->unit_text());
+        results.add_const_column("benchmark", benchmark->benchmark_name());
+        results.add_const_column("testcase", benchmark->testcase_name());
 
         if(benchmark->has_configurations())
         {
             const auto& c = benchmark->get_current_configuration();
             for(const auto& v : c)
             {
-                results.set_const_value(v.first, v.second);
+                results.add_const_column(v.first, v.second);
             }
         }
 
@@ -386,6 +389,9 @@ namespace gauge
 
         assert(runs > 0);
         uint32_t run = 0;
+
+        results.add_column("iterations");
+        results.add_column("run_number");
 
         while(run < runs)
         {

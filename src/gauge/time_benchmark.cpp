@@ -167,6 +167,8 @@ namespace gauge
 
     void time_benchmark::store_run(tables::table &results)
     {
+        if(!results.has_column("time"))
+            results.add_column("time");
         results.set_value("time", measurement());
     }
 
