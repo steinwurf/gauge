@@ -6,12 +6,16 @@ of every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+6.0.0
+-----
 * Major: Started using tables version 4
 * Major: Extracted tables and related logic to its own repository.
 
 5.5.0
 -----
-* Minor: The python- and csv-printers can now take the default output filename 
+* Minor: The python- and csv-printers can now take the default output filename
   as a parameter.
 
 5.4.0
