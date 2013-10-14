@@ -6,9 +6,6 @@ namespace gauge
 {
     namespace po = boost::program_options;
 
-    /// Create a options map
-    //po::variables_map parse_commandline(int argc, const char *argv[]);
-
     class commandline_arguements
     {
     public:
@@ -34,4 +31,3 @@ namespace gauge
     };
 
 }
-

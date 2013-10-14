@@ -43,10 +43,7 @@ protected:
 
     std::vector<uint32_t> m_vector;
     std::list<uint32_t> m_list;
-
-
 };
-
 
 BENCHMARK_F(find_max_setup, FindMax, FindInList, 10)
 {
@@ -70,4 +67,3 @@ BENCHMARK_F(find_max_setup, FindMax, FindInVector, 10)
 
     (void)max_value; // Suppress unused variable warning
 }
-

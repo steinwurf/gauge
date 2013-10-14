@@ -58,6 +58,9 @@ public:
 
     void store_run(tables::table& results)
     {
+        if(!results.has_column("counts"))
+            results.add_column("counts");
+
         results.set_value("counts", measurement());
     }
 
@@ -75,5 +78,3 @@ BENCHMARK_F(custom_measurement, BenchmarkMe, RunCount, 100)
         m_benchmark_me.run_this();
     }
 }
-
-

@@ -124,5 +124,3 @@ inspiration in these other nice projects:
 .. _`Google Test`: http://code.google.com/p/googletest/
 
 Thanks for all the fish.
-
-

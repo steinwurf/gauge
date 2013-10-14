@@ -19,8 +19,8 @@ namespace gauge
     {
     public:
 
-        /// Destructor
-        ~printer()
+        /// Add options to the available commandline arguments
+        virtual void set_options(po::variables_map& /*options*/)
         { }
 
         /// Called when the benchmark program is started
@@ -38,10 +38,6 @@ namespace gauge
                                       const tables::table &/*results*/)
         { }
 
-        /// Add options to the available commandline arguments
-        virtual void set_options(po::variables_map& /*options*/)
-        { }
-
         /// Called when a specific benchmark is finished
         virtual void end_benchmark()
         { }
@@ -54,4 +50,3 @@ namespace gauge
     };
 
 }
-

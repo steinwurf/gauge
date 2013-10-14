@@ -42,7 +42,7 @@ def options(opt):
         resolve.ResolveGitMajorVersion(
             name = 'tables',
             git_repository = 'github.com/steinwurf/tables.git',
-            major_version = 1))
+            major_version = 4))
 
     opt.load('wurf_dependency_bundle')
     opt.load('wurf_tools')
@@ -77,4 +77,3 @@ def build(bld):
 
         bld.recurse('examples/sample_benchmarks')
         bld.recurse('test')
-

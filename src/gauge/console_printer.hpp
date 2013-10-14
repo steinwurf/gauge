@@ -3,6 +3,7 @@
 #include <iomanip>
 
 #include <boost/chrono.hpp>
+#include <tables/format.hpp>
 
 #include "printer.hpp"
 #include "statistics.hpp"
@@ -14,6 +15,7 @@ namespace gauge
     /// benchmarks to the console (std::cout)
     class console_printer : public printer
     {
+
     public: // From printer
 
         void start()
@@ -49,11 +51,10 @@ namespace gauge
 
 
         void benchmark_result(const benchmark &info,
-                              const tables::table &results)
+            const tables::table &results)
         {
-
             std::vector<uint64_t> iterations =
-                results.column_as<uint64_t>("iterations");
+                results.values_as<uint64_t>("iterations");
 
             statistics iter = calculate_statistics(
                 iterations.cbegin(),
@@ -74,8 +75,21 @@ namespace gauge
             if(info.has_configurations())
             {
                 std::cout << console::textyellow << "[  CONFIG  ]"
-                          << console::textdefault << " "
-                          << info.get_current_configuration() << std::endl;
+                          << console::textdefault << " ";
+                const auto& c = info.get_current_configuration();
+                bool first = true;
+                tables::format f;
+                for(const auto& v : c)
+                {
+                    if(!first)
+                        std::cout << ",";
+                    first = false;
+                    std::cout << v.first << "=";
+
+                    f.print(std::cout, v.second);
+                }
+
+                std::cout << std::endl;
             }
 
             double time = static_cast<double>(
@@ -87,34 +101,32 @@ namespace gauge
                       << " milliseconds" << std::endl;
 
 
-            for(const auto& r : results)
+            for(const auto& c_name : results.columns())
             {
-                if(r.first == "iterations")
+                if(c_name == "iterations")
                     continue;
-
-                if(r.first == "run_number")
+                if(c_name == "run_number")
                     continue;
-
-                if(print_column<double>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<float>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<uint64_t>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<int64_t>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<int32_t>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<uint32_t>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<int16_t>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<uint16_t>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<int8_t>(r.first,info.unit_text(),results))
-                   continue;
-                if(print_column<uint8_t>(r.first,info.unit_text(),results))
-                   continue;
+                if(print_column<double>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<float>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<uint64_t>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<int64_t>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<int32_t>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<uint32_t>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<int16_t>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<uint16_t>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<int8_t>(c_name,info.unit_text(),results))
+                    continue;
+                if(print_column<uint8_t>(c_name,info.unit_text(),results))
+                    continue;
 
             }
 
@@ -124,13 +136,16 @@ namespace gauge
 
         template<class T>
         bool print_column(const std::string& column,
-                          const std::string& unit,
-                          const tables::table& results)
+            const std::string& unit,
+            const tables::table& results)
         {
             if(!results.is_column<T>(column))
                 return false;
 
-            auto values = results.column_as<T>(column);
+            if(results.empty_rows(column) > 0)
+                return false;
+
+            auto values = results.values_as<T>(column);
 
             statistics res = calculate_statistics(
                 values.cbegin(),
@@ -139,12 +154,12 @@ namespace gauge
             std::cout << console::textgreen << "[   RESULT ] "
                       << console::textdefault;
 
-            std::cout << column << " "
-                      << std::endl
-                      << console::textgreen << "[          ] "
-                      << console::textdefault
-                      << "   Average: " << res.m_mean
-                      << " " << unit << std::endl;
+            std::cout   << column << " "
+                        << std::endl
+                        << console::textgreen << "[          ] "
+                        << console::textdefault
+                        << "   Average: " << res.m_mean
+                        << " " << unit << std::endl;
 
             print("Max:", unit, res.m_max, res.m_mean);
             print("Min:", unit, res.m_min, res.m_mean);
@@ -154,7 +169,7 @@ namespace gauge
         }
 
         void print(std::string name, std::string unit,
-                   double value, double mean)
+            double value, double mean)
         {
             std::cout << console::textgreen << "[          ] "
                       << console::textdefault
@@ -182,9 +197,5 @@ namespace gauge
 
         /// The stop time
         boost::chrono::high_resolution_clock::time_point m_benchmark_stop;
-
-
     };
 }
-
-

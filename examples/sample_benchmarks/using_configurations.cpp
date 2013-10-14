@@ -24,7 +24,6 @@ public:
         }
     }
 
-
     void setup()
     {
         // Setup the test this could also be done inside the
@@ -44,9 +43,7 @@ public:
     }
 
     std::vector<uint32_t> m_vector;
-
 };
-
 
 BENCHMARK_F(using_configurations, Stdlib, Accumulate, 10)
 {
@@ -57,4 +54,3 @@ BENCHMARK_F(using_configurations, Stdlib, Accumulate, 10)
     }
     (void)sum; // Suppress warning about unused variable
 }
-
