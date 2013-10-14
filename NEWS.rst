@@ -6,7 +6,7 @@ of every change, see the Git log.
 
 Latest
 ------
-* Major: Started using tables 2
+* Major: Started using tables version 4
 * Major: Extracted tables and related logic to its own repository.
 
 5.5.0
