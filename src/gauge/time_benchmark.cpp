@@ -38,7 +38,6 @@ namespace gauge
 
     };
 
-
     /// How many micro seconds passes in one tick of the clock
     /// now mulitply that with a 100 then that is how long we should
     /// measure
@@ -48,7 +47,6 @@ namespace gauge
     //    auto s = typename Clock::duration(1);
     //    return bc::duration_cast<bc::microseconds>(s).count() * 1000.0;
     //}
-
 
     time_benchmark::time_benchmark()
         : m_impl(new time_benchmark::impl())
@@ -141,7 +139,6 @@ namespace gauge
             return false;
         }
 
-
         // We did not get a valid measurement so we try to calculate
         // the number of iterations we need to hit the threshold
         double factor = m_impl->m_threshold / m_impl->m_result;
@@ -167,7 +164,8 @@ namespace gauge
 
     void time_benchmark::store_run(tables::table &results)
     {
+        if(!results.has_column("time"))
+            results.add_column("time");
         results.set_value("time", measurement());
     }
-
 }

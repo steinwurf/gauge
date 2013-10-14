@@ -58,6 +58,3 @@ Nick Bruun's Hayai library. These have since been modified to fit gauge.
   a drink or whatever is suited to the situation, given that you like the
   software.
   This notice may not be removed or altered from any source distribution.
-
-
-

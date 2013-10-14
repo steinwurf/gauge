@@ -6,10 +6,8 @@
 
 namespace gauge
 {
-
     struct runner::impl
     {
-
         /// Benchmark container
         typedef std::map<std::string, uint32_t> benchmark_map;
 
@@ -44,9 +42,6 @@ namespace gauge
 
     runner::runner()
         : m_impl(new runner::impl())
-    { }
-
-    runner::~runner()
     { }
 
     runner& runner::instance()
@@ -221,7 +216,6 @@ namespace gauge
         m_impl->m_columns[column_name] = column_value;
     }
 
-
     void runner::run_all()
     {
         assert(m_impl);
@@ -244,7 +238,6 @@ namespace gauge
             run_single_filter(f);
         }
     }
-
 
     void runner::run_single_filter(const std::string &filter)
     {
@@ -274,7 +267,6 @@ namespace gauge
         }
         else if(testcase_name == "*")
         {
-
             // The benchmark must be run for each of the testcases for which
             // it belongs. If the requested benchmark is not found, throw an
             // error
@@ -307,12 +299,9 @@ namespace gauge
             {
                 throw std::runtime_error("Error benchmark not found");
             }
-
-
         }
         else if (benchmark_name == "*")
         {
-
             // All the benchmarks from a testcase must be run. If the requested
             // testcase is not found, throw an error
 
@@ -365,7 +354,6 @@ namespace gauge
 
             run_benchmark_configurations(benchmark);
         }
-
     }
 
     void runner::run_benchmark_configurations(benchmark_ptr benchmark)
@@ -423,7 +411,20 @@ namespace gauge
 
         for(const auto &o : m_impl->m_columns)
         {
-            results.add_column(o.first, o.second);
+            results.add_const_column(o.first, o.second);
+        }
+
+        results.add_const_column("unit", benchmark->unit_text());
+        results.add_const_column("benchmark", benchmark->benchmark_name());
+        results.add_const_column("testcase", benchmark->testcase_name());
+
+        if(benchmark->has_configurations())
+        {
+            const auto& c = benchmark->get_current_configuration();
+            for(const auto& v : c)
+            {
+                results.add_const_column(v.first, v.second);
+            }
         }
 
         for(auto& printer : m_impl->m_printers)
@@ -431,9 +432,11 @@ namespace gauge
             printer->start_benchmark();
         }
 
-
         assert(runs > 0);
         uint32_t run = 0;
+
+        results.add_column("iterations");
+        results.add_column("run_number");
 
         while(run < runs)
         {
@@ -465,7 +468,6 @@ namespace gauge
             }
         }
 
-
         // Notify all printers that we are done
         for(auto& printer : m_impl->m_printers)
         {
@@ -478,7 +480,6 @@ namespace gauge
         }
 
         m_impl->m_current_benchmark = benchmark_ptr();
-
     }
 
     std::vector<runner::printer_ptr>& runner::printers()
@@ -486,5 +487,3 @@ namespace gauge
         return m_impl->m_printers;
     }
 }
-
-

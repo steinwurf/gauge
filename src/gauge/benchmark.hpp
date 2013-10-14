@@ -154,5 +154,3 @@ namespace gauge
         std::vector<config_set> m_configurations;
     };
 }
-
-

@@ -57,7 +57,6 @@ uint32_t count_bk(uint32_t v)
     return c;
 }
 
-
 // Counting bits set (naive way)
 uint32_t count_naive(uint32_t v)
 {
@@ -91,7 +90,6 @@ BENCHMARK_OPTION(array_size)
     gauge::runner::instance().register_options(options);
 }
 
-
 BENCHMARK_F(using_options, CountBits, count_bk, 10)
 {
 
@@ -113,5 +111,3 @@ BENCHMARK_F(using_options, CountBits, count_naive, 10)
     }
     (void)sum; // Suppress warning about unused variable
 }
-
-

@@ -6,7 +6,6 @@
 
 namespace gauge
 {
-
     /// Base class for benchmarks measuring time
     class time_benchmark : public benchmark
     {
