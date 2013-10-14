@@ -67,4 +67,3 @@ Latest
 -----
 * Initial release
 * Tested on Linux, Mac and Windows
-

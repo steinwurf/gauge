@@ -143,6 +143,9 @@ namespace gauge
             if(!results.is_column<T>(column))
                 return false;
 
+            if(results.empty_rows(column) > 0)
+                return false;
+
             auto values = results.values_as<T>(column);
 
             statistics res = calculate_statistics(

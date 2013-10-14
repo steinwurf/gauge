@@ -422,7 +422,7 @@ namespace gauge
         {
             if(!results.has_column(o.first))
                 results.add_column(o.first);
-            
+
             results.set_value(o.first, o.second);
         }
 
