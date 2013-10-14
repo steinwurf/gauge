@@ -98,3 +98,4 @@
     } add_option_reg ## option_name;                                    \
                                                                         \
     void BENCHMARK_OPTION_CLASS_NAME_(option_name)::add_options()       \
+
