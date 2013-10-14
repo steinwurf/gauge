@@ -4,7 +4,6 @@
 
 #include "file_printer.hpp"
 
-
 namespace gauge
 {
     /// A json result printer implementation. The purpose
@@ -21,5 +20,4 @@ namespace gauge
         /// @see file_printer::print_to_stream(std::ostream &s)
         void print_to_stream(std::ostream &s);
     };
-
 }

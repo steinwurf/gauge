@@ -6,10 +6,8 @@
 
 namespace gauge
 {
-
     struct runner::impl
     {
-
         /// Benchmark container
         typedef std::map<std::string, uint32_t> benchmark_map;
 
@@ -218,7 +216,6 @@ namespace gauge
         m_impl->m_columns[column_name] = column_value;
     }
 
-
     void runner::run_all()
     {
         assert(m_impl);
@@ -241,7 +238,6 @@ namespace gauge
             run_single_filter(f);
         }
     }
-
 
     void runner::run_single_filter(const std::string &filter)
     {
@@ -271,7 +267,6 @@ namespace gauge
         }
         else if(testcase_name == "*")
         {
-
             // The benchmark must be run for each of the testcases for which
             // it belongs. If the requested benchmark is not found, throw an
             // error
@@ -304,12 +299,9 @@ namespace gauge
             {
                 throw std::runtime_error("Error benchmark not found");
             }
-
-
         }
         else if (benchmark_name == "*")
         {
-
             // All the benchmarks from a testcase must be run. If the requested
             // testcase is not found, throw an error
 
@@ -362,7 +354,6 @@ namespace gauge
 
             run_benchmark_configurations(benchmark);
         }
-
     }
 
     void runner::run_benchmark_configurations(benchmark_ptr benchmark)
@@ -436,7 +427,6 @@ namespace gauge
             }
         }
 
-
         for(auto& printer : m_impl->m_printers)
         {
             printer->start_benchmark();
@@ -478,7 +468,6 @@ namespace gauge
             }
         }
 
-
         // Notify all printers that we are done
         for(auto& printer : m_impl->m_printers)
         {
@@ -491,7 +480,6 @@ namespace gauge
         }
 
         m_impl->m_current_benchmark = benchmark_ptr();
-
     }
 
     std::vector<runner::printer_ptr>& runner::printers()
@@ -499,5 +487,3 @@ namespace gauge
         return m_impl->m_printers;
     }
 }
-
-

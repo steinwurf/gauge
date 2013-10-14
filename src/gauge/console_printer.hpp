@@ -9,7 +9,6 @@
 #include "statistics.hpp"
 #include "console_colors.hpp"
 
-
 namespace gauge
 {
     /// A console printer which outputs the progress of the

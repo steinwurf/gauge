@@ -78,5 +78,3 @@ BENCHMARK_F(custom_measurement, BenchmarkMe, RunCount, 100)
         m_benchmark_me.run_this();
     }
 }
-
-

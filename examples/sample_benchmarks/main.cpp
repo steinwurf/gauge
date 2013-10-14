@@ -6,7 +6,6 @@
 #include <gauge/console_printer.hpp>
 #include <gauge/csv_printer.hpp>
 
-
 int main(int argc, const char* argv[])
 {
     srand((uint32_t)time(0));

@@ -19,7 +19,6 @@ uint32_t max_container(const Container &one)
                 max = *it;
         }
     }
-
     return max;
 }
 
@@ -46,4 +45,3 @@ BENCHMARK(RunOutside, ListMaxValue, 10)
     uint32_t max = setup_and_run< std::list<uint32_t> >();
     (void)max;
 }
-

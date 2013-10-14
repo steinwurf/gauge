@@ -53,4 +53,3 @@ namespace gauge
         assert(!m_filename.empty());
     }
 }
-

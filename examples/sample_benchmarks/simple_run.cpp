@@ -34,7 +34,6 @@ BENCHMARK(SimpleRun, MaxArray, 100)
 
 }
 
-
 void max_array_opt(double* x, double* y, double* z, uint32_t elements)
 {
     for (uint32_t i = 0; i < elements; i++)
@@ -42,7 +41,6 @@ void max_array_opt(double* x, double* y, double* z, uint32_t elements)
         z[i] = ((y[i] > x[i]) ? y[i] : x[i]);
     }
 }
-
 
 BENCHMARK(SimpleRun, MaxArrayOpt, 100)
 {
@@ -63,4 +61,3 @@ BENCHMARK(SimpleRun, MaxArrayOpt, 100)
         max_array_opt(&x[0], &y[0], &z[0], elements);
     }
 }
-

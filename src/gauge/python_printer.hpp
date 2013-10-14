@@ -4,7 +4,6 @@
 
 #include "file_printer.hpp"
 
-
 namespace gauge
 {
     /// A python result printer implementation. The purpose

@@ -46,6 +46,3 @@ namespace gauge
         config_map m_values;
     };
 }
-
-
-
