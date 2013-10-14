@@ -420,10 +420,7 @@ namespace gauge
 
         for(const auto &o : m_impl->m_columns)
         {
-            if(!results.has_column(o.first))
-                results.add_column(o.first);
-
-            results.set_value(o.first, o.second);
+            results.add_const_column(o.first, o.second);
         }
 
         results.add_const_column("unit", benchmark->unit_text());
