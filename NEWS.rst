@@ -6,11 +6,11 @@ of every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Improved filter options for benchmark testing purposes.
 
 6.0.0
 -----
-* Major: Started using tables version 4
+* Major: Started using tables version 4.
 * Major: Extracted tables and related logic to its own repository.
 
 5.5.0
