@@ -35,8 +35,17 @@ namespace gauge
     void file_printer::benchmark_result(const benchmark &info,
                                         const tables::table &results)
     {
-        (void)info;
-        m_tables.insert(m_tables.end(), results);
+        tables::table output = results;
+        if(info.has_configurations())
+        {
+            const auto& c = info.get_current_configuration();
+            for(const auto& v : c)
+            {
+                output.add_const_column(v.first, v.second);
+            }
+        }
+
+        m_tables.insert(m_tables.end(), output);
     }
 
     void file_printer::end()

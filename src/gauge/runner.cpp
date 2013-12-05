@@ -418,15 +418,6 @@ namespace gauge
         results.add_const_column("benchmark", benchmark->benchmark_name());
         results.add_const_column("testcase", benchmark->testcase_name());
 
-        if(benchmark->has_configurations())
-        {
-            const auto& c = benchmark->get_current_configuration();
-            for(const auto& v : c)
-            {
-                results.add_const_column(v.first, v.second);
-            }
-        }
-
         for(auto& printer : m_impl->m_printers)
         {
             printer->start_benchmark();
