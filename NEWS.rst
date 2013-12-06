@@ -6,6 +6,7 @@ of every change, see the Git log.
 
 Latest
 ------
+* Bug: Removed configuration information from the result table.
 * Minor: Improved filter options for benchmark testing purposes.
 
 6.0.0
