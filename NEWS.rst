@@ -6,6 +6,10 @@ of every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+6.1.0
+-----
 * Bug: Removed configuration information from the result table.
 * Minor: Improved filter options for benchmark testing purposes.
 
