@@ -137,7 +137,7 @@ namespace gauge
         }
         catch(const std::exception &e)
         {
-            std::cout << "Error:" << e.what() << std::endl;
+            std::cerr << e.what() << std::endl;
             return;
         }
 
@@ -145,9 +145,18 @@ namespace gauge
         {
             auto v = m_impl->m_options["add_column"].as<
                 std::vector<std::string> >();
-
-            for(const auto& s : v)
-                parse_add_column(s);
+            try
+            {
+                for(const auto& s : v)
+                {
+                    parse_add_column(s);
+                }
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << std::endl;
+                return;
+            }
         }
 
         if(m_impl->m_options.count("help"))
@@ -172,8 +181,17 @@ namespace gauge
         // should use a filter
         if(m_impl->m_options.count("gauge_filter"))
         {
-            auto f = m_impl->m_options["gauge_filter"].as<std::vector<std::string> >();
-            run_all_filters(f);
+            auto f = m_impl->m_options["gauge_filter"]
+                .as<std::vector<std::string>>();
+            try
+            {
+                run_all_filters(f);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << std::endl;
+                return;
+            }
         }
         else
         {
