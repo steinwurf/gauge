@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+6.2.0
+-----
 * Minor: runner::run now catches all exceptions. The API has been
   extended with runner::run_unsafe which doesn't catch exceptions.
 
