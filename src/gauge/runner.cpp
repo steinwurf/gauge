@@ -94,7 +94,20 @@ namespace gauge
 
     }
 
+
     void runner::run(int argc, const char *argv[])
+    {
+        try
+        {
+            run_unsafe(argc, argv);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+    }
+
+    void runner::run_unsafe(int argc, const char *argv[])
     {
         assert(m_impl);
 
@@ -127,27 +140,20 @@ namespace gauge
 
         options.add(m_impl->m_options_description);
 
-        try
-        {
-            po::variables_map vm;
-            po::store(po::parse_command_line(argc, argv, options), vm);
-            po::notify(vm);
+        po::variables_map vm;
+        po::store(po::parse_command_line(argc, argv, options), vm);
+        po::notify(vm);
 
-            m_impl->m_options = vm;
-        }
-        catch(const std::exception &e)
-        {
-            std::cout << "Error:" << e.what() << std::endl;
-            return;
-        }
+        m_impl->m_options = vm;
 
         if(m_impl->m_options.count("add_column"))
         {
             auto v = m_impl->m_options["add_column"].as<
                 std::vector<std::string> >();
-
             for(const auto& s : v)
+            {
                 parse_add_column(s);
+            }
         }
 
         if(m_impl->m_options.count("help"))
@@ -172,7 +178,8 @@ namespace gauge
         // should use a filter
         if(m_impl->m_options.count("gauge_filter"))
         {
-            auto f = m_impl->m_options["gauge_filter"].as<std::vector<std::string> >();
+            auto f = m_impl->m_options["gauge_filter"]
+                .as<std::vector<std::string>>();
             run_all_filters(f);
         }
         else

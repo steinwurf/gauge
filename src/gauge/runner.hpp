@@ -79,6 +79,12 @@ namespace gauge
         benchmark_ptr current_benchmark();
 
         /// Start a new benchmark runner using the commandline
+        /// parameters specified. Exceptions are not handled.
+        /// @param argc for the program
+        /// @param argv for the program
+        void run_unsafe(int argc = 0, const char *argv[] = 0);
+
+        /// Start a new benchmark runner using the commandline
         /// parameters specified.
         /// @param argc for the program
         /// @param argv for the program
