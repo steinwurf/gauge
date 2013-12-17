@@ -1,12 +1,13 @@
-News for gauge
+News for Gauge
 ==============
 
-This file lists the major changes between versions. For a more detailed list
-of every change, see the Git log.
+This file lists the major changes between versions. For a more detailed list of
+every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: runner::run now catches all exceptions. The API has been
+  extended with runner::run_unsafe which doesn't catch exceptions.
 
 6.1.0
 -----
@@ -20,7 +21,7 @@ Latest
 
 5.5.0
 -----
-* Minor: The python- and csv-printers can now take the default output filename
+* Minor: The python- and CSV-printers can now take the default output filename
   as a parameter.
 
 5.4.0
@@ -33,7 +34,8 @@ Latest
 
 5.2.1
 -----
-* Bug: Fix file printers so that they correctly detect the end of all benchmarks.
+* Bug: Fix file printers so that they correctly detect the end of all
+  benchmarks.
 
 5.2.0
 -----
@@ -50,7 +52,7 @@ Latest
 -----
 * Minor: Update waf to version 1.7.10 and use the wurf_install_path tool.
 * Minor: Updated to waf-tools version 2.x.y
-* Minor: Added csv (comma separated values) printer.
+* Minor: Added CSV (comma separated values) printer.
 * Major: Changed the benchmark interface. Implementers of new benchmarks may
   now register several measurement results in a single run. The new benchmark
   also supports specifying custom benchmark options (available on the
