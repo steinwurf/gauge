@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* Minor: Added a convenience function add_default_printer() to the
+* Minor: Added a convenience function add_default_printers() to the
   gauge runner. This enables most common printers in a project.
 
 6.2.0
