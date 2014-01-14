@@ -6,7 +6,8 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Added a convenience function add_default_printer() to the
+  gauge runner. This enables most common printers in a project.
 
 6.2.0
 -----
