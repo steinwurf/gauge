@@ -3,6 +3,11 @@
 #include "runner.hpp"
 #include "results.hpp"
 #include "commandline_arguments.hpp"
+#include "json_printer.hpp"
+#include "python_printer.hpp"
+#include "console_printer.hpp"
+#include "csv_printer.hpp"
+
 
 namespace gauge
 {
@@ -48,6 +53,21 @@ namespace gauge
     {
         static runner singleton;
         return singleton;
+    }
+
+    void runner::add_default_printers()
+    {
+        instance().printers().push_back(
+            std::make_shared<gauge::console_printer>());
+
+        instance().printers().push_back(
+            std::make_shared<gauge::python_printer>());
+
+        instance().printers().push_back(
+            std::make_shared<gauge::json_printer>());
+
+        instance().printers().push_back(
+            std::make_shared<gauge::csv_printer>());
     }
 
     void runner::run_benchmarks(int argc, const char* argv[])
