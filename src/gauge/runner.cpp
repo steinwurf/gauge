@@ -1,12 +1,14 @@
 #include <cassert>
 #include <cstdlib>
 
-#include "runner.hpp"
-#include "results.hpp"
-#include "json_printer.hpp"
-#include "python_printer.hpp"
 #include "console_printer.hpp"
 #include "csv_printer.hpp"
+#include "json_printer.hpp"
+#include "python_printer.hpp"
+#include "stdout_printer.hpp"
+#include "results.hpp"
+
+#include "runner.hpp"
 
 namespace gauge
 {
@@ -64,6 +66,9 @@ namespace gauge
 
         instance().printers().push_back(
             std::make_shared<gauge::csv_printer>());
+
+        instance().printers().push_back(
+            std::make_shared<gauge::stdout_printer>());
     }
 
     void runner::run_benchmarks(int argc, const char* argv[])

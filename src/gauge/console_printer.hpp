@@ -3,7 +3,7 @@
 #include <iomanip>
 
 #include <boost/chrono.hpp>
-#include <tables/format.hpp>
+#include <tables/default_format.hpp>
 
 #include "printer.hpp"
 #include "statistics.hpp"
@@ -82,7 +82,7 @@ namespace gauge
                           << console::textdefault << " ";
                 const auto& c = info.get_current_configuration();
                 bool first = true;
-                tables::format f;
+                tables::default_format f;
                 for(const auto& v : c)
                 {
                     if(!first)
