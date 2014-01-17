@@ -18,6 +18,10 @@ namespace gauge
 
     public: // From printer
 
+        console_printer() :
+            printer("console")
+        { }
+
         void start()
         {
             m_total_start = boost::chrono::high_resolution_clock::now();
@@ -133,6 +137,8 @@ namespace gauge
             std::cout << console::textgreen << "[----------] "
                       << console::textdefault << std::endl;
         }
+
+    private:
 
         template<class T>
         bool print_column(const std::string& column,

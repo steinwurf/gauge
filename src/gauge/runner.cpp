@@ -165,17 +165,16 @@ namespace gauge
             }
         }
 
-        // Deliver possible options to printers
-        for(auto& p: m_impl->m_printers)
+        // Deliver possible options to printers and start them
+        for(auto& printer: m_impl->m_printers)
         {
-            p->set_options(m_impl->m_options);
+            printer->set_options(m_impl->m_options);
         }
 
         // Notify all printers that we are starting
-        for(auto it = m_impl->m_printers.begin();
-            it != m_impl->m_printers.end(); ++it)
+        for(auto& printer: enabled_printers())
         {
-            (*it)->start();
+            printer->start();
         }
         // Check whether we should run all tests or whether we
         // should use a filter
@@ -191,10 +190,9 @@ namespace gauge
         }
 
         // Notify all printers that we are done
-        for(auto it = m_impl->m_printers.begin();
-            it != m_impl->m_printers.end(); ++it)
+        for(auto& printer: enabled_printers())
         {
-            (*it)->end();
+            printer->end();
         }
 
     }
@@ -433,7 +431,7 @@ namespace gauge
         results.add_const_column("benchmark", benchmark->benchmark_name());
         results.add_const_column("testcase", benchmark->testcase_name());
 
-        for(auto& printer : m_impl->m_printers)
+        for(auto& printer: enabled_printers())
         {
             printer->start_benchmark();
         }
@@ -475,17 +473,32 @@ namespace gauge
         }
 
         // Notify all printers that we are done
-        for(auto& printer : m_impl->m_printers)
+        for(auto& printer: enabled_printers())
         {
             printer->end_benchmark();
         }
 
-        for(auto& printer : m_impl->m_printers)
+        for(auto& printer: enabled_printers())
         {
             printer->benchmark_result(*benchmark, results);
         }
 
         m_impl->m_current_benchmark = benchmark_ptr();
+    }
+
+    std::vector<runner::printer_ptr> runner::enabled_printers() const
+    {
+        std::vector<runner::printer_ptr> enabled_printers;
+
+        for(auto& printer : m_impl->m_printers)
+        {
+            if (printer->is_enabled())
+            {
+                enabled_printers.push_back(printer);
+            }
+        }
+
+        return enabled_printers;
     }
 
     std::vector<runner::printer_ptr>& runner::printers()

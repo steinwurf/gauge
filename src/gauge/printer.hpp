@@ -2,11 +2,15 @@
 
 #include <tables/table.hpp>
 
+#include <boost/program_options.hpp>
+
 #include "benchmark.hpp"
 #include "results.hpp"
 
 namespace gauge
 {
+
+    namespace po = boost::program_options;
 
     /// Progress printer interface. To provide a custom
     /// Result printer create a sub-class of this interface
@@ -19,9 +23,17 @@ namespace gauge
     {
     public:
 
+        /// Create a new printer
+        /// @param name The name of the printer
+        /// @param default_filename The default name of the outputted file
+        /// without the file extension
+        printer(const std::string& name, bool enabled = true);
+
+        // Returns true if the printer is enabled.
+        bool is_enabled() const;
+
         /// Add options to the available commandline arguments
-        virtual void set_options(po::variables_map& /*options*/)
-        { }
+        virtual void set_options(po::variables_map& options);
 
         /// Called when the benchmark program is started
         virtual void start()
@@ -46,6 +58,13 @@ namespace gauge
         virtual void end()
         { }
 
+    protected:
+
+        /// Name of the printer
+        std::string m_name;
+
+        /// Boolean determining wether the printer is enabled or not.
+        bool m_enabled;
 
     };
 

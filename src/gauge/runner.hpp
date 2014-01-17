@@ -116,6 +116,10 @@ namespace gauge
         /// @return access to the runners printers
         std::vector<printer_ptr>& printers();
 
+        /// @return the runners enabled printers
+        std::vector<printer_ptr> enabled_printers() const;
+
+
         /// Parse the add_column options
         /// @param column Value from the input options
         void parse_add_column(const std::string &option);
