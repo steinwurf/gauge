@@ -36,6 +36,11 @@ namespace gauge
         /// @return instance of the gauge benchmark runner
         static runner& instance();
 
+        /// Adds all the default printers to the runner. This should
+        /// be done in the before calling the run_benchmarks function
+        /// to take effect.
+        static void add_default_printers();
+
         /// Run all the benchmarks registered with the gauge benchmark
         /// runner
         static void run_benchmarks(int argc = 0, const char* argv[] = 0);
