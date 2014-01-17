@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cstdlib>
 
 #include "runner.hpp"
 #include "results.hpp"
@@ -100,6 +101,7 @@ namespace gauge
         catch(const std::exception& e)
         {
             std::cerr << e.what() << std::endl;
+            exit(EXIT_FAILURE);
         }
     }
 
