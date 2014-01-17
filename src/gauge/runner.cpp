@@ -2,7 +2,6 @@
 
 #include "runner.hpp"
 #include "results.hpp"
-#include "commandline_arguments.hpp"
 
 namespace gauge
 {
@@ -24,11 +23,8 @@ namespace gauge
         /// Test case map
         testcase_map m_testcases;
 
-        /// Command-line arguments
-        commandline_arguements m_commandline;
-
         /// The available program options
-        po::options_description m_options_description;
+        boost::program_options::options_description m_options_description;
 
         /// Parsed program options
         po::variables_map m_options;
@@ -146,6 +142,13 @@ namespace gauge
 
         m_impl->m_options = vm;
 
+
+        if(m_impl->m_options.count("help"))
+        {
+            std::cout << options << std::endl;
+            return;
+        }
+
         if(m_impl->m_options.count("add_column"))
         {
             auto v = m_impl->m_options["add_column"].as<
@@ -154,12 +157,6 @@ namespace gauge
             {
                 parse_add_column(s);
             }
-        }
-
-        if(m_impl->m_options.count("help"))
-        {
-            std::cout << options << std::endl;
-            return;
         }
 
         // Deliver possible options to printers

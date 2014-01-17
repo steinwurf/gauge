@@ -3,11 +3,15 @@
 #include <vector>
 #include <memory>
 
+#include <boost/program_options.hpp>
+
 #include "benchmark.hpp"
 #include "printer.hpp"
 
 namespace gauge
 {
+    namespace po = boost::program_options;
+
     /// The gauge benchmark runner. Responsible for
     /// invoking the registered benchmarks.
     class runner
