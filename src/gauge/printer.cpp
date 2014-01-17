@@ -20,9 +20,9 @@ namespace gauge
         gauge::po::options_description options;
 
         options.add_options()(
-            std::string("use_" + m_name).c_str(),
+            ("use_" + m_name).c_str(),
             po::value<bool>()->default_value(m_enabled),
-            std::string("Use the " + m_name + " printer").c_str());
+            ("Use the " + m_name + " printer").c_str());
 
         gauge::runner::instance().register_options(options);
     }
