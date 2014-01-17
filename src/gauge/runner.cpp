@@ -119,7 +119,7 @@ namespace gauge
               "--result_filter=time throughput")
             ("gauge_filter",
              po::value<std::vector<std::string> >()->multitoken(),
-             "Filter which testcases or benchmarks to run based on their name "
+             "Filter which test-cases or benchmarks to run based on their name "
               "for example ./benchmark --gauge_filter=MyTest.* or "
               "--gauge_filter=*.MyBenchmark or even --gauge_filter=*.* "
               "Multiple filters can also be specified e.g. "
@@ -132,7 +132,11 @@ namespace gauge
              "Add a column to the test results, this can be use to "
              "add custom information to the result files "
              "./benchmark --add_column cpu=i7 "
-             "\"date=Monday 1st June 2021\"");
+             "\"date=Monday 1st June 2021\"")
+            ("dry_run",
+             "Initializes the benchmark without running it. This is useful to "
+             "check whether the right command-line arguments have been passed "
+             "to the benchmark executable.");
 
         options.add(m_impl->m_options_description);
 
@@ -387,6 +391,11 @@ namespace gauge
     {
         assert(benchmark);
         assert(m_impl);
+
+        if(m_impl->m_options.count("dry_run"))
+        {
+            return;
+        }
 
         assert(!m_impl->m_current_benchmark);
         m_impl->m_current_benchmark = benchmark;
