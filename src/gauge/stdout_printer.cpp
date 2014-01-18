@@ -58,8 +58,8 @@ namespace gauge
                 options["stdout_formatter"].as<formatter_map::key_type>();
             if(!m_formatters.count(m_format_key))
             {
-                throw std::runtime_error(
-                    m_format_key + " is not a valid format.");
+                throw std::runtime_error("stdout printer: '" + m_format_key +
+                    "' is not a valid format.");
             }
         }
     }
