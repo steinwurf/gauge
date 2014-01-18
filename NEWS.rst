@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+7.0.0
+-----
 * Major: Removed unused ``commandline_arguments`` class.
 * Major: Removed vector separator options form ``csv_printer`` as it was unused.
 * Minor: Added ``dry_run`` option to execute the benchmark initialization code

@@ -4,7 +4,7 @@
 import os
 
 APPNAME = 'gauge'
-VERSION = '6.3.0'
+VERSION = '7.0.0'
 
 def recurse_helper(ctx, name):
 
