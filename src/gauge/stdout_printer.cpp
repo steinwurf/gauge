@@ -9,14 +9,13 @@
 
 namespace gauge
 {
-    const stdout_printer::formatter_map stdout_printer::m_formatters {
-        {"csv", std::shared_ptr<tables::format>(new tables::csv_format())},
-        {"json", std::shared_ptr<tables::format>(new tables::json_format())},
-        {"python", std::shared_ptr<tables::format>(new tables::python_format())}
-    };
-
     stdout_printer::stdout_printer() :
-        printer("stdout", false)
+        printer("stdout", false),
+        m_formatters({
+            {"csv", formatter_map::mapped_type(new tables::csv_format())},
+            {"json", formatter_map::mapped_type(new tables::json_format())},
+            {"python", formatter_map::mapped_type(new tables::python_format())}
+        })
     {
         gauge::po::options_description options;
 

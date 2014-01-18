@@ -24,7 +24,7 @@ namespace gauge
         /// @see printer::set_options(po::variables_map&);
         void set_options(po::variables_map& options);
 
-        /// @see printer::benchmark_result(const benchmark&,const table&)
+        /// @see printer::benchmark_result(const benchmark&, const table&)
         void benchmark_result(const benchmark &info,
                               const tables::table &results);
 
@@ -43,7 +43,7 @@ namespace gauge
         formatter_map::key_type m_format_key;
 
         /// The available formatters
-        static const formatter_map m_formatters;
+        formatter_map m_formatters;
 
         /// The output tables
         std::vector<tables::table> m_tables;
