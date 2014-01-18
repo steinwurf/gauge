@@ -18,31 +18,31 @@ namespace gauge
 
     public: // from printer
 
-        ///
+        /// Create a new stdout printer
         stdout_printer();
 
-        ///
+        /// @see printer::set_options(po::variables_map&);
         void set_options(po::variables_map& options);
 
-        ///
+        /// @see printer::benchmark_result(const benchmark&,const table&)
         void benchmark_result(const benchmark &info,
                               const tables::table &results);
 
-        ///
+        /// @see printer::end()
         void end();
 
     private:
 
-        ///
+        /// The type for the map containing each of the available formats
         typedef std::map<std::string, std::shared_ptr<tables::format> >
             formatter_map;
 
     private:
 
-        ///
+        /// The key for the desired format
         formatter_map::key_type m_format_key;
 
-        ///
+        /// The available formatters
         static const formatter_map m_formatters;
 
         /// The output tables
