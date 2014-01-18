@@ -12,21 +12,8 @@
 namespace gauge
 {
     csv_printer::csv_printer(const std::string& default_filename)
-        : file_printer("csvfile", "Set the output name of the csv printer",
-            default_filename)
-    {
-        // Add the filename option for this printer
-        gauge::po::options_description options;
-
-        auto default_value_seperator =
-            gauge::po::value<std::string>()->default_value(",");
-
-        options.add_options()
-            ("csvseperator", default_value_seperator,
-             "Set the value separator for the csv file writer");
-
-        gauge::runner::instance().register_options(options);
-    }
+        : file_printer("csv", default_filename)
+    { }
 
     void csv_printer::print_to_stream(std::ostream &s)
     {
@@ -39,11 +26,5 @@ namespace gauge
         tables::csv_format format;
 
         format.print(s, combined_results);
-    }
-
-    void csv_printer::set_options(po::variables_map& options)
-    {
-        file_printer::set_options(options);
-        m_value_seperator = options["csvseperator"].as<std::string>();
     }
 }

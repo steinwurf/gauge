@@ -17,13 +17,10 @@ namespace gauge
     public:
 
         /// Create a new file printer
-        /// @param filename_option The name of option for specifying the name of
-        /// the output file
-        /// @param description The description for the output filename option
+        /// @param name The name of the file printer.
         /// @param default_filename The default name of the outputted file
-        /// without the file extension
-        file_printer(const std::string& filename_option,
-            const std::string& description,
+        /// (with file extension)
+        file_printer(const std::string& name,
             const std::string& default_filename);
 
     public: // From printer

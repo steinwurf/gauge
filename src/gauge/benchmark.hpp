@@ -4,15 +4,17 @@
 #include <vector>
 
 #include <boost/any.hpp>
+#include <boost/program_options.hpp>
 
 #include <tables/table.hpp>
 
 #include "config_set.hpp"
-#include "commandline_arguments.hpp"
 #include "results.hpp"
 
 namespace gauge
 {
+
+    namespace po = boost::program_options;
 
     /// Base class for all benchmark.
     class benchmark

@@ -1,13 +1,14 @@
 #include <cassert>
+#include <cstdlib>
 
-#include "runner.hpp"
-#include "results.hpp"
-#include "commandline_arguments.hpp"
-#include "json_printer.hpp"
-#include "python_printer.hpp"
 #include "console_printer.hpp"
 #include "csv_printer.hpp"
+#include "json_printer.hpp"
+#include "python_printer.hpp"
+#include "stdout_printer.hpp"
+#include "results.hpp"
 
+#include "runner.hpp"
 
 namespace gauge
 {
@@ -29,11 +30,8 @@ namespace gauge
         /// Test case map
         testcase_map m_testcases;
 
-        /// Command-line arguments
-        commandline_arguements m_commandline;
-
         /// The available program options
-        po::options_description m_options_description;
+        boost::program_options::options_description m_options_description;
 
         /// Parsed program options
         po::variables_map m_options;
@@ -68,6 +66,9 @@ namespace gauge
 
         instance().printers().push_back(
             std::make_shared<gauge::csv_printer>());
+
+        instance().printers().push_back(
+            std::make_shared<gauge::stdout_printer>());
     }
 
     void runner::run_benchmarks(int argc, const char* argv[])
@@ -124,6 +125,7 @@ namespace gauge
         catch(const std::exception& e)
         {
             std::cerr << e.what() << std::endl;
+            exit(EXIT_FAILURE);
         }
     }
 
@@ -143,7 +145,7 @@ namespace gauge
               "--result_filter=time throughput")
             ("gauge_filter",
              po::value<std::vector<std::string> >()->multitoken(),
-             "Filter which testcases or benchmarks to run based on their name "
+             "Filter which test-cases or benchmarks to run based on their name "
               "for example ./benchmark --gauge_filter=MyTest.* or "
               "--gauge_filter=*.MyBenchmark or even --gauge_filter=*.* "
               "Multiple filters can also be specified e.g. "
@@ -156,7 +158,11 @@ namespace gauge
              "Add a column to the test results, this can be use to "
              "add custom information to the result files "
              "./benchmark --add_column cpu=i7 "
-             "\"date=Monday 1st June 2021\"");
+             "\"date=Monday 1st June 2021\"")
+            ("dry_run",
+             "Initializes the benchmark without running it. This is useful to "
+             "check whether the right command-line arguments have been passed "
+             "to the benchmark executable.");
 
         options.add(m_impl->m_options_description);
 
@@ -165,6 +171,13 @@ namespace gauge
         po::notify(vm);
 
         m_impl->m_options = vm;
+
+
+        if(m_impl->m_options.count("help"))
+        {
+            std::cout << options << std::endl;
+            return;
+        }
 
         if(m_impl->m_options.count("add_column"))
         {
@@ -176,23 +189,16 @@ namespace gauge
             }
         }
 
-        if(m_impl->m_options.count("help"))
+        // Deliver possible options to printers and start them
+        for(auto& printer: m_impl->m_printers)
         {
-            std::cout << options << std::endl;
-            return;
-        }
-
-        // Deliver possible options to printers
-        for(auto& p: m_impl->m_printers)
-        {
-            p->set_options(m_impl->m_options);
+            printer->set_options(m_impl->m_options);
         }
 
         // Notify all printers that we are starting
-        for(auto it = m_impl->m_printers.begin();
-            it != m_impl->m_printers.end(); ++it)
+        for(auto& printer: enabled_printers())
         {
-            (*it)->start();
+            printer->start();
         }
         // Check whether we should run all tests or whether we
         // should use a filter
@@ -208,10 +214,9 @@ namespace gauge
         }
 
         // Notify all printers that we are done
-        for(auto it = m_impl->m_printers.begin();
-            it != m_impl->m_printers.end(); ++it)
+        for(auto& printer: enabled_printers())
         {
-            (*it)->end();
+            printer->end();
         }
 
     }
@@ -411,6 +416,11 @@ namespace gauge
         assert(benchmark);
         assert(m_impl);
 
+        if(m_impl->m_options.count("dry_run"))
+        {
+            return;
+        }
+
         assert(!m_impl->m_current_benchmark);
         m_impl->m_current_benchmark = benchmark;
 
@@ -445,7 +455,7 @@ namespace gauge
         results.add_const_column("benchmark", benchmark->benchmark_name());
         results.add_const_column("testcase", benchmark->testcase_name());
 
-        for(auto& printer : m_impl->m_printers)
+        for(auto& printer: enabled_printers())
         {
             printer->start_benchmark();
         }
@@ -487,17 +497,32 @@ namespace gauge
         }
 
         // Notify all printers that we are done
-        for(auto& printer : m_impl->m_printers)
+        for(auto& printer: enabled_printers())
         {
             printer->end_benchmark();
         }
 
-        for(auto& printer : m_impl->m_printers)
+        for(auto& printer: enabled_printers())
         {
             printer->benchmark_result(*benchmark, results);
         }
 
         m_impl->m_current_benchmark = benchmark_ptr();
+    }
+
+    std::vector<runner::printer_ptr> runner::enabled_printers() const
+    {
+        std::vector<runner::printer_ptr> enabled_printers;
+
+        for(auto& printer : m_impl->m_printers)
+        {
+            if (printer->is_enabled())
+            {
+                enabled_printers.push_back(printer);
+            }
+        }
+
+        return enabled_printers;
     }
 
     std::vector<runner::printer_ptr>& runner::printers()

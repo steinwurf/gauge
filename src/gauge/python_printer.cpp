@@ -8,7 +8,7 @@
 namespace gauge
 {
     python_printer::python_printer(const std::string& default_filename)
-        : file_printer("pyfile", "Set the output name of the python printer",
+        : file_printer("python",
             default_filename)
     { }
 

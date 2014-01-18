@@ -6,7 +6,15 @@ every change, see the Git log.
 
 Latest
 ------
-*
+* Major: Removed unused ``commandline_arguments`` class.
+* Major: Removed vector separator options form ``csv_printer`` as it was unused.
+* Minor: Added ``dry_run`` option to execute the benchmark initialization code
+  without running the actual benchmark.
+* Minor: Added ``use_[printer_name]`` option to enable or disable certain
+  printers.
+* Minor: Added ``stdout_printer`` which is a printer that can print results
+  in a specified format to standard output.
+* Bug: If an exception occurred, gauge now returns an appropriate error code.
 
 6.3.0
 -----

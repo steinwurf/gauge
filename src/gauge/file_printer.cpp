@@ -14,10 +14,9 @@
 namespace gauge
 {
 
-    file_printer::file_printer(const std::string& filename_option,
-        const std::string& description,
+    file_printer::file_printer(const std::string& name,
         const std::string& default_filename)
-            : m_filename_option(filename_option)
+            : printer(name), m_filename_option(name + "_file")
     {
         // Add the filename option for this printer
         gauge::po::options_description options;
@@ -27,7 +26,7 @@ namespace gauge
 
         options.add_options()
             (m_filename_option.c_str(), default_filename_value,
-             description.c_str());
+            ("Set the output filename of the " + name + " printer").c_str());
 
         gauge::runner::instance().register_options(options);
     }
@@ -58,6 +57,7 @@ namespace gauge
 
     void file_printer::set_options(po::variables_map& options)
     {
+        printer::set_options(options);
         m_filename = options[m_filename_option].as<std::string>();
         assert(!m_filename.empty());
     }

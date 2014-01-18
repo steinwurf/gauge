@@ -3,11 +3,15 @@
 #include <vector>
 #include <memory>
 
+#include <boost/program_options.hpp>
+
 #include "benchmark.hpp"
 #include "printer.hpp"
 
 namespace gauge
 {
+    namespace po = boost::program_options;
+
     /// The gauge benchmark runner. Responsible for
     /// invoking the registered benchmarks.
     class runner
@@ -116,6 +120,10 @@ namespace gauge
 
         /// @return access to the runners printers
         std::vector<printer_ptr>& printers();
+
+        /// @return the runners enabled printers
+        std::vector<printer_ptr> enabled_printers() const;
+
 
         /// Parse the add_column options
         /// @param column Value from the input options
