@@ -46,7 +46,11 @@ namespace gauge
 
     void stdout_printer::end()
     {
+        // Add newlines on each sides of the outputtet results to ease
+        // the process of parsing it.
+        std::cout << std::endl;
         m_formatters.at(m_format_key)->print(std::cout, m_tables);
+        std::cout << std::endl;
     }
 
     void stdout_printer::set_options(po::variables_map& options)

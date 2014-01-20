@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Added newlines to the ``stdout_printer``'s outpout.
 
 7.0.0
 -----
