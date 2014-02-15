@@ -91,6 +91,8 @@ namespace gauge
             bc::duration_cast<bc::microseconds>(
                 m_impl->m_stop-m_impl->m_start).count());
 
+        printf("Result time: %.3f us\n", m_impl->m_result);
+
         assert(m_impl->m_iterations > 0);
     }
 
@@ -106,7 +108,6 @@ namespace gauge
 
     bool time_benchmark::accept_measurement()
     {
-
         // Did you forget the RUN macro?
         assert(m_impl);
         assert(m_impl->m_started);
