@@ -1,7 +1,7 @@
-// Copyright Steinwurf ApS 2011-2012.
-// Distributed under the "STEINWURF RESEARCH LICENSE 1.0".
-// See accompanying file LICENSE.rst or
-// http://www.steinwurf.com/licensing
+// Copyright (c) 2012 Steinwurf ApS
+// All Rights Reserved
+//
+// Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
 #include <cstdint>
 #include <ctime>

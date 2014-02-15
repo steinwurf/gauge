@@ -1,3 +1,7 @@
+// Copyright (c) 2012 Steinwurf ApS
+// All Rights Reserved
+//
+// Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
 #include <tables/csv_format.hpp>
 #include <tables/json_format.hpp>
