@@ -117,9 +117,7 @@ namespace gauge
     {
         assert(m_impl->m_current_benchmark);
         return m_impl->m_current_benchmark;
-
     }
-
 
     void runner::run(int argc, const char *argv[])
     {
@@ -223,7 +221,6 @@ namespace gauge
         {
             printer->end();
         }
-
     }
 
     void runner::parse_add_column(const std::string &option)

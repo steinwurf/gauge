@@ -3,8 +3,6 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <cstdio>
-
 #include <gtest/gtest.h>
 
 #include <boost/chrono.hpp>
@@ -14,21 +12,20 @@
 
 namespace bc = boost::chrono;
 
-double get_micro(bc::high_resolution_clock::duration delta)
-{
-    return (double)bc::duration_cast<bc::microseconds>(delta).count();
-}
-
 struct sleep_benchmark : public gauge::time_benchmark
 {
+    bool accept_measurement()
+    {
+        // We always accept the first measurement here
+        return true;
+    }
+
     double measurement()
     {
-        // Get the time spent per iteration
+        // Get the time spent sleeping
         double time = gauge::time_benchmark::measurement();
-
-        printf("Sleep time: %.3f us\n", time);
+        // This should be higher than the requested time
         EXPECT_GT(time, m_last_delay);
-
         return time;
     }
 
@@ -71,15 +68,9 @@ BENCHMARK_F(sleep_benchmark, Gauge, sleep_100000usecs, 1)
     run_benchmark(100000);
 }
 
-TEST(Gauge, sleep_1000us)
+TEST(Gauge, sleep_intervals)
 {
-    bc::high_resolution_clock::time_point t1, t2;
-    t1 = bc::high_resolution_clock::now();
-    boost::this_thread::sleep_for(bc::microseconds(50));
-    t2 = bc::high_resolution_clock::now();
-    double sleep_time = get_micro(t2 - t1);
-    printf("Isolated sleep time:  %.3f us\n", sleep_time);
-
+    // Dummy arguments for gauge::runner
     int argc = 1;
     const char* argv[] = { "program" };
 

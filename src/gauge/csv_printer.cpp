@@ -16,8 +16,8 @@
 
 namespace gauge
 {
-    csv_printer::csv_printer(const std::string& default_filename)
-        : file_printer("csv", default_filename)
+    csv_printer::csv_printer(const std::string& default_filename) :
+        file_printer("csv", default_filename)
     { }
 
     void csv_printer::print_to_stream(std::ostream &s)
