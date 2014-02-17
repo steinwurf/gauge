@@ -18,7 +18,7 @@
 
 namespace gauge
 {
-    printer::printer(const std::string& name, bool enabled):
+    printer::printer(const std::string& name, bool enabled) :
         m_name(name),
         m_enabled(enabled)
     {

@@ -25,36 +25,36 @@ namespace gauge
         /// with a specific id.
         /// Starts the benchmark
         /// @param benchmark_id the id of the benchmark
-        iteration_controller()
-            : m_iteration_count(0),
-              m_total_iterations(0),
-              m_benchmark(gauge::runner::instance().current_benchmark())
-            {
-                assert(m_benchmark);
+        iteration_controller() :
+            m_iteration_count(0),
+            m_total_iterations(0),
+            m_benchmark(gauge::runner::instance().current_benchmark())
+        {
+            assert(m_benchmark);
 
-                m_total_iterations = m_benchmark->iteration_count();
+            m_total_iterations = m_benchmark->iteration_count();
 
-                m_benchmark->start();
-            }
+            m_benchmark->start();
+        }
 
         /// Stops the benchmark
         ~iteration_controller()
-            {
-                m_benchmark->stop();
-            }
+        {
+            m_benchmark->stop();
+        }
 
         /// @return true if the required number of iterations has been
         ///         completed
         bool is_done()
-            {
-                return !(m_iteration_count < m_total_iterations);
-            }
+        {
+            return !(m_iteration_count < m_total_iterations);
+        }
 
         /// Increments the iteration counter
         void next()
-            {
-                ++m_iteration_count;
-            }
+        {
+            ++m_iteration_count;
+        }
 
     private:
 

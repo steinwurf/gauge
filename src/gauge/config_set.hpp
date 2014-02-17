@@ -38,10 +38,14 @@ namespace gauge
         }
 
         const_iterator begin() const
-        { return m_values.begin(); }
+        {
+            return m_values.begin();
+        }
 
         const_iterator end() const
-        { return m_values.end(); }
+        {
+            return m_values.end();
+        }
 
         uint64_t size() const
         {

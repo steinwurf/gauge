@@ -20,7 +20,7 @@
 
 namespace gauge
 {
-    std::ostream& operator <<(std::ostream& stream,
+    std::ostream& operator<<(std::ostream& stream,
                               const console::textcolor& color)
     {
         console_impl::print_color(stream, color);

@@ -106,7 +106,6 @@ namespace gauge
 
     bool time_benchmark::accept_measurement()
     {
-
         // Did you forget the RUN macro?
         assert(m_impl);
         assert(m_impl->m_started);

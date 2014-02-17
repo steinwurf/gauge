@@ -51,6 +51,6 @@ namespace gauge
     /// will try to determine whether any terminal color support exists
     /// @param stream the output stream
     /// @param color the selected color
-    std::ostream& operator <<(std::ostream& stream,
-                              const gauge::console::textcolor& color);
+    std::ostream& operator<<(std::ostream& stream,
+                             const gauge::console::textcolor& color);
 }

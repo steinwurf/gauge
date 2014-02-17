@@ -75,5 +75,5 @@ def build(bld):
         recurse_helper(bld, 'gtest')
         recurse_helper(bld, 'tables')
 
-        bld.recurse('examples/sample_benchmarks')
         bld.recurse('test')
+        bld.recurse('examples/sample_benchmarks')

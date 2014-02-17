@@ -56,11 +56,15 @@ namespace gauge
 
         /// @return the test case name
         virtual std::string testcase_name() const
-        { return "unknown"; }
+        {
+            return "unknown";
+        }
 
         /// @return the name of the benchmark in a test case
         virtual std::string benchmark_name() const
-        { return "unknown"; }
+        {
+            return "unknown";
+        }
 
         /// @todo: consider to handle this differently since
         /// we now allow the user to override the number of
@@ -80,11 +84,15 @@ namespace gauge
         /// @return the number of configurations create for this
         ///         benchmark
         uint32_t configuration_count() const
-        { return (uint32_t)m_configurations.size(); }
+        {
+            return (uint32_t)m_configurations.size();
+        }
 
         /// @return true if the benchmark has configurations
         bool has_configurations() const
-        { return configuration_count() > 0; }
+        {
+            return configuration_count() > 0;
+        }
 
         /// Updates the configuration index
         /// @param config_index, the new configuration index
@@ -126,10 +134,10 @@ namespace gauge
         virtual void stop() = 0;
 
         /// @return true if a warm-up iteration is needed
-        virtual bool needs_warmup_iteration(){ return false; }
+        virtual bool needs_warmup_iteration() { return false; }
 
         /// @return true if the previous measurement was accepted
-        virtual bool accept_measurement(){ return true; }
+        virtual bool accept_measurement() { return true; }
 
         /// Returns the unit we are measuring
         virtual std::string unit_text() const = 0;
@@ -141,12 +149,13 @@ namespace gauge
 
         /// Called once before every test run. Allows a user to
         /// prepare resources for the upcoming benchmark
-        virtual void setup(){}
+        virtual void setup()
+        { }
 
         /// Called once after every test run. Allows a user to
         /// cleanup resources in between benchmark runs.
         virtual void tear_down()
-        {}
+        { }
 
     private:
 
