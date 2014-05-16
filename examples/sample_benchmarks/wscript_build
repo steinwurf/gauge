@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 bld.program(
-    features = 'cxx',
-    source   = bld.path.ant_glob('*.cpp'),
-    target   = 'gauge_example',
-    use      = ['tables','gauge'])
+    features='cxx',
+    source=bld.path.ant_glob('*.cpp'),
+    target='gauge_example',
+    use=['tables', 'gauge'])
