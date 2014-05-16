@@ -6,11 +6,12 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Update to waf 1.8.0-pre1
+* Minor: Made python files comply with pep8
 
 7.1.0
 -----
-* Minor: Added newlines to the ``stdout_printer``'s outpout.
+* Minor: Added newlines to the ``stdout_printer``'s output.
 
 7.0.0
 -----
