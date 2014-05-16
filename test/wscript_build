@@ -2,8 +2,8 @@
 # encoding: utf-8
 
 bld.program(
-    features = 'cxx test',
-    source   = ['gauge_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
-    target   = 'gauge_tests',
-    use      = ['gauge', 'tables', 'gtest', 'boost_includes', 'boost_thread',
-                'boost_system', 'boost_timer', 'boost_chrono'])
+    features='cxx test',
+    source=['gauge_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
+    target='gauge_tests',
+    use=['gauge', 'tables', 'gtest', 'boost_includes', 'boost_thread',
+           'boost_system', 'boost_timer', 'boost_chrono'])
