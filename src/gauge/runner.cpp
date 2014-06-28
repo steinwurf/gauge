@@ -140,6 +140,8 @@ namespace gauge
 
         options.add_options()
             ("help", "produce help message")
+            ("print_tests", "print testcases")
+            ("print_benchmarks", "print benchmarks")
             ("result_filter",
              po::value<std::vector<std::string> >()->multitoken(),
              "Filter which results should be stored "
@@ -179,6 +181,28 @@ namespace gauge
         if(m_impl->m_options.count("help"))
         {
             std::cout << options << std::endl;
+            return;
+        }
+
+        if(m_impl->m_options.count("print_tests"))
+        {
+            for(const auto& testcase : m_impl->m_testcases)
+            {
+                std::cout << testcase.first << " ";
+            }
+            std::cout << std::endl;
+            return;
+        }
+
+        if(m_impl->m_options.count("print_benchmarks"))
+        {
+            for(const auto& testcase : m_impl->m_testcases)
+            {
+                for(const auto& benchmark : testcase.second)
+                {
+                    std::cout << testcase.first << "." << benchmark.first << std::endl;
+                }
+            }
             return;
         }
 
