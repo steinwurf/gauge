@@ -3,6 +3,9 @@ Introduction
 
 gauge is a flexible C++ benchmarking tool.
 
+.. image:: http://buildbot.steinwurf.dk/svgstatus?project=gauge
+    :target: http://buildbot.steinwurf.dk/stats?projects=gauge
+
 Dependencies
 ------------
 * We rely on functionality from the Boost C++ libraries, currently the
