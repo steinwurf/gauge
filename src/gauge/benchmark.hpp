@@ -5,13 +5,14 @@
 
 #pragma once
 
-#include <cassert>
-#include <vector>
-
 #include <boost/any.hpp>
 #include <boost/program_options.hpp>
 
 #include <tables/table.hpp>
+
+#include <cassert>
+#include <vector>
+#include <string>
 
 #include "config_set.hpp"
 #include "results.hpp"
@@ -74,7 +75,9 @@ namespace gauge
         virtual uint32_t runs() const = 0;
 
         /// Reset the state of a measurement controller
-        virtual void init(){};
+        virtual void init()
+        {
+        }
 
         /// For how many iterations should we loop
         /// @return the iteration count

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <memory>
+#include <string>
 
 #include "benchmark.hpp"
 
@@ -22,7 +22,8 @@ namespace gauge
         /// Destructor
         ~time_benchmark();
 
-    public: // From benchmark
+    public:
+        // From benchmark
 
         /// @copydoc benchmark::init()
         virtual void init();

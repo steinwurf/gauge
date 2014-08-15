@@ -9,7 +9,6 @@
 #include <sstream>
 #include <string>
 
-#include <boost/program_options.hpp>
 #include <tables/table.hpp>
 
 #include "benchmark.hpp"
@@ -37,7 +36,7 @@ namespace gauge
         return m_enabled;
     }
 
-    void printer::set_options(po::variables_map& options)
+    void printer::set_options(const po::variables_map& options)
     {
         m_enabled = options["use_" + m_name].as<bool>();
     }

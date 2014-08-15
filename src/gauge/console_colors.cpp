@@ -14,8 +14,8 @@
 #endif
 
 // @todo implement colors for windows
-//#elif defined(_WIN32)
-//  #include "console_colors_win32.h"
+// #elif defined(_WIN32)
+// #include "console_colors_win32.h"
 
 
 namespace gauge

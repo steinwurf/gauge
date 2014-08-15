@@ -9,7 +9,6 @@
 #include <vector>
 #include <ostream>
 
-#include <boost/program_options.hpp>
 #include <tables/table.hpp>
 
 #include "printer.hpp"
@@ -28,7 +27,8 @@ namespace gauge
         file_printer(const std::string& name,
             const std::string& default_filename);
 
-    public: // From printer
+    public:
+        // From printer
 
         /// @see printer::benchmark_result(const benchmark&,const table&)
         virtual void benchmark_result(const benchmark& info,
@@ -38,7 +38,7 @@ namespace gauge
         virtual void end();
 
         /// @see printer::set_options(po::variables_map&);
-        virtual void set_options(po::variables_map& options);
+        virtual void set_options(const po::variables_map& options);
 
     public:
 

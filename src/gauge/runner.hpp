@@ -5,10 +5,11 @@
 
 #pragma once
 
+#include <boost/program_options.hpp>
+
 #include <vector>
 #include <memory>
-
-#include <boost/program_options.hpp>
+#include <string>
 
 #include "benchmark.hpp"
 #include "printer.hpp"
@@ -82,11 +83,6 @@ namespace gauge
                            make_benchmark benchmark,
                            std::string testcase_name,
                            std::string benchmark_name);
-
-        /// Returns the benchmark with the specific id
-        /// @param id of the desired benchmark
-        /// @return pointer to the benchmark
-        //benchmark_ptr get_benchmark(uint32_t id);
 
         /// Returns the id of the currently active benchmark
         /// @return id of benchmark

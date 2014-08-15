@@ -5,19 +5,19 @@
 
 #pragma once
 
+#include <boost/any.hpp>
+
 #include <iostream>
 #include <memory>
 #include <map>
 #include <cstdint>
 #include <string>
-#include <boost/any.hpp>
 
 namespace gauge
 {
 
     struct config_set
     {
-
         typedef std::map<std::string, boost::any> config_map;
         typedef config_map::const_iterator const_iterator;
 

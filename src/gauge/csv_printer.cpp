@@ -3,12 +3,12 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <ostream>
-
-#include <boost/program_options.hpp>
 
 #include <tables/csv_format.hpp>
 #include <tables/table.hpp>
+
+#include <ostream>
+#include <string>
 
 #include "csv_printer.hpp"
 #include "file_printer.hpp"

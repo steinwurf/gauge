@@ -5,6 +5,12 @@
 
 #include <cassert>
 #include <cstdlib>
+#include <string>
+#include <map>
+#include <limits>
+#include <vector>
+
+#include <boost/program_options.hpp>
 
 #include "console_printer.hpp"
 #include "csv_printer.hpp"
@@ -87,7 +93,7 @@ namespace gauge
         assert(m_impl);
 
         const auto& opt = options.options();
-        for(const auto& o: opt)
+        for (const auto& o: opt)
             m_impl->m_options_description.add(o);
     }
 
@@ -178,15 +184,15 @@ namespace gauge
         m_impl->m_options = vm;
 
 
-        if(m_impl->m_options.count("help"))
+        if (m_impl->m_options.count("help"))
         {
             std::cout << options << std::endl;
             return;
         }
 
-        if(m_impl->m_options.count("print_tests"))
+        if (m_impl->m_options.count("print_tests"))
         {
-            for(const auto& testcase : m_impl->m_testcases)
+            for (const auto& testcase : m_impl->m_testcases)
             {
                 std::cout << testcase.first << " ";
             }
@@ -194,42 +200,43 @@ namespace gauge
             return;
         }
 
-        if(m_impl->m_options.count("print_benchmarks"))
+        if (m_impl->m_options.count("print_benchmarks"))
         {
-            for(const auto& testcase : m_impl->m_testcases)
+            for (const auto& testcase : m_impl->m_testcases)
             {
-                for(const auto& benchmark : testcase.second)
+                for (const auto& benchmark : testcase.second)
                 {
-                    std::cout << testcase.first << "." << benchmark.first << std::endl;
+                    std::cout << testcase.first << "."
+                              << benchmark.first << std::endl;
                 }
             }
             return;
         }
 
-        if(m_impl->m_options.count("add_column"))
+        if (m_impl->m_options.count("add_column"))
         {
             auto v = m_impl->m_options["add_column"].as<
                 std::vector<std::string> >();
-            for(const auto& s : v)
+            for (const auto& s : v)
             {
                 parse_add_column(s);
             }
         }
 
         // Deliver possible options to printers and start them
-        for(auto& printer: m_impl->m_printers)
+        for (auto& printer: m_impl->m_printers)
         {
             printer->set_options(m_impl->m_options);
         }
 
         // Notify all printers that we are starting
-        for(auto& printer: enabled_printers())
+        for (auto& printer: enabled_printers())
         {
             printer->start();
         }
         // Check whether we should run all tests or whether we
         // should use a filter
-        if(m_impl->m_options.count("gauge_filter"))
+        if (m_impl->m_options.count("gauge_filter"))
         {
             auto f = m_impl->m_options["gauge_filter"]
                 .as<std::vector<std::string>>();
@@ -241,7 +248,7 @@ namespace gauge
         }
 
         // Notify all printers that we are done
-        for(auto& printer: enabled_printers())
+        for (auto& printer: enabled_printers())
         {
             printer->end();
         }
@@ -256,13 +263,13 @@ namespace gauge
 
         std::getline(sstream, column_name, '=');
 
-        if(!sstream)
+        if (!sstream)
             throw std::runtime_error("Error malformed add_column"
                                      " (example cpu=i7)");
 
         std::getline(sstream, column_value);
 
-        if(!sstream)
+        if (!sstream)
         {
             throw std::runtime_error("Error malformed add_column"
                                      " (example cpu=i7)");
@@ -278,7 +285,7 @@ namespace gauge
     {
         assert(m_impl);
 
-        for(auto& m : m_impl->m_benchmarks)
+        for (auto& m : m_impl->m_benchmarks)
         {
             auto& make = m.second;
             auto benchmark = make();
@@ -291,7 +298,7 @@ namespace gauge
 
     void runner::run_all_filters(const std::vector<std::string> &filters)
     {
-        for(const auto& f : filters)
+        for (const auto& f : filters)
         {
             run_single_filter(f);
         }
@@ -306,24 +313,24 @@ namespace gauge
 
         std::getline(sstream, testcase_name, '.');
 
-        if(!sstream)
+        if (!sstream)
             throw std::runtime_error("Error malformed gauge_filter"
                                      " (example MyTest.*)");
 
         std::getline(sstream, benchmark_name);
 
-        if(!sstream)
+        if (!sstream)
         {
             throw std::runtime_error("Error malformed gauge_filter"
                                      " (example MyTest.*)");
         }
 
         // Evaluate all possible filter combinations
-        if(testcase_name == "*" && benchmark_name == "*")
+        if (testcase_name == "*" && benchmark_name == "*")
         {
             run_all();
         }
-        else if(testcase_name == "*")
+        else if (testcase_name == "*")
         {
             // The benchmark must be run for each of the testcases for which
             // it belongs. If the requested benchmark is not found, throw an
@@ -331,13 +338,11 @@ namespace gauge
 
             bool benchmark_found = false;
 
-            for(const auto& testcase : m_impl->m_testcases)
+            for (const auto& testcase : m_impl->m_testcases)
             {
-
-                for(const auto& b : testcase.second)
+                for (const auto& b : testcase.second)
                 {
-
-                    if(benchmark_name == b.first)
+                    if (benchmark_name == b.first)
                     {
 
                         uint32_t id = b.second;
@@ -349,11 +354,10 @@ namespace gauge
                         run_benchmark_configurations(benchmark);
                         benchmark_found = true;
                     }
-
                 }
             }
 
-            if(!benchmark_found)
+            if (!benchmark_found)
             {
                 throw std::runtime_error("Error benchmark not found");
             }
@@ -363,7 +367,7 @@ namespace gauge
             // All the benchmarks from a testcase must be run. If the requested
             // testcase is not found, throw an error
 
-            if(m_impl->m_testcases.find(testcase_name) ==
+            if (m_impl->m_testcases.find(testcase_name) ==
                m_impl->m_testcases.end())
             {
                 throw std::runtime_error("Error testcase not found");
@@ -371,7 +375,7 @@ namespace gauge
 
             auto &benchmarks = m_impl->m_testcases[testcase_name];
 
-            for(auto& b : benchmarks)
+            for (auto& b : benchmarks)
             {
                 uint32_t id = b.second;
 
@@ -383,13 +387,11 @@ namespace gauge
 
                 run_benchmark_configurations(benchmark);
             }
-
         }
         else
         {
             // Run the specific testcase_name.benchmark_name pair
-
-            if(m_impl->m_testcases.find(testcase_name) ==
+            if (m_impl->m_testcases.find(testcase_name) ==
                m_impl->m_testcases.end())
             {
                 throw std::runtime_error("Error testcase not found");
@@ -397,7 +399,7 @@ namespace gauge
 
             auto &benchmarks = m_impl->m_testcases[testcase_name];
 
-            if(benchmarks.find(benchmark_name) == benchmarks.end())
+            if (benchmarks.find(benchmark_name) == benchmarks.end())
             {
                 throw std::runtime_error("Error benchmark not found");
             }
@@ -421,11 +423,11 @@ namespace gauge
 
         benchmark->get_options(m_impl->m_options);
 
-        if(benchmark->has_configurations())
+        if (benchmark->has_configurations())
         {
             uint32_t configs = benchmark->configuration_count();
 
-            for(uint32_t i = 0; i < configs; ++i)
+            for (uint32_t i = 0; i < configs; ++i)
             {
                 benchmark->set_current_configuration(i);
                 run_benchmark(benchmark);
@@ -442,7 +444,7 @@ namespace gauge
         assert(benchmark);
         assert(m_impl);
 
-        if(m_impl->m_options.count("dry_run"))
+        if (m_impl->m_options.count("dry_run"))
         {
             return;
         }
@@ -452,7 +454,7 @@ namespace gauge
 
         benchmark->init();
 
-        if(benchmark->needs_warmup_iteration())
+        if (benchmark->needs_warmup_iteration())
         {
             benchmark->setup();
             benchmark->test_body();
@@ -461,7 +463,7 @@ namespace gauge
 
         uint32_t runs = 0;
 
-        if(m_impl->m_options.count("runs"))
+        if (m_impl->m_options.count("runs"))
         {
             runs = m_impl->m_options["runs"].as<uint32_t>();
         }
@@ -472,7 +474,7 @@ namespace gauge
 
         tables::table results;
 
-        for(const auto &o : m_impl->m_columns)
+        for (const auto &o : m_impl->m_columns)
         {
             results.add_const_column(o.first, o.second);
         }
@@ -481,7 +483,7 @@ namespace gauge
         results.add_const_column("benchmark", benchmark->benchmark_name());
         results.add_const_column("testcase", benchmark->testcase_name());
 
-        for(auto& printer: enabled_printers())
+        for (auto& printer: enabled_printers())
         {
             printer->start_benchmark();
         }
@@ -492,13 +494,13 @@ namespace gauge
         results.add_column("iterations");
         results.add_column("run_number");
 
-        while(run < runs)
+        while (run < runs)
         {
             benchmark->setup();
             benchmark->test_body();
             benchmark->tear_down();
 
-            if(benchmark->accept_measurement())
+            if (benchmark->accept_measurement())
             {
                 results.add_row();
                 results.set_value("iterations", benchmark->iteration_count());
@@ -509,13 +511,14 @@ namespace gauge
         }
 
         // Clean out unwanted results
-        if(m_impl->m_options.count("result_filter"))
+        if (m_impl->m_options.count("result_filter"))
         {
-            auto f = m_impl->m_options["result_filter"].as<std::vector<std::string> >();
+            auto f = m_impl->m_options["result_filter"].as<
+                std::vector<std::string>>();
 
-            for(auto& i : f)
+            for (auto& i : f)
             {
-                if(!results.has_column(i))
+                if (!results.has_column(i))
                     continue;
 
                 results.drop_column(i);
@@ -523,12 +526,12 @@ namespace gauge
         }
 
         // Notify all printers that we are done
-        for(auto& printer: enabled_printers())
+        for (auto& printer: enabled_printers())
         {
             printer->end_benchmark();
         }
 
-        for(auto& printer: enabled_printers())
+        for (auto& printer: enabled_printers())
         {
             printer->benchmark_result(*benchmark, results);
         }
@@ -540,7 +543,7 @@ namespace gauge
     {
         std::vector<runner::printer_ptr> enabled_printers;
 
-        for(auto& printer : m_impl->m_printers)
+        for (auto& printer : m_impl->m_printers)
         {
             if (printer->is_enabled())
             {

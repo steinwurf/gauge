@@ -3,10 +3,10 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#include <gtest/gtest.h>
+
 #include <cstdint>
 #include <ctime>
-
-#include <gtest/gtest.h>
 
 GTEST_API_ int main(int argc, char **argv)
 {

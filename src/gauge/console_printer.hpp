@@ -5,10 +5,12 @@
 
 #pragma once
 
-#include <iomanip>
-
 #include <boost/chrono.hpp>
 #include <tables/format.hpp>
+
+#include <iomanip>
+#include <vector>
+#include <string>
 
 #include "printer.hpp"
 #include "statistics.hpp"
@@ -20,8 +22,8 @@ namespace gauge
     /// benchmarks to the console (std::cout)
     class console_printer : public printer
     {
-
-    public: // From printer
+    public:
+        // From printer
 
         console_printer() :
             printer("console")
@@ -45,7 +47,6 @@ namespace gauge
                       << " seconds in total" << std::endl;
             std::cout << console::textgreen << "[----------] "
                       << console::textdefault << std::endl;
-
         }
 
         void start_benchmark()
@@ -81,16 +82,16 @@ namespace gauge
                       << (iter.m_mean == 1 ? "iteration" : "iterations")
                       << ")" << std::endl;
 
-            if(info.has_configurations())
+            if (info.has_configurations())
             {
                 std::cout << console::textyellow << "[  CONFIG  ]"
                           << console::textdefault << " ";
                 const auto& c = info.get_current_configuration();
                 bool first = true;
                 tables::format f;
-                for(const auto& v : c)
+                for (const auto& v : c)
                 {
-                    if(!first)
+                    if (!first)
                         std::cout << ",";
                     first = false;
                     std::cout << v.first << "=";
@@ -110,33 +111,32 @@ namespace gauge
                       << " milliseconds" << std::endl;
 
 
-            for(const auto& c_name : results.columns())
+            for (const auto& c_name : results.columns())
             {
-                if(c_name == "iterations")
+                if (c_name == "iterations")
                     continue;
-                if(c_name == "run_number")
+                if (c_name == "run_number")
                     continue;
-                if(print_column<double>(c_name,info.unit_text(),results))
+                if (print_column<double>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<float>(c_name,info.unit_text(),results))
+                if (print_column<float>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<uint64_t>(c_name,info.unit_text(),results))
+                if (print_column<uint64_t>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<int64_t>(c_name,info.unit_text(),results))
+                if (print_column<int64_t>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<int32_t>(c_name,info.unit_text(),results))
+                if (print_column<int32_t>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<uint32_t>(c_name,info.unit_text(),results))
+                if (print_column<uint32_t>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<int16_t>(c_name,info.unit_text(),results))
+                if (print_column<int16_t>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<uint16_t>(c_name,info.unit_text(),results))
+                if (print_column<uint16_t>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<int8_t>(c_name,info.unit_text(),results))
+                if (print_column<int8_t>(c_name,info.unit_text(),results))
                     continue;
-                if(print_column<uint8_t>(c_name,info.unit_text(),results))
+                if (print_column<uint8_t>(c_name,info.unit_text(),results))
                     continue;
-
             }
 
             std::cout << console::textgreen << "[----------] "
@@ -150,10 +150,10 @@ namespace gauge
             const std::string& unit,
             const tables::table& results)
         {
-            if(!results.is_column<T>(column))
+            if (!results.is_column<T>(column))
                 return false;
 
-            if(results.empty_rows(column) > 0)
+            if (results.empty_rows(column) > 0)
                 return false;
 
             auto values = results.values_as<T>(column);
@@ -176,10 +176,9 @@ namespace gauge
             print("Min:", unit, res.m_min, res.m_mean);
 
             return true;
-
         }
 
-        void print(std::string name, std::string unit,
+        void print(const std::string& name, const std::string& unit,
             double value, double mean)
         {
             std::cout << console::textgreen << "[          ] "
