@@ -6,6 +6,8 @@ every change, see the Git log.
 
 Latest
 ------
+* Major: Made single argument constructors explicit
+* Minor: Fixed style issues
 * Minor: Update to waf 1.8.0-pre1
 * Minor: Made python files comply with pep8
 * Minor: Added command line options to print testcases and benchmarks.

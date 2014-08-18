@@ -39,7 +39,7 @@ namespace gauge
         {
             int c = 0;
 
-            switch(color)
+            switch (color)
             {
             case console::textblack: c = 30; break;
             case console::textblue: c = 34; break;
@@ -58,7 +58,7 @@ namespace gauge
         static void print_color(std::ostream &stream,
                                 const console::textcolor& color)
         {
-            if(!has_colors())
+            if (!has_colors())
                 return;
 
             if (color == gauge::console::textdefault)

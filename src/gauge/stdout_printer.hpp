@@ -8,6 +8,12 @@
 #include <tables/format.hpp>
 #include <tables/table.hpp>
 
+#include <boost/program_options.hpp>
+
+#include <map>
+#include <vector>
+#include <string>
+
 #include "benchmark.hpp"
 #include "printer.hpp"
 
@@ -20,14 +26,14 @@ namespace gauge
     /// provided formatter.
     class stdout_printer : public printer
     {
-
-    public: // from printer
+    public:
+        // from printer
 
         /// Create a new stdout printer
         stdout_printer();
 
         /// @see printer::set_options(po::variables_map&);
-        void set_options(po::variables_map& options);
+        void set_options(const po::variables_map& options);
 
         /// @see printer::benchmark_result(const benchmark&, const table&)
         void benchmark_result(const benchmark &info,

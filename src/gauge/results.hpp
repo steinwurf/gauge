@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <cstdint>
+#include <map>
+#include <string>
 
 namespace gauge
 {
@@ -18,7 +20,6 @@ namespace gauge
     /// number of iterations performed to obtain m_results[0]
     struct results
     {
-
         /// The name of this result - describes the result type e.g.
         /// "time" or "throughput"
         std::string m_name;
@@ -32,12 +33,10 @@ namespace gauge
         /// The number of iterations performed to obtain the
         /// corresponding result
         std::vector<uint64_t> m_iterations;
-
     };
 
     struct result
     {
-
         /// The name of this result - describes the result type e.g.
         /// "time" or "throughput"
         std::string m_name;
@@ -51,7 +50,6 @@ namespace gauge
         /// The number of iterations performed to obtain the
         /// corresponding result
         std::vector<uint64_t> m_iterations;
-
     };
 
     typedef std::map<std::string, result> temp_results;

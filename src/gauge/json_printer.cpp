@@ -3,8 +3,11 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <ostream>
+
 #include <tables/json_format.hpp>
+
+#include <ostream>
+#include <string>
 
 #include "file_printer.hpp"
 #include "json_printer.hpp"

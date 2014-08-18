@@ -38,7 +38,7 @@ namespace gauge
         bool is_enabled() const;
 
         /// Add options to the available commandline arguments
-        virtual void set_options(po::variables_map& options);
+        virtual void set_options(const po::variables_map& options);
 
         /// Called when the benchmark program is started
         virtual void start()

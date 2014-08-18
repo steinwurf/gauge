@@ -5,6 +5,9 @@
 
 #include <boost/chrono.hpp>
 
+#include <algorithm>
+#include <string>
+
 #include "time_benchmark.hpp"
 
 namespace gauge
@@ -40,18 +43,7 @@ namespace gauge
 
         /// Stores whether the measurement was accepted
         bool m_accepted;
-
     };
-
-    /// How many micro seconds passes in one tick of the clock
-    /// now mulitply that with a 100 then that is how long we should
-    /// measure
-    //template <class Clock>
-    //double display_precision()
-    //{
-    //    auto s = typename Clock::duration(1);
-    //    return bc::duration_cast<bc::microseconds>(s).count() * 1000.0;
-    //}
 
     time_benchmark::time_benchmark()
         : m_impl(new time_benchmark::impl())
@@ -113,10 +105,10 @@ namespace gauge
         assert(m_impl->m_threshold > 0);
         assert(m_impl->m_iterations > 0);
 
-        if(m_impl->m_result >= m_impl->m_threshold)
+        if (m_impl->m_result >= m_impl->m_threshold)
         {
             double factor = m_impl->m_result / m_impl->m_threshold;
-            if(factor > 2.0)
+            if (factor > 2.0)
             {
                 // We seem to be running longer than needed
                 m_impl->m_iterations = static_cast<uint32_t>(
@@ -128,7 +120,7 @@ namespace gauge
             return true;
         }
 
-        if(m_impl->m_result == 0)
+        if (m_impl->m_result == 0)
         {
             // Check for overflow - are you sure you actually measure
             // anything - it seems time is zero even with a very large
@@ -168,7 +160,7 @@ namespace gauge
 
     void time_benchmark::store_run(tables::table &results)
     {
-        if(!results.has_column("time"))
+        if (!results.has_column("time"))
             results.add_column("time");
         results.set_value("time", measurement());
     }

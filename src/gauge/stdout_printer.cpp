@@ -7,6 +7,8 @@
 #include <tables/json_format.hpp>
 #include <tables/python_format.hpp>
 
+#include <string>
+
 #include "runner.hpp"
 
 #include "stdout_printer.hpp"
@@ -57,14 +59,14 @@ namespace gauge
         std::cout << std::endl;
     }
 
-    void stdout_printer::set_options(po::variables_map& options)
+    void stdout_printer::set_options(const po::variables_map& options)
     {
         printer::set_options(options);
         if (m_enabled)
         {
             m_format_key =
                 options["stdout_formatter"].as<formatter_map::key_type>();
-            if(!m_formatters.count(m_format_key))
+            if (!m_formatters.count(m_format_key))
             {
                 throw std::runtime_error("stdout printer: '" + m_format_key +
                     "' is not a valid format.");

@@ -10,6 +10,8 @@
 #include "benchmark.hpp"
 #include "time_benchmark.hpp"
 
+#include <string>
+
 #define BENCHMARK_CLASS_NAME_(testcase_name, benchmark_name)     \
     testcase_name ## _ ## benchmark_name ## _Benchmark
 

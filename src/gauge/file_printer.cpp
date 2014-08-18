@@ -9,7 +9,6 @@
 #include <sstream>
 #include <string>
 
-#include <boost/program_options.hpp>
 #include <tables/table.hpp>
 
 #include "benchmark.hpp"
@@ -40,10 +39,10 @@ namespace gauge
                                         const tables::table &results)
     {
         tables::table output = results;
-        if(info.has_configurations())
+        if (info.has_configurations())
         {
             const auto& c = info.get_current_configuration();
-            for(const auto& v : c)
+            for (const auto& v : c)
             {
                 output.add_const_column(v.first, v.second);
             }
@@ -60,7 +59,7 @@ namespace gauge
         result_file.close();
     }
 
-    void file_printer::set_options(po::variables_map& options)
+    void file_printer::set_options(const po::variables_map& options)
     {
         printer::set_options(options);
         m_filename = options[m_filename_option].as<std::string>();
