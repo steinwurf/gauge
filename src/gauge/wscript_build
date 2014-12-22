@@ -1,10 +1,15 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
+from waflib import Context
+
 bld.stlib(
     features='cxx',
     source=bld.path.ant_glob('**/*.cpp'),
     target='gauge',
+    export_defines=[
+        'STEINWURF_{}_VERSION="{}"'.format(
+            Context.g_module.APPNAME.upper(), Context.g_module.VERSION)],
     export_includes=['..'],
     use=['tables', 'boost_chrono', 'boost_system',
          'boost_program_options']
