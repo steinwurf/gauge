@@ -12,6 +12,7 @@ Latest
 * Minor: Update to waf 1.8.0-pre1
 * Minor: Made python files comply with pep8
 * Minor: Added command line options to print testcases and benchmarks.
+* Minor: Added version.
 
 7.1.0
 -----
