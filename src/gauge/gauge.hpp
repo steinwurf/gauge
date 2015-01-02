@@ -75,6 +75,15 @@
                fixture_name,                             \
                runs)
 
+#define BENCHMARK_F_RUN(fixture_name,                               \
+                        testcase_name,                              \
+                        benchmark_name,                             \
+                        runs)                                       \
+    BENCHMARK_(testcase_name, benchmark_name, fixture_name, runs)   \
+    {                                                               \
+        run();                                                      \
+    }
+
 #define BENCHMARK(testcase_name,                         \
                   benchmark_name,                        \
                   runs)                                  \
