@@ -69,6 +69,15 @@ public:
         results.set_value("counts", measurement());
     }
 
+    void test_body()
+    {
+        RUN
+        {
+            m_benchmark_me.run_this();
+        }
+    }
+
+
     /// The class being bench-marked
     benchmark_me m_benchmark_me;
 
@@ -77,9 +86,4 @@ public:
 };
 
 
-BENCHMARK_F(custom_measurement, BenchmarkMe, RunCount, 100)
-{
-    RUN{
-        m_benchmark_me.run_this();
-    }
-}
+BENCHMARK_F(custom_measurement, BenchmarkMe, RunCount, 100);

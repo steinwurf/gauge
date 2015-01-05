@@ -42,6 +42,16 @@ public:
             m_vector[i] = rand() % 5;
     }
 
+    void test_body()
+    {
+        volatile uint32_t sum;
+        RUN
+        {
+            sum = std::accumulate(m_vector.begin(), m_vector.end(), 0);
+        }
+        (void)sum; // Suppress warning about unused variable
+    }
+
     void tear_down()
     {
         // No implementation required
@@ -50,12 +60,4 @@ public:
     std::vector<uint32_t> m_vector;
 };
 
-BENCHMARK_F(using_configurations, Stdlib, Accumulate, 10)
-{
-
-    volatile uint32_t sum;
-    RUN{
-        sum = std::accumulate(m_vector.begin(), m_vector.end(), 0);
-    }
-    (void)sum; // Suppress warning about unused variable
-}
+BENCHMARK_F(using_configurations, Stdlib, Accumulate, 10);

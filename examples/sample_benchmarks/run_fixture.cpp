@@ -24,7 +24,7 @@ public:
         std::generate(std::begin(m_container), std::end(m_container), rand);
     }
 
-    void run()
+    void test_body()
     {
         RUN
         {
@@ -39,5 +39,5 @@ protected:
     Container m_container;
 };
 
-BENCHMARK_F_RUN(sort_data_setup<std::vector<uint32_t>>, SortVector, Uint32, 10)
-BENCHMARK_F_RUN(sort_data_setup<std::vector<uint8_t>>, SortVector, Uint8, 10)
+//BENCHMARK_F_TEST(sort_data_setup<std::vector<uint32_t>>, SortVector, Uint32, 10)
+//BENCHMARK_F_TEST(sort_data_setup<std::vector<uint8_t>>, SortVector, Uint8, 10)

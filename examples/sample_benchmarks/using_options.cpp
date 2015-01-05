@@ -38,13 +38,25 @@ public:
         // get_options() function and using the option name and
         // type to access the variables_map.
         auto values = options["array_size"].as<std::vector<int> >();
-        for(auto v : values)
+        for (auto v : values)
         {
             gauge::config_set cs;
             cs.set_value<uint32_t>("array_size", v);
             add_configuration(cs);
         }
     }
+
+    // @todo I don't really like this
+    // void test_body()
+    // {
+    //     if (benchmark() == "count_bk")
+    //     {
+    //     }
+    //     else if(benchmark() == "count_naive")
+    //     {
+    //     }
+    // }
+
 
     std::vector<uint32_t> m_vector;
 
@@ -81,9 +93,7 @@ BENCHMARK_OPTION(array_size)
 {
     gauge::po::options_description options;
 
-    std::vector<int> size;
-    size.push_back(10);
-    size.push_back(40);
+    std::vector<int> size = {10U, 40U};
 
     auto default_size =
         gauge::po::value<std::vector<int> >()->default_value(
@@ -95,24 +105,26 @@ BENCHMARK_OPTION(array_size)
     gauge::runner::instance().register_options(options);
 }
 
-BENCHMARK_F(using_options, CountBits, count_bk, 10)
-{
+// BENCHMARK_F(using_options, CountBits, count_bk, 10)
+// {
 
-    volatile uint32_t sum;
-    RUN{
-        for(auto& v: m_vector)
-            sum = count_bk(v);
-    }
-    (void)sum; // Suppress warning about unused variable
-}
+//     volatile uint32_t sum;
+//     RUN
+//     {
+//         for(auto& v: m_vector)
+//             sum = count_bk(v);
+//     }
 
-BENCHMARK_F(using_options, CountBits, count_naive, 10)
-{
+//     (void)sum; // Suppress warning about unused variable
+// }
 
-    volatile uint32_t sum;
-    RUN{
-        for(auto& v: m_vector)
-            sum = count_naive(v);
-    }
-    (void)sum; // Suppress warning about unused variable
-}
+// BENCHMARK_F(using_options, CountBits, count_naive, 10)
+// {
+
+//     volatile uint32_t sum;
+//     RUN{
+//         for(auto& v: m_vector)
+//             sum = count_naive(v);
+//     }
+//     (void)sum; // Suppress warning about unused variable
+// }
