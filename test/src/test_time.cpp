@@ -37,41 +37,40 @@ protected:
     uint32_t m_last_delay;
 };
 
-// @todo enable
-// BENCHMARK_F(sleep_benchmark, Gauge, sleep_10usecs, 1)
-// {
-//      run_benchmark(10);
-// }
+BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_10usecs, 1)
+{
+     run_benchmark(10);
+}
 
-// BENCHMARK_F(sleep_benchmark, Gauge, sleep_100usecs, 1)
-// {
-//     run_benchmark(100);
-// }
+BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_100usecs, 1)
+{
+    run_benchmark(100);
+}
 
-// BENCHMARK_F(sleep_benchmark, Gauge, sleep_1000usecs, 1)
-// {
-//     run_benchmark(1000);
-// }
+BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_1000usecs, 1)
+{
+    run_benchmark(1000);
+}
 
-// BENCHMARK_F(sleep_benchmark, Gauge, sleep_10000usecs, 1)
-// {
-//     run_benchmark(10000);
-// }
+BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_10000usecs, 1)
+{
+    run_benchmark(10000);
+}
 
-// BENCHMARK_F(sleep_benchmark, Gauge, sleep_100000usecs, 1)
-// {
-//     run_benchmark(100000);
-// }
+BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_100000usecs, 1)
+{
+    run_benchmark(100000);
+}
 
-// TEST(Gauge, sleep_intervals)
-// {
-//     // Dummy arguments for gauge::runner
-//     int argc = 1;
-//     const char* argv[] = { "program" };
+TEST(Gauge, sleep_intervals)
+{
+    // Dummy arguments for gauge::runner
+    int argc = 1;
+    const char* argv[] = { "program" };
 
-//     gauge::runner::add_default_printers();
-//     gauge::runner::run_benchmarks(argc, argv);
-// }
+    gauge::runner::add_default_printers();
+    gauge::runner::run_benchmarks(argc, argv);
+}
 
 
 // TEST(Gauge, reference_sleep_intervals)

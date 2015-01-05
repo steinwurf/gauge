@@ -15,7 +15,7 @@
 // This file contains a number of macros used to setup the the benchmarks
 // using gauge.
 //
-// Using the macros we support two ways of defining a benchmark:
+// Using the macros we support three ways of defining a benchmark:
 //
 // 1) Using the "inline" option with the BENCHMARK macro. An example would
 //    look like this:
@@ -37,18 +37,59 @@
 //    {
 //    public:
 //
-//        void test_body()
+//        void setup()
+//        {
+//            m_brewer.turn_on();
+//        }
+//
+//        void tear_down()
+//        {
+//            m_brewer.turn_off();
+//        }
+//
+//        void test_body() final
 //        {
 //            // Call some function we want to measure under the RUN macro.
 //            // Only code called in the RUN scope will be measured
 //            RUN
 //            {
-//                 brew_some_coffee();
+//                 m_brewer.brew_some_coffee();
 //            }
 //        }
+//
+//        mocca_master m_brewer;
 //    };
 //
 //    BENCHMARK_F(benchmark_my_brewer, test_speed, brew_coffee, 10);
+//
+// 3) Using a fixture but defining the test body inline. Example:
+//
+//    class benchmark_my_brewer : public gauge::time_benchmark
+//    {
+//    public:
+//
+//        void setup()
+//        {
+//            m_brewer.turn_on();
+//        }
+//
+//        void tear_down()
+//        {
+//            m_brewer.turn_off();
+//        }
+//
+//        mocca_master m_brewer;
+//    };
+//
+//    BENCHMARK_F_INLINE(benchmark_my_brewer, test_speed, brew_coffee, 10)
+//    {
+//        // Call some function we want to measure under the RUN macro. Only
+//        // code called in the RUN scope will be measured
+//        RUN
+//        {
+//             m_brewer.brew_some_coffee();
+//        }
+//    }
 //
 
 // Define the name of the benchmark class
@@ -150,6 +191,13 @@
     BENCHMARK_CLASS_(testcase, benchmark, fixture, runs)                      \
     REG_BENCHMARK_CLASS_(testcase, benchmark)
 
+/// Macro creating a benchmark using a fixture class with inline test body
+#define BENCHMARK_F_INLINE(fixture, testcase, benchmark, runs)                \
+    BENCHMARK_CLASS_(testcase, benchmark, fixture, runs)                      \
+    BENCHMARK_TEST_BODY_CLASS_(testcase, benchmark)                           \
+    REG_BENCHMARK_TEST_BODY_CLASS_(testcase, benchmark)                       \
+    void BENCHMARK_TEST_BODY_NAME_(testcase, benchmark)::test_body()
+
 /// The default macro which will register and run a benchmark measuring
 /// the time elapsed.
 #define BENCHMARK(testcase, benchmark, runs)                                  \
@@ -164,13 +212,17 @@
 // {
 //     test_something();
 // }
+//
 #define RUN                                                                   \
     for (gauge::iteration_controller __controller;                            \
          __controller.is_done() == false; __controller.next())
 
+// Define the name of the class used to register options
 #define BENCHMARK_OPTION_CLASS_NAME_(option_name)                             \
     opt_ ## option_name ## _Optionclass_
 
+// Defines and instantiates an options class which allows us to specify
+// options for the benchmarks
 #define BENCHMARK_OPTION(option_name)                                         \
     static struct BENCHMARK_OPTION_CLASS_NAME_(option_name)                   \
     {                                                                         \

@@ -69,7 +69,7 @@ public:
         results.set_value("counts", measurement());
     }
 
-    void test_body()
+    void test_body() final
     {
         RUN
         {
