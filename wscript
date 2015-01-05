@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 APPNAME = 'gauge'
-VERSION = '7.1.0'
+VERSION = '8.0.0'
 
 
 def recurse_helper(ctx, name):
