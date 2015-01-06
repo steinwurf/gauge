@@ -6,6 +6,9 @@ gauge is a flexible C++ benchmarking tool.
 .. image:: http://buildbot.steinwurf.dk/svgstatus?project=gauge
     :target: http://buildbot.steinwurf.dk/stats?projects=gauge
 
+.. contents:: Table of Contents:
+   :local:
+
 Dependencies
 ------------
 * We rely on functionality from the Boost C++ libraries, currently the
@@ -15,12 +18,14 @@ Dependencies
 
 Platforms
 ---------
+
 We have tested gauge on various versions of Windows, Linux and Mac. You can
-see the status by selecting the cxx-gauge project on the Steinwurf `buildbot
-page <http://176.28.49.184:12344/>`_:
+see the status by selecting the gauge project on the Steinwurf `buildbot
+page <http://buildbot.steinwurf.com/>`_:
 
 Build
 -----
+
 We use the ``waf`` build-system to build the gauge static library.
 With some additional tools which may be found at external-waf_
 
@@ -40,7 +45,9 @@ dependencies as static libs. In the gauge directory type ``find . -name "*.a"``
 to see the libraries produced. We need to use the path to the libraries when
 using gauge with our own applications as shown in the following.
 
-When building the static lib, waf will also build the ``gauge_example`` executable.
+When building the static lib, waf will also build the ``gauge_example``
+executable.
+
 Depending on your platform you should be able to launch it by running:
 ::
   ./build/linux/examples/sample_benchmarks/gauge_example
@@ -108,10 +115,12 @@ You should now be able to run the benchmark using:
 
 License
 -------
+
 gauge is available under the BSD license, see the LICENSE.rst file.
 
 Credits
 -------
+
 We have create gauge to fit our specific purpose, however we hope
 that others may also find it useful. When designing gauge we found
 inspiration in these other nice projects:

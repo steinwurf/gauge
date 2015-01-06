@@ -6,11 +6,16 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Major: Updated the benchmark macros. There are now three variants to
+  choose from when declaring a benchmark. This introduced one breaking
+  change: The BENCHMARK_F macro has been renamed to BENCHMARK_F_INLINE. You
+  should now use BENCHMARK_F if your fixture has a test_body() function that
+  you want to run automatically. See gauge.hpp for a description of the
+  different macros.
 
 8.0.0
 -----
-* Major: Upgrade to tables 5
+* Major: Upgrade to tables 5.x.y
 * Major: Made single argument constructors explicit
 * Minor: Fixed style issues
 * Minor: Update to waf 1.8.0-pre1
