@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+8.0.0
+-----
 * Major: Upgrade to tables 5
 * Major: Made single argument constructors explicit
 * Minor: Fixed style issues
