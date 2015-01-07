@@ -59,8 +59,6 @@ def configure(conf):
 
 def build(bld):
 
-    bld.recurse('src/gauge')
-
     if bld.is_toplevel():
         recurse_helper(bld, 'boost')
         recurse_helper(bld, 'gtest')
@@ -68,3 +66,9 @@ def build(bld):
 
         bld.recurse('examples/sample_benchmarks')
         bld.recurse('test')
+
+    bld.recurse('src/gauge')
+
+    bld.env.append_unique(
+        'DEFINES_STEINWURF_VERSION',
+        'STEINWURF_GAUGE_VERSION="{}"'.format(VERSION))

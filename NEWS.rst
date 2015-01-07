@@ -12,6 +12,7 @@ Latest
   should now use BENCHMARK_F if your fixture has a test_body() function that
   you want to run automatically. See gauge.hpp for a description of the
   different macros.
+* Patch: Fix version define.
 
 8.0.0
 -----
