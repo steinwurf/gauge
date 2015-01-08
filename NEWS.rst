@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+9.0.0
+-----
 * Major: Updated the benchmark macros. There are now three variants to
   choose from when declaring a benchmark. This introduced one breaking
   change: The BENCHMARK_F macro has been renamed to BENCHMARK_F_INLINE. You
