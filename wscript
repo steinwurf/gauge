@@ -19,12 +19,12 @@ def options(opt):
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='boost',
-        git_repository='github.com/steinwurf/external-boost-light.git',
+        git_repository='github.com/steinwurf/boost.git',
         major_version=1))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='gtest',
-        git_repository='github.com/steinwurf/external-gtest.git',
+        git_repository='github.com/steinwurf/gtest.git',
         major_version=2))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
@@ -34,7 +34,7 @@ def options(opt):
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='waf-tools',
-        git_repository='github.com/steinwurf/external-waf-tools.git',
+        git_repository='github.com/steinwurf/waf-tools.git',
         major_version=2))
 
     opt.load('wurf_configure_output')
@@ -47,6 +47,8 @@ def configure(conf):
     if conf.is_toplevel():
 
         conf.load('wurf_dependency_bundle')
+        conf.load('wurf_tools')
+
         conf.load_external_tool('install_path', 'wurf_install_path')
         conf.load_external_tool('mkspec', 'wurf_cxx_mkspec_tool')
         conf.load_external_tool('project_gen', 'wurf_project_generator')
@@ -64,8 +66,8 @@ def build(bld):
         recurse_helper(bld, 'gtest')
         recurse_helper(bld, 'tables')
 
-        bld.recurse('examples/sample_benchmarks')
         bld.recurse('test')
+        bld.recurse('examples/sample_benchmarks')
 
     bld.recurse('src/gauge')
 
