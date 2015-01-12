@@ -42,7 +42,6 @@ public:
     }
 
     std::vector<uint32_t> m_vector;
-
 };
 
 // Using this macro we may specify options. For specifying options
@@ -90,7 +89,7 @@ inline uint32_t count_naive(uint32_t v)
 
 BENCHMARK_F_INLINE(using_options, CountBits, count_bk, 10)
 {
-    volatile uint32_t sum;
+    volatile uint32_t sum = 0;
 
     RUN
     {
@@ -103,7 +102,7 @@ BENCHMARK_F_INLINE(using_options, CountBits, count_bk, 10)
 
 BENCHMARK_F_INLINE(using_options, CountBits, count_naive, 10)
 {
-    volatile uint32_t sum;
+    volatile uint32_t sum = 0;
 
     RUN
     {

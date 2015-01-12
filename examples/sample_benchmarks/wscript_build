@@ -5,4 +5,4 @@ bld.program(
     features='cxx',
     source=bld.path.ant_glob('*.cpp'),
     target='gauge_example',
-    use=['tables', 'gauge'])
+    use=['gauge'])

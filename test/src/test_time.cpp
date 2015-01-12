@@ -3,12 +3,12 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#include <gauge/gauge.hpp>
+
 #include <gtest/gtest.h>
 
 #include <boost/chrono.hpp>
 #include <boost/thread.hpp>
-
-#include <gauge/gauge.hpp>
 
 namespace bc = boost::chrono;
 
