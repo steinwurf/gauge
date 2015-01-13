@@ -8,6 +8,11 @@ Latest
 ------
 * tbd
 
+9.0.1
+-----
+* Patch: Fixed warnings in using_options.cpp.
+* Patch: Added the proper use flags for all targets
+
 9.0.0
 -----
 * Major: Updated the benchmark macros. There are now three variants to
