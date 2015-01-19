@@ -1,5 +1,5 @@
-Introduction
-------------
+gauge
+-----
 
 gauge is a flexible C++ benchmarking tool.
 
@@ -8,13 +8,6 @@ gauge is a flexible C++ benchmarking tool.
 
 .. contents:: Table of Contents:
    :local:
-
-Dependencies
-------------
-* We rely on functionality from the Boost C++ libraries, currently the
-  gauge build-tool will automatically download these dependencies.
-* We are migrating to C++11 and currently use a few features, you therefore
-  have to supply the appropiate C++11 compiler switch when using gauge.
 
 Platforms
 ---------
@@ -27,13 +20,13 @@ Build
 -----
 
 We use the ``waf`` build-system to build the gauge static library.
-With some additional tools which may be found at external-waf_
+With some additional tools which may be found at waf_
 
-.. _external-waf: https://github.com/steinwurf/external-waf
+.. _waf: https://github.com/steinwurf/waf
 
 To build gauge run the following command:
 ::
-  ./waf configure --bundle=ALL --bundle-path=~/dev/bundle_dependencies
+  ./waf configure --bundle-path=~/dev/bundle_dependencies
   ./waf build
 
 Substitute the ``~/dev/bundle_dependencies`` with the path where you wish
@@ -55,12 +48,12 @@ Depending on your platform you should be able to launch it by running:
 Example Use
 -----------
 
-See various use-cases in the ``examples`` folder. The following can be found
-in the ``examples/sample_makefile`` folder. To try it out either use the
-code provide or save the following code in a file called ``main.cpp``
+See various use-cases in the ``examples`` folder. The following will be used to
+explain the basic concepts of gauge. To try it out save the following code in a
+file called ``main.cpp``
 ::
-  #include <gauge/gauge.h>
-  #include <gauge/console_printer.h>
+  #include <gauge/gauge.hpp>
+  #include <gauge/console_printer.hpp>
   #include <vector>
 
   BENCHMARK(MyTest, RunThis, 100)
@@ -73,7 +66,7 @@ code provide or save the following code in a file called ``main.cpp``
 
       // This is where the clock runs
       RUN{
-          for(int i = 1; i < integers.size(); ++i)
+          for(uint i = 1; i < integers.size(); ++i)
           {
               integers[i] += integers[i-1];
           }
@@ -129,7 +122,6 @@ inspiration in these other nice projects:
 * Nick Bruun's Hayai_ C++ benchmark tool, who also provided the nice
   terminal colors.
 * The `Google Test`_ framework.
-
 
 .. _QTestLib: http://qt-project.org/doc/qt-4.8/qtestlib-tutorial5.html
 .. _Hayai: https://github.com/nickbruun/hayai
