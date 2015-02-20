@@ -160,6 +160,13 @@ namespace gauge
         virtual void tear_down()
         { }
 
+        /// If for some reason the benchmark cannot run it can be skipped
+        /// by implementing this function in the benchmark code.
+        virtual bool skip()
+        {
+            return false;
+        }
+
     private:
 
         /// The benchmark id given by the static call to

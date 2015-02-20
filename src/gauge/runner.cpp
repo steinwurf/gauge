@@ -452,6 +452,12 @@ namespace gauge
         assert(!m_impl->m_current_benchmark);
         m_impl->m_current_benchmark = benchmark;
 
+        if (m_impl->m_current_benchmark->skip())
+        {
+            m_impl->m_current_benchmark = benchmark_ptr();
+            return;
+        }
+
         benchmark->init();
 
         if (benchmark->needs_warmup_iteration())
