@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+9.1.0
+-----
 * Minor: Adding a way to skip a benchmark at run-time. An example use-case
   for this is benchmarking run-time dispatched CPU specific instructions
   e.g. SSE, AVX etc.
