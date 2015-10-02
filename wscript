@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 APPNAME = 'gauge'
-VERSION = '9.1.0'
+VERSION = '10.0.0'
 
 import waflib.extras.wurf_options
 
