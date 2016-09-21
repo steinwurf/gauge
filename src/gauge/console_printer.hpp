@@ -38,10 +38,9 @@ namespace gauge
         {
             m_total_stop = boost::chrono::high_resolution_clock::now();
 
-            double time = 
-                static_cast<double>(
-                    boost::chrono::duration_cast<boost::chrono::microseconds>(
-                        m_total_stop-m_total_start).count());
+            double time = static_cast<double>(
+                boost::chrono::duration_cast<boost::chrono::microseconds>(
+                    m_total_stop-m_total_start).count());
 
             std::cout << std::fixed << console::textgreen << "[     DONE ]"
                       << console::textdefault << " " << (time / 1000000)
@@ -67,7 +66,7 @@ namespace gauge
             std::vector<uint64_t> iterations =
                 results.values_as<uint64_t>("iterations");
 
-            statistics iter = 
+            statistics iter =
                 calculate_statistics(iterations.cbegin(), iterations.cend());
 
             // Describe the beginning of the run.
@@ -101,10 +100,9 @@ namespace gauge
                 std::cout << std::endl;
             }
 
-            double time = 
-                static_cast<double>(
-                    boost::chrono::duration_cast<boost::chrono::microseconds>(
-                        m_benchmark_stop-m_benchmark_start).count());
+            double time = static_cast<double>(
+                boost::chrono::duration_cast<boost::chrono::microseconds>(
+                    m_benchmark_stop-m_benchmark_start).count());
 
             std::cout << std::fixed << console::textyellow << "[   TIME   ]"
                       << console::textdefault << " " << (time / 1000)
@@ -157,7 +155,7 @@ namespace gauge
 
             auto values = results.values_as<T>(column);
 
-            statistics res = 
+            statistics res =
                 calculate_statistics(values.cbegin(), values.cend());
 
             std::cout << console::textgreen << "[   RESULT ] "

@@ -18,12 +18,12 @@ namespace gauge
     stdout_printer::stdout_printer() :
         printer("stdout", false)
     {
-        m_formatters.insert(std::make_pair("csv",
-                                           std::shared_ptr<tables::format>(new tables::csv_format())));
-        m_formatters.insert(std::make_pair("json",
-                                           std::shared_ptr<tables::format>(new tables::json_format())));
-        m_formatters.insert(std::make_pair("python",
-                                           std::shared_ptr<tables::format>(new tables::python_format())));
+        m_formatters.insert(std::make_pair(
+                "csv", std::shared_ptr<tables::format>(new tables::csv_format())));
+        m_formatters.insert(std::make_pair(
+                "json", std::shared_ptr<tables::format>(new tables::json_format())));
+        m_formatters.insert(std::make_pair(
+                "python", std::shared_ptr<tables::format>(new tables::python_format())));
 
         gauge::po::options_description options;
 

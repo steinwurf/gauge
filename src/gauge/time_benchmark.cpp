@@ -80,8 +80,8 @@ namespace gauge
         m_impl->m_stopped = true;
 
         m_impl->m_result = static_cast<double>(
-                               bc::duration_cast<bc::microseconds>(
-                                   m_impl->m_stop-m_impl->m_start).count());
+            bc::duration_cast<bc::microseconds>(
+                m_impl->m_stop-m_impl->m_start).count());
 
         assert(m_impl->m_iterations > 0);
     }
@@ -112,7 +112,7 @@ namespace gauge
             {
                 // We seem to be running longer than needed
                 m_impl->m_iterations = static_cast<uint32_t>(
-                                           (m_impl->m_iterations / factor) + 1);
+                    (m_impl->m_iterations / factor) + 1);
 
                 assert(m_impl->m_iterations > 0);
             }
@@ -146,7 +146,7 @@ namespace gauge
 
         // Adjust the number of iterations with the factor
         m_impl->m_iterations = static_cast<uint32_t>(
-                                   (m_impl->m_iterations * factor) + 1);
+            (m_impl->m_iterations * factor) + 1);
 
         assert(m_impl->m_iterations > 0);
 
