@@ -22,7 +22,7 @@ namespace gauge
     {
         if (::isatty(STDOUT_FILENO))
         {
-            char *term = ::getenv("TERM");
+            char* term = ::getenv("TERM");
 
             if (term && ::strcmp(term, "dumb"))
                 return true;
@@ -55,7 +55,7 @@ namespace gauge
             return c;
         }
 
-        static void print_color(std::ostream &stream,
+        static void print_color(std::ostream& stream,
                                 const console::textcolor& color)
         {
             if (!has_colors())

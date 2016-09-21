@@ -20,7 +20,7 @@ namespace gauge
         file_printer("json", default_filename)
     { }
 
-    void json_printer::print_to_stream(std::ostream &s)
+    void json_printer::print_to_stream(std::ostream& s)
     {
         tables::json_format format;
         format.print(s, m_tables);

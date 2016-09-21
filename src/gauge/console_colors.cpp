@@ -8,9 +8,9 @@
 // The preprocessor defines are taken from
 // http://predef.sourceforge.net
 #if defined(__unix__)
-  #include "console_colors_unix.hpp"
+    #include "console_colors_unix.hpp"
 #else
-  #include "console_colors_none.hpp"
+    #include "console_colors_none.hpp"
 #endif
 
 // @todo implement colors for windows
@@ -21,7 +21,7 @@
 namespace gauge
 {
     std::ostream& operator<<(std::ostream& stream,
-                              const console::textcolor& color)
+                             const console::textcolor& color)
     {
         console_impl::print_color(stream, color);
         return stream;

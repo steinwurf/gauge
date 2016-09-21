@@ -39,7 +39,7 @@ protected:
 
 BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_10usecs, 1)
 {
-     run_benchmark(10);
+    run_benchmark(10);
 }
 
 BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_100usecs, 1)

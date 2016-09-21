@@ -51,8 +51,8 @@ namespace gauge
         /// Called when a result from a benchmark is ready
         /// @param info The benchmark
         /// @param result The benchmark results
-        virtual void benchmark_result(const benchmark &/*info*/,
-                                      const tables::table &/*results*/)
+        virtual void benchmark_result(const benchmark& /*info*/,
+                                      const tables::table& /*results*/)
         { }
 
         /// Called when a specific benchmark is finished

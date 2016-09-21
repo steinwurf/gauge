@@ -38,9 +38,10 @@ namespace gauge
         {
             m_total_stop = boost::chrono::high_resolution_clock::now();
 
-            double time = static_cast<double>(
-                boost::chrono::duration_cast<boost::chrono::microseconds>(
-                    m_total_stop-m_total_start).count());
+            double time = 
+                static_cast<double>(
+                    boost::chrono::duration_cast<boost::chrono::microseconds>(
+                        m_total_stop-m_total_start).count());
 
             std::cout << std::fixed << console::textgreen << "[     DONE ]"
                       << console::textdefault << " " << (time / 1000000)
@@ -60,16 +61,14 @@ namespace gauge
         }
 
 
-        void benchmark_result(const benchmark &info,
-            const tables::table &results)
+        void benchmark_result(const benchmark& info,
+                              const tables::table& results)
         {
             std::vector<uint64_t> iterations =
                 results.values_as<uint64_t>("iterations");
 
-            statistics iter = calculate_statistics(
-                iterations.cbegin(),
-                iterations.cend());
-
+            statistics iter = 
+                calculate_statistics(iterations.cbegin(), iterations.cend());
 
             // Describe the beginning of the run.
             std::cout << std::fixed << console::textgreen << "[ RUN      ]"
@@ -102,14 +101,14 @@ namespace gauge
                 std::cout << std::endl;
             }
 
-            double time = static_cast<double>(
-                boost::chrono::duration_cast<boost::chrono::microseconds>(
-                    m_benchmark_stop-m_benchmark_start).count());
+            double time = 
+                static_cast<double>(
+                    boost::chrono::duration_cast<boost::chrono::microseconds>(
+                        m_benchmark_stop-m_benchmark_start).count());
 
             std::cout << std::fixed << console::textyellow << "[   TIME   ]"
                       << console::textdefault << " " << (time / 1000)
                       << " milliseconds" << std::endl;
-
 
             for (const auto& c_name : results.columns())
             {
@@ -147,8 +146,8 @@ namespace gauge
 
         template<class T>
         bool print_column(const std::string& column,
-            const std::string& unit,
-            const tables::table& results)
+                          const std::string& unit,
+                          const tables::table& results)
         {
             if (!results.is_column<T>(column))
                 return false;
@@ -158,9 +157,8 @@ namespace gauge
 
             auto values = results.values_as<T>(column);
 
-            statistics res = calculate_statistics(
-                values.cbegin(),
-                values.cend());
+            statistics res = 
+                calculate_statistics(values.cbegin(), values.cend());
 
             std::cout << console::textgreen << "[   RESULT ] "
                       << console::textdefault;
@@ -179,7 +177,7 @@ namespace gauge
         }
 
         void print(const std::string& name, const std::string& unit,
-            double value, double mean)
+                   double value, double mean)
         {
             std::cout << console::textgreen << "[          ] "
                       << console::textdefault

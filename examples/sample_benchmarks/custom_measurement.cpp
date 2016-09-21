@@ -10,15 +10,15 @@
 class benchmark_me
 {
 public:
-    benchmark_me()
-        : m_count(0),
-          m_limit(1000)
+    benchmark_me() :
+        m_count(0),
+        m_limit(1000)
     {}
 
     void run_this()
     {
         uint32_t k = 0;
-        while(k < m_limit)
+        while (k < m_limit)
         {
             k += rand() % 100;
             ++m_count;
@@ -63,7 +63,7 @@ public:
 
     void store_run(tables::table& results)
     {
-        if(!results.has_column("counts"))
+        if (!results.has_column("counts"))
             results.add_column("counts");
 
         results.set_value("counts", measurement());

@@ -26,6 +26,6 @@ namespace gauge
     public:
         // From file_printer
         /// @see file_printer::print_to_stream(std::ostream &s)
-        void print_to_stream(std::ostream &s);
+        void print_to_stream(std::ostream& s);
     };
 }

@@ -26,17 +26,17 @@ namespace gauge
         gauge::po::options_description options;
 
         auto default_filename_value = gauge::po::value<std::string>()->
-            default_value(default_filename);
+                                      default_value(default_filename);
 
         options.add_options()
-            (m_filename_option.c_str(), default_filename_value,
-            ("Set the output filename of the " + name + " printer").c_str());
+        (m_filename_option.c_str(), default_filename_value,
+         ("Set the output filename of the " + name + " printer").c_str());
 
         gauge::runner::instance().register_options(options);
     }
 
-    void file_printer::benchmark_result(const benchmark &info,
-                                        const tables::table &results)
+    void file_printer::benchmark_result(const benchmark& info,
+                                        const tables::table& results)
     {
         tables::table output = results;
         if (info.has_configurations())

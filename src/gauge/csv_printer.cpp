@@ -20,7 +20,7 @@ namespace gauge
         file_printer("csv", default_filename)
     { }
 
-    void csv_printer::print_to_stream(std::ostream &s)
+    void csv_printer::print_to_stream(std::ostream& s)
     {
         tables::table combined_results;
         for (auto i = m_tables.begin(); i != m_tables.end(); ++i)

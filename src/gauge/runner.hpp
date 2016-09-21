@@ -31,7 +31,7 @@ namespace gauge
         typedef std::shared_ptr<printer> printer_ptr;
 
         /// Make benchmark function
-        typedef std::function<benchmark_ptr ()> make_benchmark;
+        typedef std::function<benchmark_ptr()> make_benchmark;
 
         /// Creates a new runner with a default printer
         runner();
@@ -75,7 +75,7 @@ namespace gauge
         }
 
         /// Stores the registered options with the runner
-        void register_options(const po::options_description &options);
+        void register_options(const po::options_description& options);
 
         /// Adds a new benchmark
         // void add_benchmark(uint32_t id, benchmark_ptr benchmark);
@@ -92,25 +92,25 @@ namespace gauge
         /// parameters specified. Exceptions are not handled.
         /// @param argc for the program
         /// @param argv for the program
-        void run_unsafe(int argc = 0, const char *argv[] = 0);
+        void run_unsafe(int argc = 0, const char* argv[] = 0);
 
         /// Start a new benchmark runner using the commandline
         /// parameters specified.
         /// @param argc for the program
         /// @param argv for the program
-        void run(int argc = 0, const char *argv[] = 0);
+        void run(int argc = 0, const char* argv[] = 0);
 
         /// Run all the benchmarks
         void run_all();
 
         /// Run the benchmarks matching the specified filter
         /// @param filter name e.g. MyTest.*
-        void run_single_filter(const std::string &filter);
+        void run_single_filter(const std::string& filter);
 
         /// Run the benchmarks matching the specified filter given as a
         /// comma separated file.
         /// @param filter name e.g. MyTest.* MyOtherTest.Yir
-        void run_all_filters(const std::vector<std::string> &filters);
+        void run_all_filters(const std::vector<std::string>& filters);
 
         /// Runs the benchmark with the specified id
         void run_benchmark(benchmark_ptr bench);
@@ -128,7 +128,7 @@ namespace gauge
 
         /// Parse the add_column options
         /// @param column Value from the input options
-        void parse_add_column(const std::string &option);
+        void parse_add_column(const std::string& option);
 
     private:
 

@@ -54,8 +54,8 @@ namespace gauge
         std::map<std::string, std::string> m_columns;
     };
 
-    runner::runner()
-        : m_impl(new runner::impl())
+    runner::runner() :
+        m_impl(new runner::impl())
     { }
 
     runner& runner::instance()
@@ -88,7 +88,7 @@ namespace gauge
         run.run(argc, argv);
     }
 
-    void runner::register_options(const po::options_description &options)
+    void runner::register_options(const po::options_description& options)
     {
         assert(m_impl);
 
@@ -125,55 +125,55 @@ namespace gauge
         return m_impl->m_current_benchmark;
     }
 
-    void runner::run(int argc, const char *argv[])
+    void runner::run(int argc, const char* argv[])
     {
         try
         {
             run_unsafe(argc, argv);
         }
-        catch(const std::exception& e)
+        catch (const std::exception& e)
         {
             std::cerr << e.what() << std::endl;
             exit(EXIT_FAILURE);
         }
     }
 
-    void runner::run_unsafe(int argc, const char *argv[])
+    void runner::run_unsafe(int argc, const char* argv[])
     {
         assert(m_impl);
 
         po::options_description options("Gauge");
 
         options.add_options()
-            ("help", "produce help message")
-            ("print_tests", "print testcases")
-            ("print_benchmarks", "print benchmarks")
-            ("result_filter",
-             po::value<std::vector<std::string> >()->multitoken(),
-             "Filter which results should be stored "
-              "for example ./benchmark --result_filter=time multiple filters "
-              "can be a comma separated list of filters e.g. "
-              "--result_filter=time throughput")
-            ("gauge_filter",
-             po::value<std::vector<std::string> >()->multitoken(),
-             "Filter which test-cases or benchmarks to run based on their name "
-              "for example ./benchmark --gauge_filter=MyTest.* or "
-              "--gauge_filter=*.MyBenchmark or even --gauge_filter=*.* "
-              "Multiple filters can also be specified e.g. "
-              "--gauge_filter=MyTest.one MyTest.two")
-            ("runs", po::value<uint32_t>(),
-             "Sets the number of runs to complete. Overrides the "
-             "settings specified in the benchmark ex. --runs=50")
-            ("add_column",
-             po::value<std::vector<std::string> >()->multitoken(),
-             "Add a column to the test results, this can be use to "
-             "add custom information to the result files "
-             "./benchmark --add_column cpu=i7 "
-             "\"date=Monday 1st June 2021\"")
-            ("dry_run",
-             "Initializes the benchmark without running it. This is useful to "
-             "check whether the right command-line arguments have been passed "
-             "to the benchmark executable.");
+        ("help", "produce help message")
+        ("print_tests", "print testcases")
+        ("print_benchmarks", "print benchmarks")
+        ("result_filter",
+         po::value<std::vector<std::string> >()->multitoken(),
+         "Filter which results should be stored "
+         "for example ./benchmark --result_filter=time multiple filters "
+         "can be a comma separated list of filters e.g. "
+         "--result_filter=time throughput")
+        ("gauge_filter",
+         po::value<std::vector<std::string> >()->multitoken(),
+         "Filter which test-cases or benchmarks to run based on their name "
+         "for example ./benchmark --gauge_filter=MyTest.* or "
+         "--gauge_filter=*.MyBenchmark or even --gauge_filter=*.* "
+         "Multiple filters can also be specified e.g. "
+         "--gauge_filter=MyTest.one MyTest.two")
+        ("runs", po::value<uint32_t>(),
+         "Sets the number of runs to complete. Overrides the "
+         "settings specified in the benchmark ex. --runs=50")
+        ("add_column",
+         po::value<std::vector<std::string> >()->multitoken(),
+         "Add a column to the test results, this can be use to "
+         "add custom information to the result files "
+         "./benchmark --add_column cpu=i7 "
+         "\"date=Monday 1st June 2021\"")
+        ("dry_run",
+         "Initializes the benchmark without running it. This is useful to "
+         "check whether the right command-line arguments have been passed "
+         "to the benchmark executable.");
 
         options.add(m_impl->m_options_description);
 
@@ -216,7 +216,7 @@ namespace gauge
         if (m_impl->m_options.count("add_column"))
         {
             auto v = m_impl->m_options["add_column"].as<
-                std::vector<std::string> >();
+                     std::vector<std::string> >();
             for (const auto& s : v)
             {
                 parse_add_column(s);
@@ -239,7 +239,7 @@ namespace gauge
         if (m_impl->m_options.count("gauge_filter"))
         {
             auto f = m_impl->m_options["gauge_filter"]
-                .as<std::vector<std::string>>();
+                     .as<std::vector<std::string>>();
             run_all_filters(f);
         }
         else
@@ -254,7 +254,7 @@ namespace gauge
         }
     }
 
-    void runner::parse_add_column(const std::string &option)
+    void runner::parse_add_column(const std::string& option)
     {
         std::istringstream sstream(option);
 
@@ -296,7 +296,7 @@ namespace gauge
         }
     }
 
-    void runner::run_all_filters(const std::vector<std::string> &filters)
+    void runner::run_all_filters(const std::vector<std::string>& filters)
     {
         for (const auto& f : filters)
         {
@@ -304,7 +304,7 @@ namespace gauge
         }
     }
 
-    void runner::run_single_filter(const std::string &filter)
+    void runner::run_single_filter(const std::string& filter)
     {
         std::istringstream sstream(filter);
 
@@ -368,12 +368,12 @@ namespace gauge
             // testcase is not found, throw an error
 
             if (m_impl->m_testcases.find(testcase_name) ==
-               m_impl->m_testcases.end())
+                m_impl->m_testcases.end())
             {
                 throw std::runtime_error("Error testcase not found");
             }
 
-            auto &benchmarks = m_impl->m_testcases[testcase_name];
+            auto& benchmarks = m_impl->m_testcases[testcase_name];
 
             for (auto& b : benchmarks)
             {
@@ -392,12 +392,12 @@ namespace gauge
         {
             // Run the specific testcase_name.benchmark_name pair
             if (m_impl->m_testcases.find(testcase_name) ==
-               m_impl->m_testcases.end())
+                m_impl->m_testcases.end())
             {
                 throw std::runtime_error("Error testcase not found");
             }
 
-            auto &benchmarks = m_impl->m_testcases[testcase_name];
+            auto& benchmarks = m_impl->m_testcases[testcase_name];
 
             if (benchmarks.find(benchmark_name) == benchmarks.end())
             {
@@ -480,7 +480,7 @@ namespace gauge
 
         tables::table results;
 
-        for (const auto &o : m_impl->m_columns)
+        for (const auto& o : m_impl->m_columns)
         {
             results.add_const_column(o.first, o.second);
         }
@@ -520,7 +520,7 @@ namespace gauge
         if (m_impl->m_options.count("result_filter"))
         {
             auto f = m_impl->m_options["result_filter"].as<
-                std::vector<std::string>>();
+                     std::vector<std::string>>();
 
             for (auto& i : f)
             {

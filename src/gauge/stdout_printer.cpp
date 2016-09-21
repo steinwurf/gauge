@@ -19,11 +19,11 @@ namespace gauge
         printer("stdout", false)
     {
         m_formatters.insert(std::make_pair("csv",
-            std::shared_ptr<tables::format>(new tables::csv_format())));
+                                           std::shared_ptr<tables::format>(new tables::csv_format())));
         m_formatters.insert(std::make_pair("json",
-            std::shared_ptr<tables::format>(new tables::json_format())));
+                                           std::shared_ptr<tables::format>(new tables::json_format())));
         m_formatters.insert(std::make_pair("python",
-            std::shared_ptr<tables::format>(new tables::python_format())));
+                                           std::shared_ptr<tables::format>(new tables::python_format())));
 
         gauge::po::options_description options;
 
@@ -35,8 +35,8 @@ namespace gauge
         gauge::runner::instance().register_options(options);
     }
 
-    void stdout_printer::benchmark_result(const benchmark &info,
-                                          const tables::table &results)
+    void stdout_printer::benchmark_result(const benchmark& info,
+                                          const tables::table& results)
     {
         tables::table output = results;
         if (info.has_configurations())
@@ -69,7 +69,7 @@ namespace gauge
             if (!m_formatters.count(m_format_key))
             {
                 throw std::runtime_error("stdout printer: '" + m_format_key +
-                    "' is not a valid format.");
+                                         "' is not a valid format.");
             }
         }
     }

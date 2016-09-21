@@ -49,7 +49,7 @@ namespace gauge
 
         /// Store the results of the test run in the result table
         /// @param results The table containing the final results
-        virtual void store_run(tables::table &results) = 0;
+        virtual void store_run(tables::table& results) = 0;
 
         /// Add options to the available commandline arguments
         virtual void get_options(po::variables_map& /*options*/)
@@ -107,7 +107,7 @@ namespace gauge
 
         /// Updates the configuration index
         /// @param config_index, the new configuration index
-        void add_configuration(const config_set &config)
+        void add_configuration(const config_set& config)
         {
             m_configurations.push_back(config);
         }

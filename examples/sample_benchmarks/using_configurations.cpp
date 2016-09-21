@@ -21,7 +21,7 @@ public:
         values.push_back(1000);
         values.push_back(4000);
 
-        for(auto v : values)
+        for (auto v : values)
         {
             gauge::config_set cs;
             cs.set_value<uint32_t>("vector_length", v);
@@ -38,7 +38,7 @@ public:
         uint32_t length = cs.get_value<uint32_t>("vector_length");
 
         m_vector.resize(length);
-        for(uint32_t i = 0; i < length; ++i)
+        for (uint32_t i = 0; i < length; ++i)
             m_vector[i] = rand() % 5;
     }
 

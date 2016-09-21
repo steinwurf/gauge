@@ -22,13 +22,13 @@ namespace gauge
         typedef config_map::const_iterator const_iterator;
 
         template<class T>
-        void set_value(const std::string &key, T v)
+        void set_value(const std::string& key, T v)
         {
             m_values[key] = boost::any(v);
         }
 
         template<class T>
-        T get_value(const std::string &key) const
+        T get_value(const std::string& key) const
         {
             assert(m_values.find(key) != m_values.end());
             assert(typeid(T) == m_values.at(key).type());

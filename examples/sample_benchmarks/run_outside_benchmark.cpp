@@ -10,17 +10,18 @@
 #include <gauge/gauge.hpp>
 
 template<class Container>
-uint32_t max_container(const Container &one)
+uint32_t max_container(const Container& one)
 {
     uint32_t max = 0;
 
     // RUN may be called outside the BENCHMARK macro as long a we
     // only call it once
-    RUN{
+    RUN
+    {
 
         for (auto it = one.begin(); it != one.end(); it++)
         {
-            if(*it > max)
+            if (*it > max)
                 max = *it;
         }
     }
@@ -33,7 +34,7 @@ uint32_t setup_and_run()
     uint32_t elements = 10000;
     Container c(elements);
 
-    for(auto it = c.begin(); it != c.end(); ++it)
+    for (auto it = c.begin(); it != c.end(); ++it)
         *it = rand();
 
     return max_container(c);
