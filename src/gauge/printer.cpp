@@ -17,27 +17,27 @@
 
 namespace gauge
 {
-    printer::printer(const std::string& name, bool enabled) :
-        m_name(name),
-        m_enabled(enabled)
-    {
-        gauge::po::options_description options;
+printer::printer(const std::string& name, bool enabled) :
+    m_name(name),
+    m_enabled(enabled)
+{
+    gauge::po::options_description options;
 
-        options.add_options()(
-            ("use_" + m_name).c_str(),
-            po::value<bool>()->default_value(m_enabled),
-            ("Use the " + m_name + " printer").c_str());
+    options.add_options()(
+        ("use_" + m_name).c_str(),
+        po::value<bool>()->default_value(m_enabled),
+        ("Use the " + m_name + " printer").c_str());
 
-        gauge::runner::instance().register_options(options);
-    }
+    gauge::runner::instance().register_options(options);
+}
 
-    bool printer::is_enabled() const
-    {
-        return m_enabled;
-    }
+bool printer::is_enabled() const
+{
+    return m_enabled;
+}
 
-    void printer::set_options(const po::variables_map& options)
-    {
-        m_enabled = options["use_" + m_name].as<bool>();
-    }
+void printer::set_options(const po::variables_map& options)
+{
+    m_enabled = options["use_" + m_name].as<bool>();
+}
 }

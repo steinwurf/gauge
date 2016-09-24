@@ -7,15 +7,15 @@
 
 namespace gauge
 {
-    class console_impl
-    {
-    public:
+class console_impl
+{
+public:
 
-        /// No color support so just return
-        static void print_color(std::ostream& /*stream*/,
-                                const console::textcolor& /*color*/)
-        {
-            return;
-        }
-    };
+    /// No color support so just return
+    static void print_color(std::ostream& /*stream*/,
+                            const console::textcolor& /*color*/)
+    {
+        return;
+    }
+};
 }

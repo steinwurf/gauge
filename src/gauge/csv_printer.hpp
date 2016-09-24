@@ -12,17 +12,17 @@
 
 namespace gauge
 {
-    class csv_printer : public file_printer
-    {
-    public:
-        /// Create a new csv printer
-        /// @param default_filename The default name of the outputted file
-        explicit csv_printer(const std::string& default_filename = "out.csv");
+class csv_printer : public file_printer
+{
+public:
+    /// Create a new csv printer
+    /// @param default_filename The default name of the outputted file
+    explicit csv_printer(const std::string& default_filename = "out.csv");
 
-    public:
-        // From file_printer
+public:
+    // From file_printer
 
-        /// @see file_printer::print_to_stream(std::ostream &s)
-        void print_to_stream(std::ostream& s);
-    };
+    /// @see file_printer::print_to_stream(std::ostream &s)
+    void print_to_stream(std::ostream& s);
+};
 }
