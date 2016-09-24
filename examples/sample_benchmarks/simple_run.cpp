@@ -26,14 +26,15 @@ BENCHMARK(SimpleRun, MaxArray, 100)
     std::vector<double> y(elements);
     std::vector<double> z(elements);
 
-    for(uint32_t i = 0; i < elements; ++i)
+    for (uint32_t i = 0; i < elements; ++i)
     {
         x[i] = rand();
         y[i] = rand();
     }
 
     // This is where the clock runs
-    RUN{
+    RUN
+    {
         max_array(&x[0], &y[0], &z[0], elements);
     }
 
@@ -56,13 +57,14 @@ BENCHMARK(SimpleRun, MaxArrayOpt, 100)
     std::vector<double> y(elements);
     std::vector<double> z(elements);
 
-    for(uint32_t i = 0; i < elements; ++i)
+    for (uint32_t i = 0; i < elements; ++i)
     {
         x[i] = rand();
         y[i] = rand();
     }
 
-    RUN{
+    RUN
+    {
         max_array_opt(&x[0], &y[0], &z[0], elements);
     }
 }

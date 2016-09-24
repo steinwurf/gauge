@@ -16,47 +16,47 @@
 
 namespace gauge
 {
-    class file_printer : public printer
-    {
-    public:
+class file_printer : public printer
+{
+public:
 
-        /// Create a new file printer
-        /// @param name The name of the file printer.
-        /// @param default_filename The default name of the outputted file
-        /// (with file extension)
-        file_printer(const std::string& name,
-            const std::string& default_filename);
+    /// Create a new file printer
+    /// @param name The name of the file printer.
+    /// @param default_filename The default name of the outputted file
+    /// (with file extension)
+    file_printer(const std::string& name,
+                 const std::string& default_filename);
 
-    public:
-        // From printer
+public:
+    // From printer
 
-        /// @see printer::benchmark_result(const benchmark&,const table&)
-        virtual void benchmark_result(const benchmark& info,
-            const tables::table& results);
+    /// @see printer::benchmark_result(const benchmark&,const table&)
+    virtual void benchmark_result(const benchmark& info,
+                                  const tables::table& results);
 
-        /// @see printer::end()
-        virtual void end();
+    /// @see printer::end()
+    virtual void end();
 
-        /// @see printer::set_options(po::variables_map&);
-        virtual void set_options(const po::variables_map& options);
+    /// @see printer::set_options(po::variables_map&);
+    virtual void set_options(const po::variables_map& options);
 
-    public:
+public:
 
-        /// Prints data to a stream. Used in the file_printer::end method.
-        /// @param s Steam to write to.
-        virtual void print_to_stream(std::ostream &s) = 0;
+    /// Prints data to a stream. Used in the file_printer::end method.
+    /// @param s Steam to write to.
+    virtual void print_to_stream(std::ostream& s) = 0;
 
-    protected:
+protected:
 
-        /// Store the filename of the output file
-        std::string m_filename;
+    /// Store the filename of the output file
+    std::string m_filename;
 
-        /// Store the name of the filename option
-        std::string m_filename_option;
+    /// Store the name of the filename option
+    std::string m_filename_option;
 
-        /// The output tables
-        std::vector<tables::table> m_tables;
+    /// The output tables
+    std::vector<tables::table> m_tables;
 
-    };
+};
 
 }

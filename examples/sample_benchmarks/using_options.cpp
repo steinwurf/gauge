@@ -58,7 +58,7 @@ BENCHMARK_OPTION(array_size)
             size, "")->multitoken();
 
     options.add_options()
-        ("array_size", default_size, "Set bit array size");
+    ("array_size", default_size, "Set bit array size");
 
     gauge::runner::instance().register_options(options);
 }
@@ -93,7 +93,7 @@ BENCHMARK_F_INLINE(using_options, CountBits, count_bk, 10)
 
     RUN
     {
-        for(auto v: m_vector)
+        for (auto v: m_vector)
             sum += count_bk(v);
     }
 
@@ -106,7 +106,7 @@ BENCHMARK_F_INLINE(using_options, CountBits, count_naive, 10)
 
     RUN
     {
-        for(auto v: m_vector)
+        for (auto v: m_vector)
             sum += count_naive(v);
     }
 

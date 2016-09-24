@@ -13,8 +13,8 @@ class sort_data_setup : public gauge::time_benchmark
 {
 public:
 
-    sort_data_setup()
-        : m_elements(1000)
+    sort_data_setup() :
+        m_elements(1000)
     {
         m_container.resize(m_elements, 0);
     }
