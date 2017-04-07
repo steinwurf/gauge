@@ -18,48 +18,49 @@ struct sleep_benchmark : public gauge::time_benchmark
     {
         // Get the time spent sleeping
         double time = gauge::time_benchmark::measurement();
-        // This should be higher than the requested time
-        EXPECT_GT(time, m_last_delay);
+        // This should be higher than 99% of the requested time
+        // The sleep period might end a little earlier on Windows
+        EXPECT_GE(time, m_delay.count() * 0.99);
         return time;
     }
 
-    void run_benchmark(uint32_t delay)
+    void run_benchmark(bc::microseconds delay)
     {
-        m_last_delay = delay;
+        m_delay = delay;
         RUN
         {
-            boost::this_thread::sleep_for(bc::microseconds(delay));
+            boost::this_thread::sleep_for(delay);
         }
     }
 
 protected:
 
-    uint32_t m_last_delay;
+    bc::microseconds m_delay;
 };
 
-BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_10usecs, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 10usec, 1)
 {
-    run_benchmark(10);
+    run_benchmark(bc::microseconds(10));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_100usecs, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 100usec, 1)
 {
-    run_benchmark(100);
+    run_benchmark(bc::microseconds(100));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_1000usecs, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 1msec, 1)
 {
-    run_benchmark(1000);
+    run_benchmark(bc::milliseconds(1));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_10000usecs, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 10msec, 1)
 {
-    run_benchmark(10000);
+    run_benchmark(bc::milliseconds(10));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Gauge, sleep_100000usecs, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 100msec, 1)
 {
-    run_benchmark(100000);
+    run_benchmark(bc::milliseconds(100));
 }
 
 TEST(Gauge, sleep_intervals)
@@ -68,25 +69,5 @@ TEST(Gauge, sleep_intervals)
     int argc = 1;
     const char* argv[] = { "program" };
 
-    gauge::runner::add_default_printers();
     gauge::runner::run_benchmarks(argc, argv);
 }
-
-
-// TEST(Gauge, reference_sleep_intervals)
-// {
-//     uint32_t loop = 100000;
-
-//     auto start = bc::high_resolution_clock::now();
-
-//     for(uint32_t i = 0; i < loop; ++i)
-//         boost::this_thread::sleep_for(bc::microseconds(10));
-
-//     auto stop = bc::high_resolution_clock::now();
-
-//     auto duration = static_cast<double>(
-//         bc::duration_cast<bc::microseconds>(stop - start).count());
-
-//     std::cout << "Duration " << duration << std::endl;
-//     std::cout << "Duration per loop" << duration/loop << std::endl;
-// }

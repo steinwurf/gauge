@@ -18,8 +18,9 @@ struct boost_asio_timer_benchmark : public gauge::time_benchmark
     {
         // Get the time spent sleeping
         double time = gauge::time_benchmark::measurement();
-        // This should be higher than the requested time
-        EXPECT_GT(time, m_delay.count());
+        // This should be higher than 99% of the requested time
+        // The timer might expire a little earlier on Windows
+        EXPECT_GE(time, m_delay.count() * 0.99);
         return time;
     }
 
@@ -56,24 +57,24 @@ protected:
     boost::chrono::microseconds m_delay;
 };
 
-BENCHMARK_F_INLINE(boost_asio_timer_benchmark, Gauge, 100msec, 1)
+BENCHMARK_F_INLINE(boost_asio_timer_benchmark, AsioTimer, 100msec, 1)
 {
     run_benchmark(boost::chrono::milliseconds(100));
 }
 
-BENCHMARK_F_INLINE(boost_asio_timer_benchmark, Gauge, 10msec, 1)
+BENCHMARK_F_INLINE(boost_asio_timer_benchmark, AsioTimer, 10msec, 1)
 {
     run_benchmark(boost::chrono::milliseconds(10));
 }
 
-BENCHMARK_F_INLINE(boost_asio_timer_benchmark, Gauge, 1msec, 1)
+BENCHMARK_F_INLINE(boost_asio_timer_benchmark, AsioTimer, 1msec, 1)
 {
     run_benchmark(boost::chrono::milliseconds(1));
 }
 
-BENCHMARK_F_INLINE(boost_asio_timer_benchmark, Gauge, 1usec, 1)
+BENCHMARK_F_INLINE(boost_asio_timer_benchmark, AsioTimer, 10usec, 1)
 {
-    run_benchmark(boost::chrono::microseconds(1));
+    run_benchmark(boost::chrono::microseconds(10));
 }
 
 TEST(Gauge, boost_asio_timer)
