@@ -69,5 +69,6 @@ TEST(Gauge, sleep_intervals)
     int argc = 1;
     const char* argv[] = { "program" };
 
+    gauge::runner::add_default_printers();
     gauge::runner::run_benchmarks(argc, argv);
 }

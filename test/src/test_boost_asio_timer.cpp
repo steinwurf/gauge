@@ -14,6 +14,12 @@ struct boost_asio_timer_benchmark : public gauge::time_benchmark
 {
     using clock_type = boost::chrono::high_resolution_clock;
 
+    bool accept_measurement()
+    {
+        // Force only one iteration
+        return true;
+    }
+
     double measurement()
     {
         // Get the time spent sleeping
