@@ -5,6 +5,7 @@
 
 #include <cassert>
 #include <cstdlib>
+#include <ctime>
 #include <string>
 #include <map>
 #include <limits>
@@ -164,9 +165,13 @@ void runner::run_unsafe(int argc, const char* argv[])
     ("runs", po::value<uint32_t>(),
      "Sets the number of runs to complete. Overrides the "
      "settings specified in the benchmark ex. --runs=50")
+    ("warmup_time", po::value<double>()->default_value(2.0),
+     "Set the CPU warm-up time in seconds before starting the first benchmark. "
+     "This should avoid unfavorable results for the first few benchmarks "
+     "due to the CPU power-saving mechanisms, e.g. --warmup_time=5.0")
     ("add_column",
      po::value<std::vector<std::string> >()->multitoken(),
-     "Add a column to the test results, this can be use to "
+     "Add a column to the test results, this can be used to "
      "add custom information to the result files "
      "./benchmark --add_column cpu=i7 "
      "\"date=Monday 1st June 2021\"")
@@ -182,7 +187,6 @@ void runner::run_unsafe(int argc, const char* argv[])
     po::notify(vm);
 
     m_impl->m_options = vm;
-
 
     if (m_impl->m_options.count("help"))
     {
@@ -222,6 +226,16 @@ void runner::run_unsafe(int argc, const char* argv[])
             parse_add_column(s);
         }
     }
+
+    // Run a CPU core at 100% for the specified warm-up time before starting
+    // the actual benchmarks. This should avoid unfavorable results for the
+    // first few benchmarks, especially on mobile CPUs with aggressive
+    // power-saving mechanisms.
+    double warmup_time = m_impl->m_options["warmup_time"].as<double>();
+    time_t start = time(0);
+    // Continuously query the current time until we reach the given interval.
+    // This operation cannot be "optimized away" by the compiler.
+    while (difftime(time(0), start) < warmup_time) {}
 
     // Deliver possible options to printers and start them
     for (auto& printer: m_impl->m_printers)
