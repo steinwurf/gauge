@@ -6,7 +6,9 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Added a CPU warm-up time before starting first benchmark to avoid
+  unfavorable results for the first few benchmarks. The time interval can
+  be controlled by the ``--warmup_time`` option.
 
 11.0.0
 ------
