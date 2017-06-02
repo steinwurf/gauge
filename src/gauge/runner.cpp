@@ -232,10 +232,15 @@ void runner::run_unsafe(int argc, const char* argv[])
     // first few benchmarks, especially on mobile CPUs with aggressive
     // power-saving mechanisms.
     double warmup_time = m_impl->m_options["warmup_time"].as<double>();
-    time_t start = time(0);
-    // Continuously query the current time until we reach the given interval.
-    // This operation cannot be "optimized away" by the compiler.
-    while (difftime(time(0), start) < warmup_time) {}
+    // The warm-up phase makes no sense for a dry run
+    if (m_impl->m_options.count("dry_run") == 0)
+    {
+        time_t start = time(0);
+        // Continuously query the current time and compare with the start time
+        // until the difference reaches the given warm-up interval.
+        // This operation cannot be "optimized away" by the compiler.
+        while (difftime(time(0), start) < warmup_time) {}
+    }
 
     // Deliver possible options to printers and start them
     for (auto& printer: m_impl->m_printers)
