@@ -63,6 +63,10 @@ public:
     virtual void end()
     { }
 
+    /// Virtual destructor
+    virtual ~printer()
+    { }
+
 protected:
 
     /// Name of the printer
