@@ -96,15 +96,15 @@ BENCHMARK_OPTION(basic_options)
         multitoken();
 
     options.add_options()
-        ("symbols", default_symbols, "Set the number of symbols");
+    ("symbols", default_symbols, "Set the number of symbols");
 
     options.add_options()
-        ("symbol_size", default_symbol_size, "Set the symbol size in bytes");
+    ("symbol_size", default_symbol_size, "Set the symbol size in bytes");
 
     options.add_options()
-        ("type", default_types, "Set type [encoder|decoder]");
+    ("type", default_types, "Set type [encoder|decoder]");
 
     gauge::runner::instance().register_options(options);
 }
 
-BENCHMARK_F(option_benchmark, options, basic, 10);
+BENCHMARK_F(option_benchmark, options, basic, 1);
