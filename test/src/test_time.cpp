@@ -60,13 +60,3 @@ BENCHMARK_F_INLINE(sleep_benchmark, sleep, 100msec, 1)
 {
     run_benchmark(std::chrono::milliseconds(100));
 }
-
-TEST(gauge, sleep_intervals)
-{
-    // Dummy arguments for gauge::runner
-    int argc = 1;
-    const char* argv[] = { "program" };
-
-    gauge::runner::add_default_printers();
-    gauge::runner::run_benchmarks(argc, argv);
-}
