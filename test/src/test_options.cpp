@@ -17,7 +17,7 @@ struct option_benchmark : public gauge::time_benchmark
         if (!results.has_column("magic"))
             results.add_column("magic");
 
-        results.set_value("magic", m_delay.count());
+        results.set_value("magic", (uint32_t)m_delay.count());
     }
 
     double measurement()
