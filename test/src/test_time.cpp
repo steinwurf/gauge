@@ -5,12 +5,10 @@
 
 #include <gauge/gauge.hpp>
 
+#include <chrono>
+#include <thread>
+
 #include <gtest/gtest.h>
-
-#include <boost/chrono.hpp>
-#include <boost/thread.hpp>
-
-namespace bc = boost::chrono;
 
 struct sleep_benchmark : public gauge::time_benchmark
 {
@@ -24,46 +22,46 @@ struct sleep_benchmark : public gauge::time_benchmark
         return time;
     }
 
-    void run_benchmark(bc::microseconds delay)
+    void run_benchmark(std::chrono::microseconds delay)
     {
         m_delay = delay;
         RUN
         {
-            boost::this_thread::sleep_for(delay);
+            std::this_thread::sleep_for(delay);
         }
     }
 
 protected:
 
-    bc::microseconds m_delay;
+    std::chrono::microseconds m_delay;
 };
 
-BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 10usec, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, sleep, 10usec, 1)
 {
-    run_benchmark(bc::microseconds(10));
+    run_benchmark(std::chrono::microseconds(10));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 100usec, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, sleep, 100usec, 1)
 {
-    run_benchmark(bc::microseconds(100));
+    run_benchmark(std::chrono::microseconds(100));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 1msec, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, sleep, 1msec, 1)
 {
-    run_benchmark(bc::milliseconds(1));
+    run_benchmark(std::chrono::milliseconds(1));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 10msec, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, sleep, 10msec, 1)
 {
-    run_benchmark(bc::milliseconds(10));
+    run_benchmark(std::chrono::milliseconds(10));
 }
 
-BENCHMARK_F_INLINE(sleep_benchmark, Sleep, 100msec, 1)
+BENCHMARK_F_INLINE(sleep_benchmark, sleep, 100msec, 1)
 {
-    run_benchmark(bc::milliseconds(100));
+    run_benchmark(std::chrono::milliseconds(100));
 }
 
-TEST(Gauge, sleep_intervals)
+TEST(gauge, sleep_intervals)
 {
     // Dummy arguments for gauge::runner
     int argc = 1;

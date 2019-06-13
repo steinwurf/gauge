@@ -5,12 +5,12 @@
 
 #pragma once
 
-#include <boost/chrono.hpp>
-#include <tables/format.hpp>
-
 #include <iomanip>
+#include <chrono>
 #include <vector>
 #include <string>
+
+#include <tables/format.hpp>
 
 #include "printer.hpp"
 #include "statistics.hpp"
@@ -31,15 +31,15 @@ public:
 
     void start()
     {
-        m_total_start = boost::chrono::high_resolution_clock::now();
+        m_total_start = std::chrono::high_resolution_clock::now();
     }
 
     void end()
     {
-        m_total_stop = boost::chrono::high_resolution_clock::now();
+        m_total_stop = std::chrono::high_resolution_clock::now();
 
         double time = static_cast<double>(
-            boost::chrono::duration_cast<boost::chrono::microseconds>(
+            std::chrono::duration_cast<std::chrono::microseconds>(
                 m_total_stop-m_total_start).count());
 
         std::cout << std::fixed << console::textgreen << "[     DONE ]"
@@ -51,12 +51,12 @@ public:
 
     void start_benchmark()
     {
-        m_benchmark_start = boost::chrono::high_resolution_clock::now();
+        m_benchmark_start = std::chrono::high_resolution_clock::now();
     }
 
     void end_benchmark()
     {
-        m_benchmark_stop = boost::chrono::high_resolution_clock::now();
+        m_benchmark_stop = std::chrono::high_resolution_clock::now();
     }
 
 
@@ -101,7 +101,7 @@ public:
         }
 
         double time = static_cast<double>(
-            boost::chrono::duration_cast<boost::chrono::microseconds>(
+            std::chrono::duration_cast<std::chrono::microseconds>(
                 m_benchmark_stop-m_benchmark_start).count());
 
         std::cout << std::fixed << console::textyellow << "[   TIME   ]"
@@ -193,15 +193,15 @@ private:
 private:
 
     /// The start time
-    boost::chrono::high_resolution_clock::time_point m_total_start;
+    std::chrono::high_resolution_clock::time_point m_total_start;
 
     /// The stop time
-    boost::chrono::high_resolution_clock::time_point m_total_stop;
+    std::chrono::high_resolution_clock::time_point m_total_stop;
 
     /// The start time
-    boost::chrono::high_resolution_clock::time_point m_benchmark_start;
+    std::chrono::high_resolution_clock::time_point m_benchmark_start;
 
     /// The stop time
-    boost::chrono::high_resolution_clock::time_point m_benchmark_stop;
+    std::chrono::high_resolution_clock::time_point m_benchmark_stop;
 };
 }
