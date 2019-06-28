@@ -498,6 +498,7 @@ void runner::run_benchmark(benchmark_ptr benchmark)
     }
 
     tables::table results;
+    results.reserve(runs);
 
     for (const auto& o : m_impl->m_columns)
     {
