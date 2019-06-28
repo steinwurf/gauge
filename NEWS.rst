@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Patch: Reserve runs in result table.
 
 11.1.1
 ------
