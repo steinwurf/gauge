@@ -509,6 +509,8 @@ void runner::run_benchmark(benchmark_ptr benchmark)
     results.add_const_column("benchmark", benchmark->benchmark_name());
     results.add_const_column("testcase", benchmark->testcase_name());
 
+    benchmark->prepare_table(results);
+
     for (auto& printer: enabled_printers())
     {
         printer->start_benchmark();

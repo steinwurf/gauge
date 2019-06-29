@@ -6,7 +6,8 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Add prepare_table(...) function to allow
+  benchmarks create their needed result columns.
 
 11.1.2
 ------
