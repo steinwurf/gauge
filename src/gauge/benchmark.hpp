@@ -55,11 +55,15 @@ public:
     /// This should reduce overhead when running the actual benchmark.
     /// @param results The table containing the results
     virtual void prepare_table(tables::table& results)
-    { }
+    {
+        (void) results;
+    }
 
     /// Add options to the available commandline arguments
-    virtual void get_options(po::variables_map& /*options*/)
-    { }
+    virtual void get_options(po::variables_map& options)
+    {
+        (void) options;
+    }
 
     /// @return the test case name
     virtual std::string testcase_name() const
