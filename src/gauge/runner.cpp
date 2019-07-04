@@ -509,6 +509,9 @@ void runner::run_benchmark(benchmark_ptr benchmark)
     results.add_const_column("benchmark", benchmark->benchmark_name());
     results.add_const_column("testcase", benchmark->testcase_name());
 
+    results.add_column("iterations");
+    results.add_column("run_number");
+
     benchmark->prepare_table(results);
 
     for (auto& printer: enabled_printers())
@@ -518,9 +521,6 @@ void runner::run_benchmark(benchmark_ptr benchmark)
 
     assert(runs > 0);
     uint32_t run = 0;
-
-    results.add_column("iterations");
-    results.add_column("run_number");
 
     while (run < runs)
     {

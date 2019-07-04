@@ -26,15 +26,14 @@ namespace po = boost::program_options;
 class benchmark
 {
 public:
+
     /// Constructor
     benchmark()
-    {
-    }
+    { }
 
     /// Destructor
     virtual ~benchmark()
-    {
-    }
+    { }
 
     /// @param benchmark_id sets the benchmark id
     void set_id(uint32_t benchmark_id)
@@ -49,20 +48,18 @@ public:
     }
 
     /// Store the results of the test run in the result table
-    /// @param results The table containing the final results
-    virtual void store_run(tables::table &results) = 0;
+    /// @param results The table containing the results
+    virtual void store_run(tables::table& results) = 0;
 
     /// Allows the benchmark to "prepare" the table with the needed columns.
-    /// Creating minimal overhead when running the tests
-    /// @param results The table containing the final results
-    virtual void prepare_table(tables::table &)
-    {
-    }
+    /// This should reduce overhead when running the actual benchmark.
+    /// @param results The table containing the results
+    virtual void prepare_table(tables::table& results)
+    { }
 
     /// Add options to the available commandline arguments
-    virtual void get_options(po::variables_map & /*options*/)
-    {
-    }
+    virtual void get_options(po::variables_map& /*options*/)
+    { }
 
     /// @return the test case name
     virtual std::string testcase_name() const
@@ -85,8 +82,7 @@ public:
 
     /// Reset the state of a measurement controller
     virtual void init()
-    {
-    }
+    { }
 
     /// For how many iterations should we loop
     /// @return the iteration count
@@ -118,7 +114,7 @@ public:
 
     /// Updates the configuration index
     /// @param config_index, the new configuration index
-    void add_configuration(const config_set &config)
+    void add_configuration(const config_set& config)
     {
         m_configurations.push_back(config);
     }
@@ -164,14 +160,12 @@ public:
     /// Called once before every test run. Allows a user to
     /// prepare resources for the upcoming benchmark
     virtual void setup()
-    {
-    }
+    { }
 
     /// Called once after every test run. Allows a user to
     /// cleanup resources in between benchmark runs.
     virtual void tear_down()
-    {
-    }
+    { }
 
     /// If for some reason the benchmark cannot run it can be skipped
     /// by implementing this function in the benchmark code.
@@ -191,4 +185,4 @@ private:
     /// Stores the different configurations
     std::vector<config_set> m_configurations;
 };
-} // namespace gauge
+}

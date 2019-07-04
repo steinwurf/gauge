@@ -6,8 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
-* Minor: Add prepare_table(...) function to allow
-  benchmarks create their needed result columns.
+* tbd
+* Minor: Add the prepare_table(...) function to allow benchmarks to create
+  their needed result columns in advance. The allocation of new columns during
+  the benchmark can disrupt the performance measurements.
 
 11.1.2
 ------
