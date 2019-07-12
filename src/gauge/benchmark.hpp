@@ -48,12 +48,22 @@ public:
     }
 
     /// Store the results of the test run in the result table
-    /// @param results The table containing the final results
+    /// @param results The table containing the results
     virtual void store_run(tables::table& results) = 0;
 
+    /// Allows the benchmark to "prepare" the table with the needed columns.
+    /// This should reduce overhead when running the actual benchmark.
+    /// @param results The table containing the results
+    virtual void prepare_table(tables::table& results)
+    {
+        (void) results;
+    }
+
     /// Add options to the available commandline arguments
-    virtual void get_options(po::variables_map& /*options*/)
-    { }
+    virtual void get_options(po::variables_map& options)
+    {
+        (void) options;
+    }
 
     /// @return the test case name
     virtual std::string testcase_name() const
@@ -76,13 +86,14 @@ public:
 
     /// Reset the state of a measurement controller
     virtual void init()
-    {
-    }
+    { }
 
     /// For how many iterations should we loop
     /// @return the iteration count
     virtual uint64_t iteration_count() const
-    { return 1; };
+    {
+        return 1;
+    };
 
     /// @return the number of configurations create for this
     ///         benchmark
@@ -168,7 +179,6 @@ public:
     }
 
 private:
-
     /// The benchmark id given by the static call to
     /// register_id in the runner
     uint32_t m_id;

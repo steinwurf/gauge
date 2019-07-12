@@ -498,6 +498,7 @@ void runner::run_benchmark(benchmark_ptr benchmark)
     }
 
     tables::table results;
+    results.reserve(runs);
 
     for (const auto& o : m_impl->m_columns)
     {
@@ -508,6 +509,11 @@ void runner::run_benchmark(benchmark_ptr benchmark)
     results.add_const_column("benchmark", benchmark->benchmark_name());
     results.add_const_column("testcase", benchmark->testcase_name());
 
+    results.add_column("iterations");
+    results.add_column("run_number");
+
+    benchmark->prepare_table(results);
+
     for (auto& printer: enabled_printers())
     {
         printer->start_benchmark();
@@ -515,9 +521,6 @@ void runner::run_benchmark(benchmark_ptr benchmark)
 
     assert(runs > 0);
     uint32_t run = 0;
-
-    results.add_column("iterations");
-    results.add_column("run_number");
 
     while (run < runs)
     {

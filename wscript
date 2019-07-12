@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 APPNAME = 'gauge'
-VERSION = '11.1.1'
+VERSION = '11.2.0'
 
 
 def build(bld):
