@@ -6,5 +6,4 @@ bld.stlib(
     source=bld.path.ant_glob('**/*.cpp'),
     target='gauge',
     export_includes=['..'],
-    use=['tables', 'boost_includes', 'boost_chrono', 'boost_system',
-         'boost_program_options'])
+    use=['tables', 'boost_includes', 'boost_program_options'])

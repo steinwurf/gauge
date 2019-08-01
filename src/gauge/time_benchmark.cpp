@@ -3,7 +3,7 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <boost/chrono.hpp>
+#include <chrono>
 
 #include <algorithm>
 #include <string>
@@ -12,8 +12,6 @@
 
 namespace gauge
 {
-namespace bc = boost::chrono;
-
 class time_benchmark::impl
 {
 public:
@@ -27,10 +25,10 @@ public:
     double m_threshold;
 
     /// The start time
-    bc::high_resolution_clock::time_point m_start;
+    std::chrono::high_resolution_clock::time_point m_start;
 
     /// The stop time
-    bc::high_resolution_clock::time_point m_stop;
+    std::chrono::high_resolution_clock::time_point m_stop;
 
     /// The result in microseconds
     double m_result;
@@ -69,18 +67,18 @@ void time_benchmark::start()
 {
     assert(m_impl->m_iterations > 0);
     m_impl->m_started = true;
-    m_impl->m_start = bc::high_resolution_clock::now();
+    m_impl->m_start = std::chrono::high_resolution_clock::now();
 }
 
 void time_benchmark::stop()
 {
-    m_impl->m_stop = bc::high_resolution_clock::now();
+    m_impl->m_stop = std::chrono::high_resolution_clock::now();
 
     assert(m_impl->m_started);
     m_impl->m_stopped = true;
 
     m_impl->m_result = static_cast<double>(
-        bc::duration_cast<bc::microseconds>(
+        std::chrono::duration_cast<std::chrono::microseconds>(
             m_impl->m_stop-m_impl->m_start).count());
 
     assert(m_impl->m_iterations > 0);

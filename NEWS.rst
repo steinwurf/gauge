@@ -7,6 +7,8 @@ every change, see the Git log.
 Latest
 ------
 * tbd
+* Minor: Added test for specifying options using BENCHMARK_OPTION.
+* Major: Replaced boost::chrono references with std::chrono.
 
 11.2.0
 ------
