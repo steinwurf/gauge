@@ -21,13 +21,6 @@
         "sources": ["github.com/steinwurf/tables.git"]
     },
     {
-        "name": "cxxopts",
-        "resolver": "git",
-        "method": "semver",
-        "major": 1,
-        "sources": ["github.com/steinwurf/cxxopts.git"]
-    },
-    {
         "name": "gtest",
         "internal": true,
         "resolver": "git",
