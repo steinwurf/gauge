@@ -10,14 +10,14 @@
         "name": "boost",
         "resolver": "git",
         "method": "semver",
-        "major": 3,
+        "major": 4,
         "sources": ["github.com/steinwurf/boost.git"]
     },
     {
         "name": "tables",
         "resolver": "git",
         "method": "semver",
-        "major": 7,
+        "major": 8,
         "sources": ["github.com/steinwurf/tables.git"]
     },
     {
