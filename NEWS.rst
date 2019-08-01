@@ -7,6 +7,9 @@ every change, see the Git log.
 Latest
 ------
 * tbd
+
+12.0.0
+------
 * Major: Upgrade to boost 4
 * Major: Upgrade to tables 8
 * Minor: Added a test for specifying options using BENCHMARK_OPTION.
