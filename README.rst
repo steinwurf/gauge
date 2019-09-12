@@ -3,8 +3,8 @@ gauge
 
 gauge is a flexible C++ benchmarking tool.
 
-.. image:: http://buildbot.steinwurf.dk/svgstatus?project=gauge
-    :target: http://buildbot.steinwurf.dk/stats?projects=gauge
+.. image:: https://travis-ci.org/steinwurf/gauge.svg?branch=master
+    :target: https://travis-ci.org/steinwurf/gauge
 
 .. contents:: Table of Contents:
    :local:
