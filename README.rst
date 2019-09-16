@@ -9,51 +9,48 @@ gauge is a flexible C++ benchmarking tool.
 .. contents:: Table of Contents:
    :local:
 
-Platforms
----------
-
-We have tested gauge on various versions of Windows, Linux and Mac. You can
-see the status by selecting the gauge project on the Steinwurf `buildbot
-page <http://buildbot.steinwurf.com/>`_:
-
 Build
 -----
 
-We use the ``waf`` build-system to build the gauge static library.
-With some additional tools which may be found at waf_
+We use the ``waf`` build system to build the gauge static library.
+We have some additional tools which may be found at waf_
 
 .. _waf: https://github.com/steinwurf/waf
 
-To build gauge run the following command:
-::
-  ./waf configure --bundle-path=~/dev/bundle_dependencies
-  ./waf build
+If you already installed a C++14 compiler, git and python on your system,
+then you can clone this repository to a suitable folder::
 
-Substitute the ``~/dev/bundle_dependencies`` with the path where you wish
-waf to download gauge's dependencies. You may omit this option then waf
-will download the dependencies into the gauge project folder.
+    git clone git@github.com:steinwurf/gauge.git
 
-You should now have the ``libgauge.a`` static lib. It also build the boost
-dependencies as static libs. In the gauge directory type ``find . -name "*.a"``
-to see the libraries produced. We need to use the path to the libraries when
-using gauge with our own applications as shown in the following.
+Configure and build the project::
+
+    cd gauge
+    python waf configure
+    python waf build
+
+Run the unit tests::
+
+    python waf --run_tests
+
+You should now have the gauge static lib and also its dependencies compiled
+as static libs.
 
 When building the static lib, waf will also build the ``gauge_example``
 executable.
 
-Depending on your platform you should be able to launch it by running:
-::
+Depending on your platform you should be able to launch it by running::
+
   ./build/linux/examples/sample_benchmarks/gauge_example
 
 Example Use
 -----------
 
-See various use-cases in the ``examples`` folder. The following will be used to
+See various use cases in the ``examples`` folder. The following will be used to
 explain the basic concepts of gauge. To try it out save the following code in a
-file called ``main.cpp``
-::
+file called ``main.cpp``::
+
   #include <gauge/gauge.hpp>
-  #include <gauge/console_printer.hpp>
+
   #include <vector>
 
   BENCHMARK(MyTest, RunThis, 100)
@@ -65,7 +62,8 @@ file called ``main.cpp``
       }
 
       // This is where the clock runs
-      RUN{
+      RUN
+      {
           for(uint i = 1; i < integers.size(); ++i)
           {
               integers[i] += integers[i-1];
@@ -75,9 +73,7 @@ file called ``main.cpp``
 
   int main(int argc, const char* argv[])
   {
-      gauge::runner::instance().printers().push_back(
-         std::make_shared<gauge::console_printer>());
-
+      gauge::runner::add_default_printers();
       gauge::runner::run_benchmarks(argc, argv);
       return 0;
   }
@@ -94,16 +90,12 @@ be executed several times (we refer to this as the number of iterations).
 When gauge is satisfied with the measurement we exit the run loop. For every
 ``BENCHMARK`` we may only call ``RUN`` once.
 
-Using ``g++`` the example code may be compiled as:
-::
-  g++ main.cpp -o benchmark --std=c++0x -I../path_to_gauge/ -L../path_to_libguage -lgauge -L../path_to_libboostxyz -lboost_chrono -lboost_program_options -lboost_system -lrt
+Using ``g++`` the example code may be compiled as::
 
-We assume you are using the boost libs built together with gauge. In the
-future we will attempt also support boost libraries installed using your
-package manager or similar.
+  g++ main.cpp -o benchmark --std=c++14 -I../path_to_gauge/ -L../path_to_libguage -lgauge -ltables
 
-You should now be able to run the benchmark using:
-::
+You should now be able to run the benchmark using::
+
   ./benchmark
 
 License
