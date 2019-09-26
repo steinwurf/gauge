@@ -1,10 +1,10 @@
 gauge
 -----
 
-gauge is a flexible C++ benchmarking tool.
-
 .. image:: https://travis-ci.org/steinwurf/gauge.svg?branch=master
     :target: https://travis-ci.org/steinwurf/gauge
+
+gauge is a flexible C++ benchmarking tool.
 
 .. contents:: Table of Contents:
    :local:
