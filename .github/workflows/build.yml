@@ -7,27 +7,27 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - container: conanio/gcc5
-          cxx_mkspec: --cxx_mkspec=cxx_gxx54_x64
-          name: GCC 5.4
-        - container: conanio/gcc9
-          cxx_mkspec: --cxx_mkspec=cxx_gxx92_x64
-          name: GCC 9.2
-        - container: conanio/clang39
-          name: Clang 3.9
-          cxx_mkspec: --cxx_mkspec=cxx_clang39_x64
-        - container: conanio/clang10
-          name: Clang 10
-        - container: conanio/clang10
-          cxx_mkspec: --cxx_mkspec=cxx_clang10_address_sanitizer_x64
-          name: Clang 10 Address Sanitizer
-        # TODO: Re-able this when we have fixed memory issue in google-test
-        # - container: conanio/clang10 
-        #   cxx_mkspec: --cxx_mkspec=cxx_clang10_memory_sanitizer_x64
-        #   name: Clang 10 Memory Sanitizer
-        - container: conanio/clang10
-          cxx_mkspec: --cxx_mkspec=cxx_clang10_thread_sanitizer_x64
-          name: Clang 10 Thread Sanitizer
+          - container: conanio/gcc5
+            cxx_mkspec: --cxx_mkspec=cxx_gxx54_x64
+            name: GCC 5.4
+          - container: conanio/gcc9
+            cxx_mkspec: --cxx_mkspec=cxx_gxx92_x64
+            name: GCC 9.2
+          - container: conanio/clang39
+            name: Clang 3.9
+            cxx_mkspec: --cxx_mkspec=cxx_clang39_x64
+          - container: conanio/clang10
+            name: Clang 10
+          - container: conanio/clang10
+            cxx_mkspec: --cxx_mkspec=cxx_clang10_address_sanitizer_x64
+            name: Clang 10 Address Sanitizer
+          # TODO: Re-able this when we have fixed memory issue in google-test
+          # - container: conanio/clang10
+          #   cxx_mkspec: --cxx_mkspec=cxx_clang10_memory_sanitizer_x64
+          #   name: Clang 10 Memory Sanitizer
+          - container: conanio/clang10
+            cxx_mkspec: --cxx_mkspec=cxx_clang10_thread_sanitizer_x64
+            name: Clang 10 Thread Sanitizer
     runs-on: [self-hosted, docker]
     name: ${{ matrix.config.name }}
     container:
@@ -54,17 +54,17 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - cxx_mkspec: cxx_msvc16_x86
-          name: MSVC 16 32-bit
-        - cxx_mkspec: cxx_msvc16_x64
-          name: MSVC 16 64-bit
-        - cxx_mkspec: cxx_apple_llvm120_x64
-          name: Apple LLVM 12.0 64-bit
-        - cxx_mkspec: cxx_clang70_x64
-          name: Clang 7.0 64-Bit
-        - cxx_mkspec: cxx_gxx83_x64
-          name: GCC 8.3 64-Bit
-    runs-on: [self-hosted, '${{ matrix.config.cxx_mkspec }}']
+          - cxx_mkspec: cxx_msvc16_x86
+            name: MSVC 16 32-bit
+          - cxx_mkspec: cxx_msvc16_x64
+            name: MSVC 16 64-bit
+          - cxx_mkspec: cxx_apple_llvm120_x64
+            name: Apple LLVM 12.0 64-bit
+          - cxx_mkspec: cxx_clang70_x64
+            name: Clang 7.0 64-Bit
+          - cxx_mkspec: cxx_gxx83_x64
+            name: GCC 8.3 64-Bit
+    runs-on: [self-hosted, "${{ matrix.config.cxx_mkspec }}"]
     name: ${{ matrix.config.name }}
     env:
       python: python3
@@ -84,33 +84,6 @@ jobs:
           ${{ env.python }} waf
       - name: Test
         run: ${{ env.python }} waf --run_tests
-  # CMake build
-  cmake_build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [Windows, macOS, Linux]
-    runs-on: [self-hosted, '${{ matrix.os }}', 'cmake']
-    name: ${{ matrix.os }} CMake Build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: CMake Build
-        shell: python
-        run: |
-          import shutil
-          import os
-          import subprocess
-
-          build_path = 'build'
-          if os.path.exists(build_path):
-              print("Path '{}' already exists - removing".format(build_path))
-              shutil.rmtree(build_path)
-          os.mkdir(build_path)
-          os.chdir(build_path)
-          extras = { "VERBOSE": "1" }
-          subprocess.check_call(['cmake', '../'], env=dict(os.environ.copy(), **extras))
-          subprocess.check_call(['cmake', '--build', '.'], env=dict(os.environ.copy(), **extras))
   # Code Format Check
   clang-format:
     name: ClangFormat

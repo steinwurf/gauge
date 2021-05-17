@@ -37,5 +37,5 @@ protected:
 };
 
 // BENCHMARK_F_TEST(sort_data_setup<std::vector<uint32_t>>, SortVector, Uint32,
-// 10) BENCHMARK_F_TEST(sort_data_setup<std::vector<uint8_t>>, SortVector, Uint8,
-// 10)
+// 10) BENCHMARK_F_TEST(sort_data_setup<std::vector<uint8_t>>, SortVector,
+// Uint8, 10)
