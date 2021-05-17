@@ -3,17 +3,16 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#include <cstdlib>
 #include <gauge/gauge.hpp>
 #include <tables/table.hpp>
-#include <cstdlib>
 
 class benchmark_me
 {
 public:
-    benchmark_me() :
-        m_count(0),
-        m_limit(1000)
-    {}
+    benchmark_me() : m_count(0), m_limit(1000)
+    {
+    }
 
     void run_this()
     {
@@ -38,7 +37,6 @@ public:
 class custom_measurement : public gauge::benchmark
 {
 public:
-
     void start()
     {
         m_old_count = m_benchmark_me.m_count;
@@ -59,7 +57,9 @@ public:
 
     /// The unit we measure in
     std::string unit_text() const
-    { return "counts"; }
+    {
+        return "counts";
+    }
 
     void store_run(tables::table& results)
     {
@@ -77,13 +77,11 @@ public:
         }
     }
 
-
     /// The class being bench-marked
     benchmark_me m_benchmark_me;
 
     uint32_t m_old_count;
     uint32_t m_new_count;
 };
-
 
 BENCHMARK_F(custom_measurement, BenchmarkMe, RunCount, 100);

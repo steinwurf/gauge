@@ -3,13 +3,13 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#include <cstdlib>
 #include <list>
 #include <vector>
-#include <cstdlib>
 
 #include <gauge/gauge.hpp>
 
-template<class Container>
+template <class Container>
 uint32_t max_container(const Container& one)
 {
     uint32_t max = 0;
@@ -28,7 +28,7 @@ uint32_t max_container(const Container& one)
     return max;
 }
 
-template<typename Container>
+template <typename Container>
 uint32_t setup_and_run()
 {
     uint32_t elements = 10000;
@@ -42,12 +42,12 @@ uint32_t setup_and_run()
 
 BENCHMARK(RunOutside, VectorMaxValue, 10)
 {
-    uint32_t max = setup_and_run< std::vector<uint32_t> >();
+    uint32_t max = setup_and_run<std::vector<uint32_t>>();
     (void)max;
 }
 
 BENCHMARK(RunOutside, ListMaxValue, 10)
 {
-    uint32_t max = setup_and_run< std::list<uint32_t> >();
+    uint32_t max = setup_and_run<std::list<uint32_t>>();
     (void)max;
 }

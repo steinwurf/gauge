@@ -15,7 +15,6 @@ namespace gauge
 class time_benchmark : public benchmark
 {
 public:
-
     /// Constructor
     time_benchmark();
 
@@ -49,7 +48,6 @@ public:
     virtual void store_run(tables::table& results);
 
 private:
-
     class impl;
     std::unique_ptr<impl> m_impl;
 };

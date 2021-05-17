@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <string>
 #include <ostream>
+#include <string>
 
 #include "file_printer.hpp"
 

@@ -27,7 +27,6 @@ namespace po = boost::program_options;
 class printer
 {
 public:
-
     /// Create a new printer
     /// @param name The name of the printer
     /// @param default_filename The default name of the outputted file
@@ -42,39 +41,43 @@ public:
 
     /// Called when the benchmark program is started
     virtual void start()
-    { }
+    {
+    }
 
     /// Called when a specific benchmark is started
     virtual void start_benchmark()
-    { }
+    {
+    }
 
     /// Called when a result from a benchmark is ready
     /// @param info The benchmark
     /// @param result The benchmark results
     virtual void benchmark_result(const benchmark& /*info*/,
                                   const tables::table& /*results*/)
-    { }
+    {
+    }
 
     /// Called when a specific benchmark is finished
     virtual void end_benchmark()
-    { }
+    {
+    }
 
     /// Called when the benchmark program is finished
     virtual void end()
-    { }
+    {
+    }
 
     /// Virtual destructor
     virtual ~printer()
-    { }
+    {
+    }
 
 protected:
-
     /// Name of the printer
     std::string m_name;
 
     /// Boolean determining wether the printer is enabled or not.
     bool m_enabled;
-
 };
 
 }

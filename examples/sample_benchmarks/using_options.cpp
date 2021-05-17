@@ -13,7 +13,6 @@
 class using_options : public gauge::time_benchmark
 {
 public:
-
     void setup()
     {
         // Setup the test this could also be done inside the
@@ -32,7 +31,7 @@ public:
         // The options specified are available by overriding the
         // get_options() function and using the option name and
         // type to access the variables_map.
-        auto values = options["array_size"].as<std::vector<int> >();
+        auto values = options["array_size"].as<std::vector<int>>();
         for (auto v : values)
         {
             gauge::config_set cs;
@@ -53,12 +52,11 @@ BENCHMARK_OPTION(array_size)
 
     std::vector<int> size = {10U, 40U};
 
-    auto default_size =
-        gauge::po::value<std::vector<int> >()->default_value(
-            size, "")->multitoken();
+    auto default_size = gauge::po::value<std::vector<int>>()
+                            ->default_value(size, "")
+                            ->multitoken();
 
-    options.add_options()
-    ("array_size", default_size, "Set bit array size");
+    options.add_options()("array_size", default_size, "Set bit array size");
 
     gauge::runner::instance().register_options(options);
 }
@@ -93,11 +91,11 @@ BENCHMARK_F_INLINE(using_options, CountBits, count_bk, 10)
 
     RUN
     {
-        for (auto v: m_vector)
+        for (auto v : m_vector)
             sum += count_bk(v);
     }
 
-    (void) sum; // Suppress warning about unused variable
+    (void)sum; // Suppress warning about unused variable
 }
 
 BENCHMARK_F_INLINE(using_options, CountBits, count_naive, 10)
@@ -106,9 +104,9 @@ BENCHMARK_F_INLINE(using_options, CountBits, count_naive, 10)
 
     RUN
     {
-        for (auto v: m_vector)
+        for (auto v : m_vector)
             sum += count_naive(v);
     }
 
-    (void) sum; // Suppress warning about unused variable
+    (void)sum; // Suppress warning about unused variable
 }

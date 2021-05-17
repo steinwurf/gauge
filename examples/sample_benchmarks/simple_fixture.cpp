@@ -8,11 +8,10 @@
 
 #include <gauge/gauge.hpp>
 
-template<class Container>
+template <class Container>
 class find_max_setup : public gauge::time_benchmark
 {
 public:
-
     find_max_setup()
     {
         m_container.resize(1000, 0);
@@ -35,11 +34,10 @@ public:
                                           std::end(m_container));
         }
 
-        (void) max_value;
+        (void)max_value;
     }
 
 protected:
-
     Container m_container;
 };
 

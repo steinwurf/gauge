@@ -11,7 +11,6 @@ namespace gauge
 class console
 {
 public:
-
     /// Console text colors.
     enum textcolor
     {

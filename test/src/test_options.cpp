@@ -72,7 +72,6 @@ struct option_benchmark : public gauge::time_benchmark
     }
 
 protected:
-
     std::chrono::microseconds m_delay;
 };
 
@@ -80,29 +79,25 @@ BENCHMARK_OPTION(basic_options)
 {
     gauge::po::options_description options;
 
-    auto default_symbols =
-        gauge::po::value<std::vector<uint32_t>>()->
-        default_value({16, 32}, "")->
-        multitoken();
+    auto default_symbols = gauge::po::value<std::vector<uint32_t>>()
+                               ->default_value({16, 32}, "")
+                               ->multitoken();
 
-    auto default_symbol_size =
-        gauge::po::value<std::vector<uint32_t>>()->
-        default_value({1600}, "")->
-        multitoken();
+    auto default_symbol_size = gauge::po::value<std::vector<uint32_t>>()
+                                   ->default_value({1600}, "")
+                                   ->multitoken();
 
-    auto default_types =
-        gauge::po::value<std::vector<std::string>>()->
-        default_value({"encoder", "decoder"}, "")->
-        multitoken();
+    auto default_types = gauge::po::value<std::vector<std::string>>()
+                             ->default_value({"encoder", "decoder"}, "")
+                             ->multitoken();
 
-    options.add_options()
-    ("symbols", default_symbols, "Set the number of symbols");
+    options.add_options()("symbols", default_symbols,
+                          "Set the number of symbols");
 
-    options.add_options()
-    ("symbol_size", default_symbol_size, "Set the symbol size in bytes");
+    options.add_options()("symbol_size", default_symbol_size,
+                          "Set the symbol size in bytes");
 
-    options.add_options()
-    ("type", default_types, "Set type [encoder|decoder]");
+    options.add_options()("type", default_types, "Set type [encoder|decoder]");
 
     gauge::runner::instance().register_options(options);
 }

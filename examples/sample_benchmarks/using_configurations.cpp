@@ -14,7 +14,6 @@
 class using_configurations : public gauge::time_benchmark
 {
 public:
-
     using_configurations()
     {
         std::vector<int> values;

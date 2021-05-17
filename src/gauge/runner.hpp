@@ -7,9 +7,9 @@
 
 #include <boost/program_options.hpp>
 
-#include <vector>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "benchmark.hpp"
 #include "printer.hpp"
@@ -23,7 +23,6 @@ namespace po = boost::program_options;
 class runner
 {
 public:
-
     /// Pointer to a benchmark
     typedef std::shared_ptr<benchmark> benchmark_ptr;
 
@@ -57,7 +56,7 @@ public:
     static uint32_t register_id();
 
     /// Creates the desired benchmark with the runner
-    template<class T>
+    template <class T>
     void register_benchmark(std::string testcase_name,
                             std::string benchmark_name)
     {
@@ -68,7 +67,7 @@ public:
     }
 
     /// Fetch the options for a specific benchmark
-    template<class T>
+    template <class T>
     void register_options()
     {
         T::add_options();
@@ -79,10 +78,8 @@ public:
 
     /// Adds a new benchmark
     // void add_benchmark(uint32_t id, benchmark_ptr benchmark);
-    void add_benchmark(uint32_t id,
-                       make_benchmark benchmark,
-                       std::string testcase_name,
-                       std::string benchmark_name);
+    void add_benchmark(uint32_t id, make_benchmark benchmark,
+                       std::string testcase_name, std::string benchmark_name);
 
     /// Returns the id of the currently active benchmark
     /// @return id of benchmark
@@ -125,13 +122,11 @@ public:
     /// @return the runners enabled printers
     std::vector<printer_ptr> enabled_printers() const;
 
-
     /// Parse the add_column options
     /// @param column Value from the input options
     void parse_add_column(const std::string& option);
 
 private:
-
     struct impl;
     std::unique_ptr<impl> m_impl;
 };

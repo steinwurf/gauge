@@ -7,10 +7,10 @@
 
 #include <boost/any.hpp>
 
-#include <iostream>
-#include <memory>
-#include <map>
 #include <cstdint>
+#include <iostream>
+#include <map>
+#include <memory>
 #include <string>
 
 namespace gauge
@@ -21,13 +21,13 @@ struct config_set
     typedef std::map<std::string, boost::any> config_map;
     typedef config_map::const_iterator const_iterator;
 
-    template<class T>
+    template <class T>
     void set_value(const std::string& key, T v)
     {
         m_values[key] = boost::any(v);
     }
 
-    template<class T>
+    template <class T>
     T get_value(const std::string& key) const
     {
         assert(m_values.find(key) != m_values.end());
