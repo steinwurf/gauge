@@ -15,22 +15,21 @@
 
 namespace gauge
 {
-stdout_printer::stdout_printer() :
-    printer("stdout", false)
+stdout_printer::stdout_printer() : printer("stdout", false)
 {
     m_formatters.insert(std::make_pair(
         "csv", std::shared_ptr<tables::format>(new tables::csv_format())));
     m_formatters.insert(std::make_pair(
         "json", std::shared_ptr<tables::format>(new tables::json_format())));
     m_formatters.insert(std::make_pair(
-        "python", std::shared_ptr<tables::format>(new tables::python_format())));
+        "python",
+        std::shared_ptr<tables::format>(new tables::python_format())));
 
     gauge::po::options_description options;
 
-    options.add_options()(
-        "stdout_formatter",
-        po::value<std::string>()->default_value(""),
-        "The format to use for the stdout printer");
+    options.add_options()("stdout_formatter",
+                          po::value<std::string>()->default_value(""),
+                          "The format to use for the stdout printer");
 
     gauge::runner::instance().register_options(options);
 }

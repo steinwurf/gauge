@@ -3,10 +3,10 @@
 
 #pragma once
 
-#include <unistd.h>
+#include <cassert>
 #include <cstdlib>
 #include <cstring>
-#include <cassert>
+#include <unistd.h>
 
 #include "console_colors.hpp"
 
@@ -34,22 +34,38 @@ inline bool has_colors()
 class console_impl
 {
 public:
-
     static int color_code(const console::textcolor& color)
     {
         int c = 0;
 
         switch (color)
         {
-        case console::textblack: c = 30; break;
-        case console::textblue: c = 34; break;
-        case console::textgreen: c = 32; break;
-        case console::textcyan: c = 36; break;
-        case console::textred: c = 31; break;
-        case console::textpurple: c = 35; break;
-        case console::textyellow: c = 33; break;
-        case console::textwhite: c = 37; break;
-        default: assert(0);
+        case console::textblack:
+            c = 30;
+            break;
+        case console::textblue:
+            c = 34;
+            break;
+        case console::textgreen:
+            c = 32;
+            break;
+        case console::textcyan:
+            c = 36;
+            break;
+        case console::textred:
+            c = 31;
+            break;
+        case console::textpurple:
+            c = 35;
+            break;
+        case console::textyellow:
+            c = 33;
+            break;
+        case console::textwhite:
+            c = 37;
+            break;
+        default:
+            assert(0);
         }
 
         return c;

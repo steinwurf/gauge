@@ -15,19 +15,16 @@ namespace gauge
 class iteration_controller
 {
 public:
-
     /// Pointer to the benchmark
     typedef std::shared_ptr<benchmark> benchmark_ptr;
 
 public:
-
     /// Create a new iteration controller for the benchmark
     /// with a specific id.
     /// Starts the benchmark
     /// @param benchmark_id the id of the benchmark
     iteration_controller() :
-        m_iteration_count(0),
-        m_total_iterations(0),
+        m_iteration_count(0), m_total_iterations(0),
         m_benchmark(gauge::runner::instance().current_benchmark())
     {
         assert(m_benchmark);
@@ -57,7 +54,6 @@ public:
     }
 
 private:
-
     /// The current iteration count
     uint64_t m_iteration_count;
 

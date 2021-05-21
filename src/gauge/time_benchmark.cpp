@@ -15,7 +15,6 @@ namespace gauge
 class time_benchmark::impl
 {
 public:
-
     /// The number of iterations to run to get an
     /// acceptable result
     uint64_t m_iterations;
@@ -43,12 +42,13 @@ public:
     bool m_accepted;
 };
 
-time_benchmark::time_benchmark() :
-    m_impl(new time_benchmark::impl())
-{ }
+time_benchmark::time_benchmark() : m_impl(new time_benchmark::impl())
+{
+}
 
 time_benchmark::~time_benchmark()
-{ }
+{
+}
 
 void time_benchmark::init()
 {
@@ -78,8 +78,9 @@ void time_benchmark::stop()
     m_impl->m_stopped = true;
 
     m_impl->m_result = static_cast<double>(
-        std::chrono::duration_cast<std::chrono::microseconds>(
-            m_impl->m_stop-m_impl->m_start).count());
+        std::chrono::duration_cast<std::chrono::microseconds>(m_impl->m_stop -
+                                                              m_impl->m_start)
+            .count());
 
     assert(m_impl->m_iterations > 0);
 }
@@ -109,8 +110,8 @@ bool time_benchmark::accept_measurement()
         if (factor > 2.0)
         {
             // We seem to be running longer than needed
-            m_impl->m_iterations = static_cast<uint32_t>(
-                (m_impl->m_iterations / factor) + 1);
+            m_impl->m_iterations =
+                static_cast<uint32_t>((m_impl->m_iterations / factor) + 1);
 
             assert(m_impl->m_iterations > 0);
         }
@@ -143,8 +144,8 @@ bool time_benchmark::accept_measurement()
     assert(factor > 1.0);
 
     // Adjust the number of iterations with the factor
-    m_impl->m_iterations = static_cast<uint32_t>(
-        (m_impl->m_iterations * factor) + 1);
+    m_impl->m_iterations =
+        static_cast<uint32_t>((m_impl->m_iterations * factor) + 1);
 
     assert(m_impl->m_iterations > 0);
 

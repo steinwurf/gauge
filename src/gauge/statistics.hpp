@@ -28,7 +28,7 @@ struct statistics
 };
 
 /// Calculates the mean of a sequence
-template<class Iterator>
+template <class Iterator>
 double mean(Iterator begin, Iterator end)
 {
     uint64_t size = std::distance(begin, end);
@@ -38,17 +38,15 @@ double mean(Iterator begin, Iterator end)
 }
 
 /// Calculate the statistics of a sequence
-template<class Iterator>
+template <class Iterator>
 statistics calculate_statistics(Iterator begin, Iterator end)
 {
     statistics s;
     s.m_mean = mean(begin, end);
 
-    typename Iterator::value_type max =
-        *std::max_element(begin, end);
+    typename Iterator::value_type max = *std::max_element(begin, end);
 
-    typename Iterator::value_type min =
-        *std::min_element(begin, end);
+    typename Iterator::value_type min = *std::min_element(begin, end);
 
     // @todo do we have an issues with overflows here
     s.m_max = static_cast<double>(max);

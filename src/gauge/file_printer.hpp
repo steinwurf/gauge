@@ -5,27 +5,25 @@
 
 #pragma once
 
+#include <ostream>
 #include <string>
 #include <vector>
-#include <ostream>
 
 #include <tables/table.hpp>
 
-#include "printer.hpp"
 #include "benchmark.hpp"
+#include "printer.hpp"
 
 namespace gauge
 {
 class file_printer : public printer
 {
 public:
-
     /// Create a new file printer
     /// @param name The name of the file printer.
     /// @param default_filename The default name of the outputted file
     /// (with file extension)
-    file_printer(const std::string& name,
-                 const std::string& default_filename);
+    file_printer(const std::string& name, const std::string& default_filename);
 
 public:
     // From printer
@@ -41,13 +39,11 @@ public:
     virtual void set_options(const po::variables_map& options);
 
 public:
-
     /// Prints data to a stream. Used in the file_printer::end method.
     /// @param s Steam to write to.
     virtual void print_to_stream(std::ostream& s) = 0;
 
 protected:
-
     /// Store the filename of the output file
     std::string m_filename;
 
@@ -56,7 +52,6 @@ protected:
 
     /// The output tables
     std::vector<tables::table> m_tables;
-
 };
 
 }

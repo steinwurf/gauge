@@ -6,9 +6,9 @@
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
-#include <string>
-#include <map>
 #include <limits>
+#include <map>
+#include <string>
 #include <vector>
 
 #include <boost/program_options.hpp>
@@ -17,8 +17,8 @@
 #include "csv_printer.hpp"
 #include "json_printer.hpp"
 #include "python_printer.hpp"
-#include "stdout_printer.hpp"
 #include "results.hpp"
+#include "stdout_printer.hpp"
 
 #include "runner.hpp"
 
@@ -55,9 +55,9 @@ struct runner::impl
     std::map<std::string, std::string> m_columns;
 };
 
-runner::runner() :
-    m_impl(new runner::impl())
-{ }
+runner::runner() : m_impl(new runner::impl())
+{
+}
 
 runner& runner::instance()
 {
@@ -67,20 +67,15 @@ runner& runner::instance()
 
 void runner::add_default_printers()
 {
-    instance().printers().push_back(
-        std::make_shared<gauge::console_printer>());
+    instance().printers().push_back(std::make_shared<gauge::console_printer>());
 
-    instance().printers().push_back(
-        std::make_shared<gauge::python_printer>());
+    instance().printers().push_back(std::make_shared<gauge::python_printer>());
 
-    instance().printers().push_back(
-        std::make_shared<gauge::json_printer>());
+    instance().printers().push_back(std::make_shared<gauge::json_printer>());
 
-    instance().printers().push_back(
-        std::make_shared<gauge::csv_printer>());
+    instance().printers().push_back(std::make_shared<gauge::csv_printer>());
 
-    instance().printers().push_back(
-        std::make_shared<gauge::stdout_printer>());
+    instance().printers().push_back(std::make_shared<gauge::stdout_printer>());
 }
 
 void runner::run_benchmarks(int argc, const char* argv[])
@@ -94,7 +89,7 @@ void runner::register_options(const po::options_description& options)
     assert(m_impl);
 
     const auto& opt = options.options();
-    for (const auto& o: opt)
+    for (const auto& o : opt)
         m_impl->m_options_description.add(o);
 }
 
@@ -109,8 +104,7 @@ uint32_t runner::register_id()
     return ++id;
 }
 
-void runner::add_benchmark(uint32_t id,
-                           make_benchmark benchmark,
+void runner::add_benchmark(uint32_t id, make_benchmark benchmark,
                            std::string testcase_name,
                            std::string benchmark_name)
 {
@@ -145,40 +139,37 @@ void runner::run_unsafe(int argc, const char* argv[])
 
     po::options_description options("Gauge");
 
-    options.add_options()
-    ("help", "produce help message")
-    ("print_tests", "print testcases")
-    ("print_benchmarks", "print benchmarks")
-    ("result_filter",
-     po::value<std::vector<std::string> >()->multitoken(),
-     "Filter which results should be stored "
-     "for example ./benchmark --result_filter=time multiple filters "
-     "can be a comma separated list of filters e.g. "
-     "--result_filter=time throughput")
-    ("gauge_filter",
-     po::value<std::vector<std::string> >()->multitoken(),
-     "Filter which test-cases or benchmarks to run based on their name "
-     "for example ./benchmark --gauge_filter=MyTest.* or "
-     "--gauge_filter=*.MyBenchmark or even --gauge_filter=*.* "
-     "Multiple filters can also be specified e.g. "
-     "--gauge_filter=MyTest.one MyTest.two")
-    ("runs", po::value<uint32_t>(),
-     "Sets the number of runs to complete. Overrides the "
-     "settings specified in the benchmark ex. --runs=50")
-    ("warmup_time", po::value<double>()->default_value(2.0),
-     "Set the CPU warm-up time in seconds before starting the first benchmark. "
-     "This should avoid unfavorable results for the first few benchmarks "
-     "due to the CPU power-saving mechanisms, e.g. --warmup_time=5.0")
-    ("add_column",
-     po::value<std::vector<std::string> >()->multitoken(),
-     "Add a column to the test results, this can be used to "
-     "add custom information to the result files "
-     "./benchmark --add_column cpu=i7 "
-     "\"date=Monday 1st June 2021\"")
-    ("dry_run",
-     "Initializes the benchmark without running it. This is useful to "
-     "check whether the right command-line arguments have been passed "
-     "to the benchmark executable.");
+    options.add_options()("help", "produce help message")(
+        "print_tests", "print testcases")("print_benchmarks",
+                                          "print benchmarks")(
+        "result_filter", po::value<std::vector<std::string>>()->multitoken(),
+        "Filter which results should be stored "
+        "for example ./benchmark --result_filter=time multiple filters "
+        "can be a comma separated list of filters e.g. "
+        "--result_filter=time throughput")(
+        "gauge_filter", po::value<std::vector<std::string>>()->multitoken(),
+        "Filter which test-cases or benchmarks to run based on their name "
+        "for example ./benchmark --gauge_filter=MyTest.* or "
+        "--gauge_filter=*.MyBenchmark or even --gauge_filter=*.* "
+        "Multiple filters can also be specified e.g. "
+        "--gauge_filter=MyTest.one MyTest.two")(
+        "runs", po::value<uint32_t>(),
+        "Sets the number of runs to complete. Overrides the "
+        "settings specified in the benchmark ex. --runs=50")(
+        "warmup_time", po::value<double>()->default_value(2.0),
+        "Set the CPU warm-up time in seconds before starting the first "
+        "benchmark. "
+        "This should avoid unfavorable results for the first few benchmarks "
+        "due to the CPU power-saving mechanisms, e.g. --warmup_time=5.0")(
+        "add_column", po::value<std::vector<std::string>>()->multitoken(),
+        "Add a column to the test results, this can be used to "
+        "add custom information to the result files "
+        "./benchmark --add_column cpu=i7 "
+        "\"date=Monday 1st June 2021\"")(
+        "dry_run",
+        "Initializes the benchmark without running it. This is useful to "
+        "check whether the right command-line arguments have been passed "
+        "to the benchmark executable.");
 
     options.add(m_impl->m_options_description);
 
@@ -210,8 +201,8 @@ void runner::run_unsafe(int argc, const char* argv[])
         {
             for (const auto& benchmark : testcase.second)
             {
-                std::cout << testcase.first << "."
-                          << benchmark.first << std::endl;
+                std::cout << testcase.first << "." << benchmark.first
+                          << std::endl;
             }
         }
         return;
@@ -219,8 +210,7 @@ void runner::run_unsafe(int argc, const char* argv[])
 
     if (m_impl->m_options.count("add_column"))
     {
-        auto v = m_impl->m_options["add_column"].as<
-                 std::vector<std::string> >();
+        auto v = m_impl->m_options["add_column"].as<std::vector<std::string>>();
         for (const auto& s : v)
         {
             parse_add_column(s);
@@ -239,17 +229,19 @@ void runner::run_unsafe(int argc, const char* argv[])
         // Continuously query the current time and compare with the start time
         // until the difference reaches the given warm-up interval.
         // This operation cannot be "optimized away" by the compiler.
-        while (difftime(time(0), start) < warmup_time) {}
+        while (difftime(time(0), start) < warmup_time)
+        {
+        }
     }
 
     // Deliver possible options to printers and start them
-    for (auto& printer: m_impl->m_printers)
+    for (auto& printer : m_impl->m_printers)
     {
         printer->set_options(m_impl->m_options);
     }
 
     // Notify all printers that we are starting
-    for (auto& printer: enabled_printers())
+    for (auto& printer : enabled_printers())
     {
         printer->start();
     }
@@ -257,8 +249,8 @@ void runner::run_unsafe(int argc, const char* argv[])
     // should use a filter
     if (m_impl->m_options.count("gauge_filter"))
     {
-        auto f = m_impl->m_options["gauge_filter"]
-                 .as<std::vector<std::string>>();
+        auto f =
+            m_impl->m_options["gauge_filter"].as<std::vector<std::string>>();
         run_all_filters(f);
     }
     else
@@ -267,7 +259,7 @@ void runner::run_unsafe(int argc, const char* argv[])
     }
 
     // Notify all printers that we are done
-    for (auto& printer: enabled_printers())
+    for (auto& printer : enabled_printers())
     {
         printer->end();
     }
@@ -294,8 +286,7 @@ void runner::parse_add_column(const std::string& option)
                                  " (example cpu=i7)");
     }
 
-    assert(m_impl->m_columns.find(column_name) ==
-           m_impl->m_columns.end());
+    assert(m_impl->m_columns.find(column_name) == m_impl->m_columns.end());
 
     m_impl->m_columns[column_name] = column_value;
 }
@@ -398,8 +389,7 @@ void runner::run_single_filter(const std::string& filter)
         {
             uint32_t id = b.second;
 
-            assert(m_impl->m_benchmarks.find(id) !=
-                   m_impl->m_benchmarks.end());
+            assert(m_impl->m_benchmarks.find(id) != m_impl->m_benchmarks.end());
 
             auto& make = m_impl->m_benchmarks[id];
             auto benchmark = make();
@@ -425,8 +415,7 @@ void runner::run_single_filter(const std::string& filter)
 
         uint32_t id = benchmarks.find(benchmark_name)->second;
 
-        assert(m_impl->m_benchmarks.find(id) !=
-               m_impl->m_benchmarks.end());
+        assert(m_impl->m_benchmarks.find(id) != m_impl->m_benchmarks.end());
 
         auto& make = m_impl->m_benchmarks[id];
         auto benchmark = make();
@@ -514,7 +503,7 @@ void runner::run_benchmark(benchmark_ptr benchmark)
 
     benchmark->prepare_table(results);
 
-    for (auto& printer: enabled_printers())
+    for (auto& printer : enabled_printers())
     {
         printer->start_benchmark();
     }
@@ -541,8 +530,8 @@ void runner::run_benchmark(benchmark_ptr benchmark)
     // Clean out unwanted results
     if (m_impl->m_options.count("result_filter"))
     {
-        auto f = m_impl->m_options["result_filter"].as<
-                 std::vector<std::string>>();
+        auto f =
+            m_impl->m_options["result_filter"].as<std::vector<std::string>>();
 
         for (auto& i : f)
         {
@@ -554,12 +543,12 @@ void runner::run_benchmark(benchmark_ptr benchmark)
     }
 
     // Notify all printers that we are done
-    for (auto& printer: enabled_printers())
+    for (auto& printer : enabled_printers())
     {
         printer->end_benchmark();
     }
 
-    for (auto& printer: enabled_printers())
+    for (auto& printer : enabled_printers())
     {
         printer->benchmark_result(*benchmark, results);
     }

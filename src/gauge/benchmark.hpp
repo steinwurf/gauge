@@ -11,8 +11,8 @@
 #include <tables/table.hpp>
 
 #include <cassert>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "config_set.hpp"
 #include "results.hpp"
@@ -26,14 +26,15 @@ namespace po = boost::program_options;
 class benchmark
 {
 public:
-
     /// Constructor
     benchmark()
-    { }
+    {
+    }
 
     /// Destructor
     virtual ~benchmark()
-    { }
+    {
+    }
 
     /// @param benchmark_id sets the benchmark id
     void set_id(uint32_t benchmark_id)
@@ -56,13 +57,13 @@ public:
     /// @param results The table containing the results
     virtual void prepare_table(tables::table& results)
     {
-        (void) results;
+        (void)results;
     }
 
     /// Add options to the available commandline arguments
     virtual void get_options(po::variables_map& options)
     {
-        (void) options;
+        (void)options;
     }
 
     /// @return the test case name
@@ -86,7 +87,8 @@ public:
 
     /// Reset the state of a measurement controller
     virtual void init()
-    { }
+    {
+    }
 
     /// For how many iterations should we loop
     /// @return the iteration count
@@ -148,10 +150,16 @@ public:
     virtual void stop() = 0;
 
     /// @return true if a warm-up iteration is needed
-    virtual bool needs_warmup_iteration() { return false; }
+    virtual bool needs_warmup_iteration()
+    {
+        return false;
+    }
 
     /// @return true if the previous measurement was accepted
-    virtual bool accept_measurement() { return true; }
+    virtual bool accept_measurement()
+    {
+        return true;
+    }
 
     /// Returns the unit we are measuring
     virtual std::string unit_text() const = 0;
@@ -164,12 +172,14 @@ public:
     /// Called once before every test run. Allows a user to
     /// prepare resources for the upcoming benchmark
     virtual void setup()
-    { }
+    {
+    }
 
     /// Called once after every test run. Allows a user to
     /// cleanup resources in between benchmark runs.
     virtual void tear_down()
-    { }
+    {
+    }
 
     /// If for some reason the benchmark cannot run it can be skipped
     /// by implementing this function in the benchmark code.

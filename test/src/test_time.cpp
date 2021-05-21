@@ -32,7 +32,6 @@ struct sleep_benchmark : public gauge::time_benchmark
     }
 
 protected:
-
     std::chrono::microseconds m_delay;
 };
 

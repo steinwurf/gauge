@@ -5,10 +5,10 @@
 
 #pragma once
 
-#include <vector>
 #include <cstdint>
 #include <map>
 #include <string>
+#include <vector>
 
 namespace gauge
 {
@@ -53,6 +53,5 @@ struct result
 };
 
 typedef std::map<std::string, result> temp_results;
-
 
 }

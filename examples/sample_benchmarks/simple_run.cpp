@@ -3,8 +3,8 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <gauge/gauge.hpp>
 #include <cstdlib>
+#include <gauge/gauge.hpp>
 
 void max_array(double* x, double* y, double* z, uint32_t elements)
 {
@@ -37,7 +37,6 @@ BENCHMARK(SimpleRun, MaxArray, 100)
     {
         max_array(&x[0], &y[0], &z[0], elements);
     }
-
 }
 
 void max_array_opt(double* x, double* y, double* z, uint32_t elements)
