@@ -1,8 +1,28 @@
 gauge
 -----
 
-.. image:: https://travis-ci.org/steinwurf/gauge.svg?branch=master
-    :target: https://travis-ci.org/steinwurf/gauge
+|Linux make-specs| |Windows make-specs| |MacOS make-specs| |Valgrind| |No Assertions| |Clang Format| |Cppcheck|
+
+.. |Linux make-specs| image:: https://github.com/steinwurf/abacus/actions/workflows/linux_mkspecs.yml/badge.svg
+   :target: https://github.com/steinwurf/abacus/actions/workflows/linux_mkspecs.yml
+   
+.. |Windows make-specs| image:: https://github.com/steinwurf/abacus/actions/workflows/windows_mkspecs.yml/badge.svg
+   :target: https://github.com/steinwurf/abacus/actions/workflows/windows_mkspecs.yml
+
+.. |MacOS make-specs| image:: https://github.com/steinwurf/abacus/actions/workflows/macos_mkspecs.yml/badge.svg
+   :target: https://github.com/steinwurf/abacus/actions/workflows/macos_mkspecs.yml
+
+.. |Clang Format| image:: https://github.com/steinwurf/abacus/actions/workflows/clang-format.yml/badge.svg
+   :target: https://github.com/steinwurf/abacus/actions/workflows/clang-format.yml
+
+.. |No Assertions| image:: https://github.com/steinwurf/abacus/actions/workflows/nodebug.yml/badge.svg
+   :target: https://github.com/steinwurf/abacus/actions/workflows/nodebug.yml
+
+.. |Valgrind| image:: https://github.com/steinwurf/abacus/actions/workflows/valgrind.yml/badge.svg
+   :target: https://github.com/steinwurf/abacus/actions/workflows/valgrind.yml
+
+.. |Cppcheck| image:: https://github.com/steinwurf/abacus/actions/workflows/cppcheck.yml/badge.svg
+   :target: https://github.com/steinwurf/abacus/actions/workflows/cppcheck.yml
 
 gauge is a flexible C++ benchmarking tool.
 
